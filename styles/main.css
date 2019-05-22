@@ -1523,7 +1523,7 @@ fieldset[disabled]
 .show > .btn-primary.dropdown-toggle,
 .show > .btn-primary.dropdown-toggle:focus,
 .show > .btn-primary.dropdown-toggle:hover {
-  background-color: #40a249;
+  background-color: #2ca8ff;
   color: #FFFFFF;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -1552,8 +1552,8 @@ fieldset[disabled] .btn-primary.active {
 
 .btn-primary.btn-simple:hover, .btn-primary.btn-simple:focus, .btn-primary.btn-simple:active {
   background-color: transparent;
-  color: #40a249;
-  border-color: #40a249;
+  color: #2ca8ff;
+  border-color: #2ca8ff;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -1564,7 +1564,7 @@ fieldset[disabled] .btn-primary.active {
 
 .btn-primary.btn-link:hover, .btn-primary.btn-link:focus, .btn-primary.btn-link:active {
   background-color: transparent;
-  color: #40a249;
+  color: #2ca8ff;
   text-decoration: none;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -1870,13 +1870,13 @@ fieldset[disabled] .btn-neutral.active {
 .show > .btn-neutral.dropdown-toggle:focus,
 .show > .btn-neutral.dropdown-toggle:hover {
   background-color: #FFFFFF;
-  color: #40a249;
+  color: #2ca8ff;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
 
 .btn-neutral:hover, .btn-neutral:focus {
-  color: #40a249;
+  color: #2ca8ff;
 }
 
 .btn-neutral:hover:not(.nav-link), .btn-neutral:focus:not(.nav-link) {
