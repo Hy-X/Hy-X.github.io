@@ -594,7 +594,7 @@
 }
 
 .slider.slider-primary.noUi-target {
-  background-color: rgba(55, 140, 63, 0.4);
+  background-color: rgba(233, 94, 56, 0.4);
 }
 
 .slider.slider-primary .noUi-handle {
@@ -2598,7 +2598,7 @@ textarea.form-control:focus, textarea.form-control:active {
 }
 
 .progress-container.progress-primary .progress {
-  background: rgba(233, 95, 56, 0.4);
+  background: rgba(233, 94, 56, 0.4);
 }
 
 .progress-container.progress-primary .progress-bar {
@@ -4932,8 +4932,8 @@ Created using IcoMoon - icomoon.io
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
   /* For Firefox 3.6 to 15 */
-  background: -webkit-gradient(linear, left bottom, left top, from(rgba(227, 227, 227, 0.26)), to(rgba(55, 140, 63, 0.95)));
-  background: linear-gradient(0deg, rgba(227, 227, 227, 0.26), rgba(55, 140, 63, 0.95));
+  background: -webkit-gradient(linear, left bottom, left top, from(rgba(227, 227, 227, 0.26)), to(rgba(233, 94, 56, 0.95)));
+  background: linear-gradient(0deg, rgba(227, 227, 227, 0.26), rgba(233, 94, 56, 0.95));
   /* Standard syntax */
 }
 
@@ -7049,8 +7049,8 @@ Created using IcoMoon - icomoon.io
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
   /* For Firefox 3.6 to 15 */
-  background: -webkit-gradient(linear, left bottom, left top, from(rgba(44, 44, 44, 0.2)), to(rgba(55, 140, 63, 0.6)));
-  background: linear-gradient(0deg, rgba(44, 44, 44, 0.2), rgba(55, 140, 63, 0.6));
+  background: -webkit-gradient(linear, left bottom, left top, from(rgba(44, 44, 44, 0.2)), to(rgba(233, 94, 56, 0.6)));
+  background: linear-gradient(0deg, rgba(44, 44, 44, 0.2), rgba(233, 94, 56, 0.6));
   /* Standard syntax */
 }
 
