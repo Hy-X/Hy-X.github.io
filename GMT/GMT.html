@@ -231,8 +231,8 @@ set BASIN = TRUE
 set BLOCK = TRUE
 
 pwd | psxy -R$border -JM$WIDTH -H -K -P -X3 -Y11 > $OFN
-grdcut /data/xsong/i/jli109/gmtdata/etopo1.grd -Gtemp.grd -R$border
-grdcut /data/xsong/i/jli109/gmtdata/etopo1.int -Gtemp.int -R$border
+grdcut /data/etopo1.grd -Gtemp.grd -R$border
+grdcut /data/etopo1.int -Gtemp.int -R$border
 grdimage temp.grd -R$border -JM  -Ctopo_hyxiao.cpt -Itemp.int -K -O -V  >> $OFN
 pscoast -JM -R$border -N1/1p -N2/0.25p,grey -W -N3/1p -K -O -V >> $OFN
 
@@ -329,8 +329,8 @@ data-aos-duration="800"
   set Ticks="a10f5SWen"
   set Basemap="-Ba2f1/a2f1"
   
-  set Input_Filename = "/data/xsong/i/hongyux2/GSA_related/Crust_1_0/crust1.0/sedthk.xyz"
-  set Cpt_Filename = "/data/xsong/i/hongyux2/GSA_related/Crust_1_0/crust1.0/sediment.cpt"
+  set Input_Filename = "/data/GSA_related/Crust_1_0/crust1.0/sedthk.xyz"
+  set Cpt_Filename = "/data/GSA_related/Crust_1_0/crust1.0/sediment.cpt"
   
   set White_Cpt = "white.cpt"
   echo -10000 255 255 255 10000 255 255 255 > white.cpt
@@ -339,8 +339,8 @@ data-aos-duration="800"
   
   pwd | psxy -R$Border -JM$Width -H -K -P -X3 -Y10 > $Output_File_Name
   
-  grdcut /data/xsong/i/jli109/gmtdata/etopo1.grd -Gtemp.grd -R$Border
-  grdcut /data/xsong/i/jli109/gmtdata/etopo1.int -Gtemp.int -R$Border
+  grdcut /data/etopo1.grd -Gtemp.grd -R$Border
+  grdcut /data/etopo1.int -Gtemp.int -R$Border
   
   grdimage temp.grd -R$Border -JM  -C$White_Cpt -Itemp.int -K -O  >> $Output_File_Name
   
