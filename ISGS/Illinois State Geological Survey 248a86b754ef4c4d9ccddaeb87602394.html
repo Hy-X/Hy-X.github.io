@@ -1,0 +1,706 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Illinois State Geological Survey </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8ef03002-2ead-405b-8bf7-c0b2acdf1d8a" class="page sans"><header><img class="page-cover-image" src="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/20220615_202234.jpg" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🏕️</span></div><h1 class="page-title">Illinois State Geological Survey </h1></header><div class="page-body"><h1 id="1bb0ce2a-16f0-41f0-a54d-f49c349ed81d" class="">HVSR Progress summary</h1><p id="67543342-54b3-4854-84a9-9605fb531a4c" class="">
+</p><p id="749a76d5-067c-4281-94fd-27d285d7a584" class="">by Hongyu(Jeff) Xiao</p><p id="2c321f23-0751-4b5f-8c06-9c9603f1b6d2" class=""><time>@August 16, 2022</time> </p><h1 id="987b4408-8cd7-43cc-9f0f-8147ea486e99" class="">1. IRIS-HVSR</h1><h2 id="73882137-4d65-41fe-b3f6-0d921b859263" class="">1.1 Project Source</h2><figure id="6e4058d4-4b65-4f5c-ac23-d9a6288898fc"><a href="https://github.com/iris-edu/HVSR" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - iris-edu/HVSR: A set of Python scripts to compute and plot HVSR curves using MUSTANG PDF-PSD web service from IRIS</div><div class="bookmark-description">A set of Python scripts to compute and plot HVSR curves using MUSTANG PDF-PSD web service from IRIS - GitHub - iris-edu/HVSR: A set of Python scripts to compute and plot HVSR curves using MUSTANG PDF-PSD web service from IRIS</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/iris-edu/HVSR</div></div><img src="https://opengraph.githubassets.com/82556b94f8c709568dcdc120129c6c6d9c861a2b6732b8e2dec164ecb380336b/iris-edu/HVSR" class="bookmark-image"/></a></figure><h2 id="6aef3aac-43d5-4c13-8374-5a3d4b7230ba" class="">1.2 Anaconda and Jupyter Notebook Setup</h2><ul id="cbf3d11f-e89f-48c2-a840-bcaebfb277db" class="bulleted-list"><li style="list-style-type:disc">Anaconda <ul id="ac04b718-f8e7-4d20-a1fa-6147c30a7e05" class="bulleted-list"><li style="list-style-type:circle">Install</li></ul><figure id="5123c9db-e54a-4777-98b3-d15702814093"><a href="https://www.anaconda.com/products/distribution" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Anaconda | Anaconda Distribution</div><div class="bookmark-description">Anaconda&#x27;s open-source Distribution is the easiest way to perform Python/R data science and machine learning on a single machine.</div></div><div class="bookmark-href"><img src="https://www.anaconda.com/assets/build/favicons/favicon-c717e30d1c.ico" class="icon bookmark-icon"/>https://www.anaconda.com/products/distribution</div></div><img src="https://assets.anaconda.com/production/anaconda-meta.jpg?w=1200&amp;h=630&amp;q=82&amp;auto=format&amp;fit=clip&amp;dm=1632326952&amp;s=2b336a00fa13405f84ce2f5b74e21fee" class="bookmark-image"/></a></figure><ul id="ddd0961c-3f90-4ed8-bb7b-de83afc6887e" class="bulleted-list"><li style="list-style-type:circle">Conda Cheat Sheet<figure id="248a86b7-54ef-4c4d-9ccd-daeb87602394"><div class="source"><a href="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/conda-cheatsheet.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/189d0299-c515-4062-8d09-2f585f762d7d/conda-cheatsheet.pdf</a></div></figure></li></ul><ul id="d39cfaea-8322-4e1d-a8bd-16b0722f2736" class="bulleted-list"><li style="list-style-type:circle">Jupyter Notebook setup<figure id="8f9f4246-2334-494b-85c4-475a412d4186"><a href="https://hy-x.github.io/Jupter_Notebooks/0%20Setting_Up_Environment%26Install_Packages.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">0 Setting_Up_Environment&amp;Install_Packages</div><div class="bookmark-description">Here is a very good information page on installing anaconda Without digging into what Anaconda is, we just need to go to Anaconda Installation Document page, and install anaconda following the steps there. Please be aware that you will need to download corresponding file based on your system (MacOs/Windows/Linux) After your installation, you could verify your installation.</div></div><div class="bookmark-href"><img src="https://hy-x.github.io/favicon.ico" class="icon bookmark-icon"/>https://hy-x.github.io/Jupter_Notebooks/0%20Setting_Up_Environment%26Install_Packages.html</div></div></a></figure></li></ul></li></ul><ul id="8a474a33-2fae-4482-a18f-15917f5ccd86" class="bulleted-list"><li style="list-style-type:disc">Environment Name: HVSR</li></ul><ul id="69db6d31-2fee-457b-ae47-67df09f07c5b" class="bulleted-list"><li style="list-style-type:disc">Display interface: Jupyter Notebook</li></ul><ul id="fc4d6a59-1564-4a25-8449-624f9d0d9f0f" class="bulleted-list"><li style="list-style-type:disc">Python Version: 3.8</li></ul><ul id="48618f4a-602b-4e1a-8bb8-8f4acf38d887" class="bulleted-list"><li style="list-style-type:disc">Package content:<pre id="06757584-66b7-46c8-9958-bcc5bce01685" class="code code-wrap"><code>CHANGES.txt
+   - a text file containing the history of changes to this bundle
+
+INSTALL.txt
+   - installation notes
+
+README.md
+   - this file
+
+bin/
+   - scripts directory containing:
+        + computeStationChannelBaseline.py (described above)
+        + computeHVSR.py (described above)
+
+param/
+   - parameters directory containing:
+        + getStationChannelBaseline_param.py - the configuration parameter file for the computeStationChannelBaseline.py script above
+        + computeHVSR_param.py - the configuration parameter file for the computeHVSR.py script above
+
+lib/
+   - bundle library files:
+        + fileLib.py - a collection of functions to work with files and directories
+        + msgLib.py - a collection of functions to print messages</code></pre></li></ul><ul id="70b47657-e343-478f-8417-5e4476939b1f" class="bulleted-list"><li style="list-style-type:disc">Example:<p id="f993955b-9669-4ba8-baae-4d8817916a66" class=""><a href="http://computehvsr.py/">computeHVSR.py</a> - uses IRIS DMC’s MUSTANG noise-psd and noise-pdf web services to compute HVSR for a given station based on the MUSTANG hourly PSDs.</p><p id="1f95a653-7a40-4aa9-a0a8-37101047aee3" class=""><a href="http://computestationchannelbaseline.py/">computeStationChannelBaseline.py</a> uses IRIS DMC’s MUSTANG noise-pdf web service to compute channel-specific noise-baseline for a given station</p><p id="2ea945c7-4221-4088-b25c-eaa900870c3a" class=""><div class="indented"><ul id="af6d9955-83a5-49fb-8bd0-c32913ef959f" class="bulleted-list"><li style="list-style-type:disc">IRIS-MUSTANG：</li></ul><figure id="726d952a-4c22-4a1e-919f-30c47f3c37be"><a href="http://services.iris.edu/mustang/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">IRIS DMC Web Services</div><div class="bookmark-description">These services may be used under IRIS Data Services Terms of Service in accordance with our Usage Guidelines. Usage of the services and data in publications should cite the services according to our citation instructions and data by network. Welcome to the MUSTANG data quality metrics web service home page.</div></div><div class="bookmark-href"><img src="http://services.iris.edu/static/img/favicon.ico" class="icon bookmark-icon"/>http://services.iris.edu/mustang/</div></div><img src="https://www.iris.edu/hq/images/layout/logos/footer-sage-x1.png" class="bookmark-image"/></a></figure></div></p><p id="e65471bd-a4c1-4764-869d-ace87917ab45" class="">
+</p><pre id="c19463b8-8d78-40e1-b640-e377e7d152fc" class="code"><code>getStationChannelBaseline.py net=IU sta=ANMO loc=00 chan=BHZ start=2002-11-20 end=2008-11-20 plot=1 plotnnm=1 verbose=1 percentlow=10 percenthigh=90</code></pre><pre id="3cac6fe6-f594-43e8-8c17-ddd1a81c9a4c" class="code"><code>computeHVSR.py net=TA sta=TCOL loc=-- chan=BHZ,BHN,BHE start=2013-01-01 end=2013-01-01 plot=1 plotbad=0 plotpsd=0 plotpdf=1 verbose=1 ymax=5 xtype=frequency n=1 removeoutliers=0 method=4</code></pre><p id="8755590a-c46b-4d08-9b10-21f0a996c178" class="">
+</p></li></ul><ul id="1bc566e2-31df-4fc1-8ba7-5eb971a6ec1e" class="bulleted-list"><li style="list-style-type:disc">Report example<figure id="a50cf5b9-ec4a-46c9-a342-b2dcc164e121" class="image"><a href="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/Untitled.png"><img style="width:1798px" src="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/Untitled.png"/></a></figure><ul id="6bff8fdd-7c7b-4bec-a8eb-21319b289472" class="bulleted-list"><li style="list-style-type:circle">this could be further processed with more analysis</li></ul><ul id="b37b8c29-4a96-4e6c-9a78-b7b454820ed2" class="bulleted-list"><li style="list-style-type:circle">report comply with SESAME HVSR check standard<figure id="1b201986-e138-44f9-a375-dd4e96fe1159"><div class="source"><a href="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/SESAME-HV-User-Guidelines.doc">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aedcfb1b-cfe7-4535-91a3-cb08b774f865/SESAME-HV-User-Guidelines.doc</a></div></figure></li></ul></li></ul><ul id="ea39b49b-743c-4bd4-baea-028b64108e93" class="bulleted-list"><li style="list-style-type:disc">Image example<ul id="6d301278-1c94-4afd-b42a-b18d7d6be50b" class="bulleted-list"><li style="list-style-type:circle">baseline example<figure id="b5503668-3e08-4b6b-8a9c-c2b46c142ec0" class="image"><a href="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/TA.L43A.--.BHZ-BHN-BHE_period.png"><img style="width:680px" src="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/TA.L43A.--.BHZ-BHN-BHE_period.png"/></a></figure></li></ul><ul id="a74cd497-4136-48de-9c3c-c88b9296835f" class="bulleted-list"><li style="list-style-type:circle">HVSR example<figure id="c7943b93-1a75-4888-a733-8a50cb42e423" class="image"><a href="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/TA.TCOL.--.2013-01-01.2013-02-01.HVSR.png"><img style="width:1149px" src="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/TA.TCOL.--.2013-01-01.2013-02-01.HVSR.png"/></a></figure></li></ul></li></ul><h2 id="614dec4f-3925-4e59-a5ff-a4dfec4e891c" class="">1.3 Modefication (refer to the modified py file)</h2><p id="65684f1f-39f9-4d7f-ae2d-95435142f820" class="">
+</p><ul id="09062bad-7a4a-4736-8614-ec7ed94011b0" class="bulleted-list"><li style="list-style-type:disc">starttime and end modification<ul id="9d25b51a-e817-4903-b720-c1a27347e604" class="bulleted-list"><li style="list-style-type:circle">the original setting:<ul id="2f432a3f-0673-4cd9-9fff-24479f075c7e" class="bulleted-list"><li style="list-style-type:square">if the start date == the end date, it will calculate hvsr over 24 hours of that day</li></ul></li></ul><ul id="8fc13f60-ecb0-48a5-8a78-63d89169458c" class="bulleted-list"><li style="list-style-type:circle">modefied setting:<ul id="16b00c17-81e2-46cc-a13d-cab9b03e9c46" class="bulleted-list"><li style="list-style-type:square">for the purpose of the ISGS work, the field deployment time is normally 20 minutes (up to 1 hour)</li></ul><ul id="d319abc1-42e7-44f5-b8f4-eaa14e41a9af" class="bulleted-list"><li style="list-style-type:square">modefied the length requirement to be 1 hour for the station</li></ul><ul id="b4dc8f91-3778-4a70-bb9a-b4e1d15e9f02" class="bulleted-list"><li style="list-style-type:square">this could be furthuer modified to be an hourly estimate</li></ul><ul id="bbb5dd70-2176-4ff7-830a-245a81ffc6b2" class="bulleted-list"><li style="list-style-type:square">default length 30/60/90 days in the summer for each station</li></ul><ul id="fc776bb0-bdec-4c48-853c-045bcf01059d" class="bulleted-list"><li style="list-style-type:square">calculation based on 1 hour interval</li></ul></li></ul><ul id="7c10a234-9ba3-45a3-a0af-80839baa951e" class="bulleted-list"><li style="list-style-type:circle">location: modified py file under bin folder</li></ul></li></ul><p id="dc39a003-a1f7-4329-b917-013c7cf237bc" class="">
+</p><ul id="25ab3b1e-6c72-460b-8072-7e301cedcd92" class="bulleted-list"><li style="list-style-type:disc">report txt file seperation and save<ul id="b7193aba-ae89-408f-8ad3-d4fa57a2d8bc" class="bulleted-list"><li style="list-style-type:circle">saved as txt file with timedate.station.network…txt file <ul id="b6b93142-3206-444a-a254-940915d0a846" class="bulleted-list"><li style="list-style-type:square">original setting:<ul id="aeae92f9-7798-477e-b7f4-adbdc0274589" class="bulleted-list"><li style="list-style-type:disc">original setting did not include timedate in the report file</li></ul><ul id="94526810-d07f-49ba-93e2-ecc84e7a6731" class="bulleted-list"><li style="list-style-type:disc">original setting will only keep one report file and the later runs will replace the existing file</li></ul></li></ul><ul id="406b3837-cea7-4161-ab38-fa8bb1892c05" class="bulleted-list"><li style="list-style-type:square">modefied setting:<ul id="139a3dd3-31df-4a13-951a-2e8452cefc57" class="bulleted-list"><li style="list-style-type:disc">include the timedate into the report file</li></ul><ul id="1719e468-1604-43a5-be71-0c9862ed6450" class="bulleted-list"><li style="list-style-type:disc">file is still in txt format</li></ul><ul id="4b233f61-df24-4467-af8b-2787cd45d7c0" class="bulleted-list"><li style="list-style-type:disc">files could be further processed by Bash or other scripting language for statistial analysis</li></ul></li></ul></li></ul><ul id="c951dd5a-bf69-402e-81f8-fa992ee89d56" class="bulleted-list"><li style="list-style-type:circle">report with SESAME HVSR check for HVSR peak<figure id="9c77696f-62eb-4280-b21c-3b050f34dfd4"><div class="source"><a href="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/SESAME-HV-User-Guidelines.doc">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aedcfb1b-cfe7-4535-91a3-cb08b774f865/SESAME-HV-User-Guidelines.doc</a></div></figure></li></ul><ul id="b45a2dfc-7104-48a7-b9d8-7a1747ba8313" class="bulleted-list"><li style="list-style-type:circle">location: data or report folder</li></ul><p id="b1b79439-b87f-4a33-af55-6506dfb9a66c" class="">
+</p></li></ul><ul id="6121de66-827c-4d2f-a024-24f597a105b6" class="bulleted-list"><li style="list-style-type:disc">final result file image save<ul id="7c9ce9a6-8104-4050-b299-a3def1b83655" class="bulleted-list"><li style="list-style-type:circle">saved as jpeg file with timedate.station.network…HVSR jpeg/png file </li></ul><ul id="5dbcf4ba-906a-4ed5-8b32-028a45f760a5" class="bulleted-list"><li style="list-style-type:circle">original setting:<ul id="1768a7db-ede9-4563-9ee8-337211c19dfb" class="bulleted-list"><li style="list-style-type:square">with timestamp but overwrite jpegs</li></ul></li></ul><ul id="00437857-859c-4245-846e-c15b059c56b4" class="bulleted-list"><li style="list-style-type:circle">modefied setting:<ul id="766dcbb5-ce3d-4d18-9f8d-55195dba5eb8" class="bulleted-list"><li style="list-style-type:square">include timedate into the file name for scripting</li></ul><ul id="5244dc0b-123f-4aa0-80c7-650626d3c028" class="bulleted-list"><li style="list-style-type:square">in jpeg/png format in image folder</li></ul></li></ul><ul id="604f174c-0325-4f2a-b8f8-a9ac009544f2" class="bulleted-list"><li style="list-style-type:circle">each image containes 3 subplots (H,V, HVSR with peak marked)</li></ul><ul id="218b13e9-c004-4ccc-87ba-48438a04b051" class="bulleted-list"><li style="list-style-type:circle">location: image folder</li></ul></li></ul><p id="43d79df9-3ac5-43e1-b40b-f3197d718e2a" class="">
+</p><h1 id="f28619eb-8191-4ce4-8bca-58e9fd946498" class=""><strong><strong>Raspberry Shake</strong></strong></h1><h2 id="c0e4a401-e00e-444b-86fd-9d9aaef78529" class="">Station View:</h2><figure id="42020171-8d62-4db3-a3d2-97b78c558210"><a href="https://stationview.raspberryshake.org/#/?lat=38.00613&amp;lon=-89.83940&amp;zoom=7.000&amp;net=AM&amp;sta=RC345" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">RS StationView</div></div><div class="bookmark-href"><img src="https://stationview.raspberryshake.org/favicon.png" class="icon bookmark-icon"/>https://stationview.raspberryshake.org/#/?lat=38.00613&amp;lon=-89.83940&amp;zoom=7.000&amp;net=AM&amp;sta=RC345</div></div></a></figure><p id="966f0878-5590-46b3-ad7d-288c150177c0" class="">
+</p><p id="d620d4cf-0e16-41d3-a3ae-72d5ed269fc2" class="">Data request example URL</p><pre id="d01cb7b9-7389-4311-9fdc-54a064d5c5e9" class="code"><code>https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=2022-08-15T20:42:10&amp;endtime=2022-08-16T20:42:10&amp;network=AM&amp;station=RC345</code></pre><p id="1b75666a-cc82-4609-9575-921b1c93e963" class="">
+</p><p id="206c79b4-927d-431f-86a6-cc08b2f85e48" class="">URL Breakdown:</p><ul id="de33f4f1-4b19-4579-bb6f-a6b2dcc6c716" class="bulleted-list"><li style="list-style-type:disc">red colors are contents defined by users<p id="f6d6db50-88ce-4d72-a4e9-d2c5386e1e36" class="block-color-gray_background"><a href="https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=2022-08-15T20:42:10&amp;endtime=2022-08-16T20:42:10&amp;network=AM&amp;station=RC345">https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=</a></p><p id="ddedd125-0108-4fc8-8d96-3dd5b941c94f" class="block-color-gray_background"><mark class="highlight-red"><a href="https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=2022-08-15T20:42:10&amp;endtime=2022-08-16T20:42:10&amp;network=AM&amp;station=RC345">2022-08-15T20:42:10</a></mark></p><p id="6f7c3d38-8f1e-4d26-8ade-05114d1e6af6" class="block-color-gray_background"><a href="https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=2022-08-15T20:42:10&amp;endtime=2022-08-16T20:42:10&amp;network=AM&amp;station=RC345">&amp;endtime=</a></p><p id="c802d228-bcd1-4229-ad37-48b0e3dc4da7" class="block-color-gray_background"><mark class="highlight-red"><a href="https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=2022-08-15T20:42:10&amp;endtime=2022-08-16T20:42:10&amp;network=AM&amp;station=RC345">2022-08-16T20:42:10</a></mark></p><p id="5a37edf0-3f4d-453b-8c1d-ec3b8475fe04" class="block-color-gray_background"><a href="https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=2022-08-15T20:42:10&amp;endtime=2022-08-16T20:42:10&amp;network=AM&amp;station=RC345">&amp;network=</a></p><p id="bedeefb1-f84c-40bd-ac4b-c4b2b5244bb3" class="block-color-gray_background"><mark class="highlight-red"><a href="https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=2022-08-15T20:42:10&amp;endtime=2022-08-16T20:42:10&amp;network=AM&amp;station=RC345">AM</a></mark></p><p id="642f1842-cbd5-4746-b6c1-4087c63fdfd8" class="block-color-gray_background"><a href="https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=2022-08-15T20:42:10&amp;endtime=2022-08-16T20:42:10&amp;network=AM&amp;station=RC345">&amp;station=</a></p><p id="ede4bc60-b326-4126-b155-e3cd6f8a1d66" class="block-color-gray_background"><mark class="highlight-red"><a href="https://data.raspberryshake.org/fdsnws/dataselect/1/query?starttime=2022-08-15T20:42:10&amp;endtime=2022-08-16T20:42:10&amp;network=AM&amp;station=RC345">RC345</a></mark></p></li></ul><p id="ea08d8c9-c918-443b-b068-d1ee93492c05" class="">
+</p><h2 id="7ded90b1-c0ea-4632-80c1-4dd811070759" class="">Jupyter Notebook Notes:</h2><h2 id="eace84f8-26b8-488e-9b76-da921651ba24" class="">2.1 Base modefication (refer to Jupyter file)</h2><ol type="1" id="0b75ffc4-ca37-4731-beb2-cf72ac49a5e4" class="numbered-list" start="1"><li>Time, Station,network information setup</li></ol><ol type="1" id="8d9846d0-d174-4196-8981-a3d369a6a88e" class="numbered-list" start="2"><li>Automatic URL requesting </li></ol><ol type="1" id="203888f9-f834-42d6-896a-ef2d8f8db4a1" class="numbered-list" start="3"><li>Automatic MSEED file downloading</li></ol><ol type="1" id="de249d5e-725a-4d5c-8039-73ef928d2e9f" class="numbered-list" start="4"><li>Automatic MSEED seismic preprocessing (Taper, demean, detrend etc..).</li></ol><h2 id="5f841772-2fa5-4743-b151-5f2ec08e563c" class="">2.2 MSEED to HVSR Bridging Modefication (refer to Jupyter file)</h2><ul id="798ec3e9-b8d2-4bfb-ac85-66ce42803ad6" class="bulleted-list"><li style="list-style-type:disc">Bridging the RasShake3D and IRIS-HVSR package<ul id="f07f919f-65fa-42bf-8ac4-b98ca56855af" class="bulleted-list"><li style="list-style-type:circle">Probabilistic Power Spectral Densities calculation<ul id="1b05d92d-9256-4b04-9dca-b54537df4761" class="bulleted-list"><li style="list-style-type:square">this is the input required by IRIS-HVSR package </li></ul><ul id="592539a0-6561-47a8-9732-dd9349373ce4" class="bulleted-list"><li style="list-style-type:square">in IRIS-HVSR package, PSD was provided by IRIS MUSTANG service</li></ul><ul id="23ba0059-83c1-4120-9929-f85090e62283" class="bulleted-list"><li style="list-style-type:square">Replace the MUSTANG cloud input with MSEED calculated PSD from the pacakge </li></ul></li></ul><ul id="2158c41c-db74-4ff5-b5a4-a090ab02c6f0" class="bulleted-list"><li style="list-style-type:circle">PPSD Example based on Obspy</li></ul><figure id="35da457c-7f4b-4754-9ab2-b24e1fb39e71" class="image"><a href="https://docs.obspy.org/_images/probabilistic_power_spectral_density2.png"><img src="https://docs.obspy.org/_images/probabilistic_power_spectral_density2.png"/></a></figure><figure id="cfdb8512-9ed1-48dd-8811-b86af8874e82" class="image"><a href="https://docs.obspy.org/_images/probabilistic_power_spectral_density.png"><img src="https://docs.obspy.org/_images/probabilistic_power_spectral_density.png"/></a></figure></li></ul><p id="c9cab46c-8dd5-49d0-bead-2aeb5d6d1631" class="">Reference:<div class="indented"><figure id="801f5de2-0011-4b5b-b7c1-182bdc98d091"><a href="https://docs.obspy.org/packages/autogen/obspy.signal.spectral_estimation.PPSD.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">obspy.signal.spectral_estimation.PPSD - ObsPy 1.3.0 documentation</div><div class="bookmark-description">Attributes Public Methods Private Methods Helper routine to get a list of 2-tuples with gapless portions of processed PPSD time ranges. This means that PSD time history is split whenever to adjacent PSD timestamps are not separated by exactly . Reuse a previously created figure returned by plot(show=False) and plot the current histogram stack (pre-computed using ) into the figure.</div></div><div class="bookmark-href"><img src="https://docs.obspy.org/_static/favicon.ico" class="icon bookmark-icon"/>https://docs.obspy.org/packages/autogen/obspy.signal.spectral_estimation.PPSD.html</div></div></a></figure><figure id="6e242896-9506-4afe-8fb4-749198908883"><a href="https://docs.obspy.org/tutorial/code_snippets/probabilistic_power_spectral_density.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Visualizing Probabilistic Power Spectral Densities - ObsPy 1.3.0 documentation</div><div class="bookmark-description">The following code example shows how to use the PPSD class defined inobspy.signal . The routine is useful for interpretation of e.g. noise measurements for site quality control checks. For more information on the topic see[McNamara2004] . Read data and select a trace with the desired station/channel combination: Metadata can be provided as an Inventory (e.g.</div></div><div class="bookmark-href"><img src="https://docs.obspy.org/_static/favicon.ico" class="icon bookmark-icon"/>https://docs.obspy.org/tutorial/code_snippets/probabilistic_power_spectral_density.html</div></div></a></figure><figure id="ebae5912-5235-4fc9-ad04-7505aa0fd560"><div class="source"><a href="Illinois%20State%20Geological%20Survey%20248a86b754ef4c4d9ccddaeb87602394/McNamaraBuland_BSSA.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/acaaf755-8a6f-4023-bb4e-201ba1400a9e/McNamaraBuland_BSSA.pdf</a></div></figure></div></p><h2 id="29bd3955-8d78-48dd-bc9c-898fedb8057d" class="">2.3 Follow-work</h2><ul id="da64668c-6f0c-461d-8196-f4b50a1c548e" class="bulleted-list"><li style="list-style-type:disc">Port-in the aquired PSD into IRIS-HVSR setting</li></ul><ul id="ffda5ed9-3e85-47c4-89e9-3a37e9d6d0d9" class="bulleted-list"><li style="list-style-type:disc">Could be reformating involved</li></ul><ul id="d575ae10-1d0e-47bb-bc7b-9c1d3f679a32" class="bulleted-list"><li style="list-style-type:disc">Processed PSDs are in XML format</li></ul><p id="df0c5996-ba88-43a9-9b23-5def9f0813ac" class="">
+</p><p id="bbc6ba0d-4ad9-47cb-affe-302ffbfb54d8" class="">
+</p><h1 id="7fae468d-afba-4ee3-84b9-a19801fc3de4" class="">Trimino TRC file decode</h1><h2 id="03736615-18e2-408e-b842-5e9da973e1e6" class="">Moho Company Email contact:</h2><ul id="fb2787c9-bca9-4547-a0ce-f73cd68386a6" class="bulleted-list"><li style="list-style-type:disc">Claiming codec to be private and refused to provide codec</li></ul><h2 id="6a4bebb0-f255-4381-8aa8-ee0d4e894871" class="">TRC file </h2><ul id="d6dbe5cd-8317-4cc7-9951-ea9820f09271" class="bulleted-list"><li style="list-style-type:disc">Binary </li></ul><ul id="59296c79-a85b-4063-8113-8cbef1052160" class="bulleted-list"><li style="list-style-type:disc">Non-standared codec </li></ul><ul id="ba46f318-87eb-4981-8f86-82305bb9e2df" class="bulleted-list"><li style="list-style-type:disc">decoded files follow SAF (SESAME ASCII) format</li></ul><p id="ddca7412-4115-4af4-98ee-f2fe6b196696" class="">
+</p><h2 id="828f68e8-0e06-4b7e-b053-3095b6764a1f" class="">Hints on the TRC codec decoding</h2><ul id="a1883a66-3b37-4680-b56c-1518b2d4d7a5" class="bulleted-list"><li style="list-style-type:disc"><strong>Binary analysis tools</strong><figure id="c76109d8-c369-462f-b047-68deed971de4"><a href="https://linuxsecurity.expert/security-tools/binary-analysis-tools" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Binary analysis tools</div><div class="bookmark-description">Binary analysis is a specialization that requires technical knowledge, patience, and especially the right tools. It is also known as reverse engineering and continues to be in demand by security firms. Reverse engineering is definitely a valuable skill to have or obtain. Typically it is used to investigate malware and during digital forensics.</div></div><div class="bookmark-href"><img src="https://linuxsecurity.expert/favicon.ico" class="icon bookmark-icon"/>https://linuxsecurity.expert/security-tools/binary-analysis-tools</div></div><img src="https://linuxsecurity.expert/static/social/linux-security-expert-facebook-940x788.png" class="bookmark-image"/></a></figure></li></ul><ul id="81c0fdc0-4885-4980-ab4d-9f4a12b8fb80" class="bulleted-list"><li style="list-style-type:disc">Python Decode exmaples<figure id="a4bde598-1fa4-49ff-8030-2f6d36c53f5f"><a href="https://www.geeksforgeeks.org/codecs-decode-in-python/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">codecs.decode() in Python - GeeksforGeeks</div><div class="bookmark-description">With the help of codecs.decode() method, we can decode the binary string into normal form by using codecs.decode() method. Syntax : codecs.decode(b_string) Return : Return the decoded string. Example #1 : In this example we can see that by using codecs.decode() method, we are able to get the decoded string which can be in binary form by using this method.</div></div><div class="bookmark-href"><img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_favicon.png" class="icon bookmark-icon"/>https://www.geeksforgeeks.org/codecs-decode-in-python/</div></div><img src="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200x200-min.png" class="bookmark-image"/></a></figure></li></ul><ul id="d282f985-7417-4fd2-884a-3c30fba7671f" class="bulleted-list"><li style="list-style-type:disc">Tried Codecs<ul id="c97d8da1-2e18-4d63-84de-2c29dada3b40" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/EBCDIC">EBCDIC</a></li></ul><ul id="1b2ab6fe-b4d0-4395-96d7-ffe6ee37407b" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO 8859-1</a> Western Europe</li></ul><ul id="862945af-72b1-4388-9efb-124fb292c696" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-2">ISO 8859-2</a> Western and Central Europe</li></ul><ul id="b5fecdcb-80c1-49d9-8e30-b56633db188e" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-3">ISO 8859-3</a> Western Europe and South European (Turkish, Maltese plus Esperanto)</li></ul><ul id="3f0563cd-3b6b-4c7c-94f1-5fb33da197a4" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-7">ISO 8859-7</a> Greek</li></ul><ul id="67a981c1-5bd7-4293-8ad8-841ffaaead97" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-9">ISO 8859-9</a> Western Europe with amended Turkish character set</li></ul><ul id="d983acc1-6826-4b97-91af-0905c6c3e6b2" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-10">ISO 8859-10</a> Western Europe with rationalised character set for Nordic languages, including complete Icelandic set</li></ul><ul id="78501b2f-12ea-445c-8fa0-4fb467f427fc" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-13">ISO 8859-13</a> Baltic languages plus Polish</li></ul><ul id="97a252da-a8a4-462f-be4e-41f8345e7753" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-14">ISO 8859-14</a> Celtic languages (Irish Gaelic, Scottish, Welsh)</li></ul><ul id="4970bb1e-41f8-40dc-92b1-80dfc66743ba" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-15">ISO 8859-15</a> Added the Euro sign and other rationalisations to ISO 8859-1</li></ul><ul id="66fa0afc-ea57-465d-a2b7-987e13643108" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-16">ISO 8859-16</a> Central, Eastern and Southern European languages (Albanian, Bosnian, Croatian, Hungarian, Polish, Romanian, Serbian and Slovenian, but also French, German, Italian and Irish Gaelic)</li></ul><ul id="b571ec46-f68e-4426-b8e7-b4a6c25b788d" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/Code_page_437">CP437</a>, <a href="https://en.wikipedia.org/wiki/Code_page_720">CP720</a>, <a href="https://en.wikipedia.org/wiki/Code_page_737">CP737</a>, <a href="https://en.wikipedia.org/wiki/Code_page_850">CP850</a>, <a href="https://en.wikipedia.org/wiki/Code_page_852">CP852</a>, <a href="https://en.wikipedia.org/wiki/Code_page_855">CP855</a>, <a href="https://en.wikipedia.org/wiki/Code_page_857">CP857</a>, <a href="https://en.wikipedia.org/wiki/Code_page_858">CP858</a>, <a href="https://en.wikipedia.org/wiki/Code_page_860">CP860</a>, <a href="https://en.wikipedia.org/wiki/Code_page_861">CP861</a>, <a href="https://en.wikipedia.org/wiki/Code_page_862">CP862</a>, <a href="https://en.wikipedia.org/wiki/Code_page_863">CP863</a>, <a href="https://en.wikipedia.org/wiki/Code_page_865">CP865</a>, <a href="https://en.wikipedia.org/wiki/Code_page_866">CP866</a>, <a href="https://en.wikipedia.org/wiki/Code_page_869">CP869</a>, <a href="https://en.wikipedia.org/wiki/Code_page_872">CP872</a></li></ul><ul id="6086c2c4-7be5-4d77-94bd-eb7b07427cfb" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/UTF-8">UTF-8</a></li></ul><ul id="e95d06aa-91f5-4767-8e5e-247fdacfe558" class="bulleted-list"><li style="list-style-type:circle"><a href="https://en.wikipedia.org/wiki/UTF-16">UTF-16</a></li></ul></li></ul><p id="29c7e63a-3694-4951-bc75-cfa5f0e8d37c" class="">
+</p><p id="8362fde8-8d0a-481a-8257-c6b58cd728b7" class="">
+</p></div></article></body></html>
