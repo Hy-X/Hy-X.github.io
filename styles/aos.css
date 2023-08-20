@@ -1,0 +1,22 @@
+/*!
+ * AOS - Animate on scroll library using CSS3
+ * Copyright (C) 2018 Michal Sajnóg <hello@michalsnik.com>
+ * Licensed under the MIT license
+ */
+
+ [data-aos] {
+    visibility: hidden;
+  }
+  
+  /* Add animations here */
+  
+  [data-aos][data-aos^="fade"][data-aos^="fade"][data-aos-anchor-placement^="top-bottom"],
+  [data-aos][data-aos^="zoom"][data-aos-anchor-placement^="top-bottom"] {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  
+  /* Other animation styles */
+  
+  /* ... */
+  
