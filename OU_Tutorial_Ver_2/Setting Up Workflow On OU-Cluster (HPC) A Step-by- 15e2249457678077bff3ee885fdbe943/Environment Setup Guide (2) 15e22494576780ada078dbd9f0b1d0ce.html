@@ -1,0 +1,854 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Environment Setup Guide (2)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="15e22494-5767-80ad-a078-dbd9f0b1d0ce" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/nasa_space_shuttle_challenger.jpg" style="object-position:center 0%"/><h1 class="page-title">Environment Setup Guide (2)</h1><p class="page-description"></p></header><div class="page-body"><p id="cc355ef2-1b53-4d0b-b733-e58ad03e1970" class="">
+</p><p id="34df2720-fa8a-4f79-9a1a-83a3e040aea1" class="">By Hongyu Xiao</p><p id="a701b73e-a7c9-48c6-bdca-f252d453929d" class="">Contact: <a href="mailto:hongyu.xiao@ou.edu">hongyu.xiao@ou.edu</a></p><h1 id="81a52e17-d3e5-4ee1-927e-b5d73445ae64" class="">Environment Setup Guide for Research Computing</h1><p id="48c09442-5f8d-4d75-88e0-53ca84ea3238" class="">This guide provides instructions for setting up your research computing environment. Whether you&#x27;re a new researcher, student, or staff member, proper environment configuration is crucial for efficient computational work.</p><h2 id="2fb0567e-0180-4b00-993d-e1f1e9019ad1" class="">Purpose and Objectives</h2><p id="42387d38-7db7-40c3-a0f0-76676e16ce14" class="">The main objectives of this environment setup are:</p><ul id="83f406ec-74e9-47e7-960a-f29fb7045b10" class="bulleted-list"><li style="list-style-type:disc">Configure a consistent and reproducible computing environment</li></ul><ul id="ab53b9e3-8ab7-466e-bf83-07e916d1112e" class="bulleted-list"><li style="list-style-type:disc">Enable access to necessary research software and tools</li></ul><ul id="3bd4661a-9414-4933-b43b-c72b41b8e87a" class="bulleted-list"><li style="list-style-type:disc">Establish proper paths and dependencies for computational tasks</li></ul><ul id="5f419deb-ec14-48a1-8290-7ea19cbbeaba" class="bulleted-list"><li style="list-style-type:disc">Ensure security and best practices in research computing</li></ul><p id="7b82a079-1b27-4f2f-a7cd-e1f49a487730" class="">By following this guide, you&#x27;ll have a fully functional research computing environment that meets both your immediate needs and supports future scalability.</p><p id="a50e2095-35f4-4072-b358-18714ed72154" class="">
+</p><h3 id="de4e6cab-7912-4685-b18e-b6709a7f9fa7" class="">Environment Setup Guide</h3><p id="2e7fb31b-0894-49b5-a500-fb05ecf0b572" class="">Configure your working environment:</p><ul id="252c1347-dfa7-4d0f-bb04-701fd150a407" class="bulleted-list"><li style="list-style-type:disc">Environment Setup Guide<ul id="698be322-ac25-4793-b08f-a6bb21fb652c" class="bulleted-list"><li style="list-style-type:circle">Shell configuration (.bashrc, .bash_profile)</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2493ce01-558c-4925-a5c5-8f5c74471b0d" class="code"><code class="language-Bash"># Example .bashrc configuration
+# Custom aliases
+alias ll=&#x27;ls -la&#x27;
+alias py=&#x27;python3&#x27;
+alias jn=&#x27;jupyter notebook&#x27;
+
+# Environment variables
+export PATH=$HOME/bin:$PATH
+export PYTHONPATH=$HOME/research/lib:$PYTHONPATH</code></pre><p id="974abcdf-c5c3-4298-ba7c-710082a0a80b" class="">
+</p><p id="76016f27-ba25-45f4-90e4-4e21ca2dd334" class="">Above is a basic example of a .bashrc configuration file that sets up common research computing environment elements including aliases, environment variables, and module loading.</p><p id="506d9782-4352-46a9-9b4e-7d92933992b0" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="307b6bfd-f2c3-4339-b680-567f7764cfe6" class="code"><code class="language-Bash"># Example of my research computing aliases
+# Jupyter notebook on specific port 
+alias jupyter_8989=&quot;jupyter notebook --no-browser --port=8989&quot;
+
+# Navigate to my research data directory
+alias ogs_ourdisk=&quot;cd /ourdisk/hpc/ogs/hongyux/dont_archive/&quot;</code></pre><p id="a0a1ea8c-17ab-4ee8-b4f4-2f36be7ed6c3" class="">
+</p><p id="ef152a66-b07e-4388-a28e-3e88a209f5a0" class="">Note: The<code> /ourdisk/hpc/ogs/</code> directory is our OGS server storage location. Each user has an automatically created folder under this path following the structure: <code>/ourdisk/hpc/ogs/yourusername/dont_archive/</code>. This is where you should store your research data and files.</p><p id="6f07d1e1-eea7-4e86-8141-ead974a25aea" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3b984fc4-2c0d-4ea2-a920-8df4a27a2a58" class="code"><code class="language-Bash"># Example of accessing your personal storage directory
+# Replace &#x27;yourusername&#x27; with your actual username
+cd /ourdisk/hpc/ogs/yourusername/dont_archive/
+
+# Creating a new directory for a specific project
+mkdir /ourdisk/hpc/ogs/yourusername/dont_archive/project_name</code></pre><p id="6f6b450a-cce7-4b99-8220-6a2b21eb35d2" class="">
+</p><ul id="173e489b-4717-4a43-afec-ae33284fe316" class="bulleted-list"><li style="list-style-type:circle">Module system overview</li></ul><p id="f33ac248-3a8c-4ced-9315-2fa1ce876f8f" class="">Our HPC systems use the <code>module</code> system to manage software environments. To see available software modules, use:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0c873878-7234-4d16-9385-9b75303bec43" class="code"><code class="language-Bash">module avail           # List all available modules
+module list            # Show currently loaded modules
+module load python     # Load Python module
+module unload python   # Unload Python module</code></pre><p id="8d4a31a9-0bc1-4b18-a96f-252d0cbb212a" class="">Common software modules include:</p><ul id="b43b76ea-7e3e-416e-8ba4-63b359fb54a0" class="bulleted-list"><li style="list-style-type:circle">Python (various versions)</li></ul><ul id="bbd90e0e-84c0-4bbc-9d21-bb8474a097a6" class="bulleted-list"><li style="list-style-type:circle">Compilers (gcc, intel)</li></ul><ul id="71570456-f8cc-4bd9-ad32-906b14f4e756" class="bulleted-list"><li style="list-style-type:circle">MPI libraries</li></ul><ul id="4bd5d0f1-3ecd-4e78-8c72-4159ac0c05c7" class="bulleted-list"><li style="list-style-type:circle">Machine learning frameworks (TensorFlow, PyTorch)</li></ul><p id="20af4138-72ee-4dca-ac9e-df3befc386a3" class="">Note: Some modules may conflict with each other. Use &#x27;module unload&#x27; before loading potentially conflicting modules.</p><p id="15783118-08ff-4244-b2b5-700c3b7a6bfc" class="">
+</p><h3 id="59eb0fa7-d653-4e27-b1c8-ffbd323654ef" class="">Using SLURM for Efficient Computing</h3><p id="aadb527f-ce54-490b-9daa-acb7b7519a02" class="">
+</p><p id="7c96b4ed-7c18-4b35-bc74-4daa9ffc3475" class="">While Jupyter notebook access through tunneling is available, using SLURM for job management often provides better efficiency and resource utilization. Here&#x27;s my template for a basic SLURM script:</p><p id="23c7fbd0-b4f8-4661-8c68-0f1d7a8b5cf6" class="">Here&#x27;s an example of a GPU-enabled SLURM script for deep learning tasks:</p><p id="532742a8-e527-451a-8f03-4ee3ec8fa0d4" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e903fbd-9eaa-4d1a-af3d-2bb952403dcf" class="code"><code class="language-Bash">#!/bin/bash
+#SBATCH --partition=disc_dual_a100    # GPU partition
+#SBATCH --gres=gpu:1                  # Request 1 GPU
+#SBATCH --output=job_%J_.txt          # Output file
+#SBATCH --error=job_%J_.txt           # Error file
+#SBATCH --ntasks=1                    # Number of tasks
+#SBATCH --mem=100G                     # Memory request
+#SBATCH --time=24:00:00              # Time limit
+
+# Run your deep learning script
+python your_training_script.py</code></pre><p id="e569cba0-511f-4553-b710-5a87e288f064" class="">When using GPU resources, make sure to specify the appropriate partition (disc_dual_a100) and request GPU resources using the --gres flag. This ensures your job gets scheduled on nodes with available GPUs.</p><p id="1907ea54-5ca9-4761-87aa-3b0d8ffde656" class="">
+</p><p id="c64f3c2a-4522-45c9-b604-bd5e6b3afb08" class="">To submit your SLURM job, use:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5c679a97-a006-45eb-8433-2c982207b898" class="code"><code class="language-Bash">sbatch your_script.sbatch</code></pre><p id="802defec-5799-42da-92a0-8d5b874a0ccd" class="">Common SLURM commands for job management:</p><ul id="eb83c19c-f205-4175-91e4-370954237163" class="bulleted-list"><li style="list-style-type:circle"><code>squeue</code> -u $USER     # Check your job queue</li></ul><ul id="cc75d4e1-d564-4adc-b936-5fcc553c3f19" class="bulleted-list"><li style="list-style-type:circle"><code>scancel</code> job_id      # Cancel a specific job</li></ul><ul id="e13a7193-3d7c-4ee1-98bf-661bd2b4fcae" class="bulleted-list"><li style="list-style-type:circle"><code>sinfo </code>             # Check partition information</li></ul><p id="6a4425a3-182a-4e17-b53b-2e34ed4cda8c" class="">This approach allows for better resource management and more efficient execution of computational tasks compared to interactive notebook sessions.</p><p id="ac76d709-c2bc-49c6-b299-79b6bbc8baeb" class="">
+</p></li></ul><p id="cdb8cabb-3ba2-40d5-829d-15230fe39d3f" class="">Here are examples of using <code>squeue</code> and <code>grep</code> to monitor jobs:</p><p id="59c4339c-9fb2-434f-84de-d9ac7d4f4087" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f8c46e3f-0e56-464b-93cf-ec3f60e5d08a" class="code"><code class="language-Bash"># View all jobs in the queue
+$ squeue
+JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+123456 disc_dual python_tr hongyux  R    2:30:15      1 node001
+123457 disc_dual tensor_jo  user2   R   12:45:22      1 node002
+123458 disc_dual pytorch_t  user3  PD    0:00:00      1 (Resources)
+
+# Filter jobs on disc partitions
+$ squeue | grep disc
+123456 disc_dual python_tr hongyux  R    2:30:15      1 node001
+123457 disc_dual tensor_jo  user2   R   12:45:22      1 node002
+123458 disc_dual pytorch_t  user3  PD    0:00:00      1 (Resources)
+123459 disc_a100 train_ml  user4   R    5:12:33      1 node003</code></pre><p id="5e80a287-47d0-45ca-ab18-8a395f3bf261" class="">
+</p><p id="ffae6f23-9a0f-4d53-b4ae-54e7882d1b6a" class="">The output shows job ID, partition name, job name, user, status (R=running, PD=pending), runtime, number of nodes, and node assignment or reason for pending.</p><p id="ba211f50-c1ee-4221-8c97-efd499d618bb" class="">
+</p><h3 id="f2084625-e59e-414b-91b6-af95458b1603" class="">Advanced SLURM Usage Tips</h3><p id="c451851f-7056-48da-8309-aa544f4a3fca" class="">Here are some additional SLURM commands and features that can help you manage your computational jobs more effectively:</p><p id="b0741a67-b150-4b1e-aceb-2fc2e5c1e227" class="">
+</p><h3 id="5334566a-a3a4-4866-b089-550e7b044fa1" class="">1. Job Dependencies</h3><p id="4a89b800-de8e-4dde-b628-17bbe38e7eba" class="">You can make jobs wait for other jobs to complete:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7b97f053-15a3-41e0-9d66-866490fb3d03" class="code"><code class="language-Bash"># Wait for job 123456 to complete before starting
+sbatch --dependency=afterok:123456 next_job.sh
+
+# Wait for job 123456 to fail before starting
+sbatch --dependency=afternotok:123456 cleanup_job.sh</code></pre><h3 id="022068ed-fa68-4aec-83a7-207ec0f5ec33" class="">2. Resource Monitoring</h3><p id="03c7a4b1-9d7a-42e0-8e79-52939c87c046" class="">Monitor your job&#x27;s resource usage:</p><ul id="448d2814-b541-410d-a5ee-fd933269c82f" class="bulleted-list"><li style="list-style-type:disc"><code>sstat</code> - View resource usage of running jobs</li></ul><ul id="0de6388a-6ca2-4ce4-af86-21cfd2b684b2" class="bulleted-list"><li style="list-style-type:disc"><code>sacct</code> - View completed job information</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="59d8c2b7-dfaa-4a21-beb8-6b46970aebdb" class="code"><code class="language-Bash"># View detailed job information
+sacct -j JobID --format=JobID,JobName,MaxRSS,Elapsed
+
+# Monitor memory usage of running job
+sstat --format=AveCPU,AveRSS,AveVMSize --jobs JobID</code></pre><p id="15e22494-5767-80b8-8324-d58c965df501" class="">
+</p><h1 id="15e22494-5767-8026-8aab-de515665a3d8" class="">Conda Setup</h1><p id="15e22494-5767-8067-86f3-f9d0063d3f48" class="">
+</p><p id="15e22494-5767-8089-8dfd-fed1f3776a49" class="">OSCER could load <code>miniconda</code> to create separate research environment for your need, for machine learning practice, different python package might be in need. Here is an example of setting up an environment.</p><p id="15e22494-5767-8027-aa2c-c96e3b1fa454" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="15e22494-5767-8041-a577-c11e9f6b5da5" class="code"><code class="language-Python"># Step 1: Download and Install Miniconda
+module load Miniconda3
+
+# Step 2: Verify Miniconda Installation
+conda --version
+
+# Step 3: Create a New Environment with a Specific Python Version
+# Replace X.Y with the desired Python version (e.g., 3.9, 3.10, 3.11)
+conda create --name myproject python=X.Y
+
+# Step 4: Activate the New Environment
+conda activate myproject
+
+# Step 5: Verify Python Version
+python --version
+
+# Optional: Install Specific Packages
+conda install numpy pandas matplotlib
+
+# To deactivate the environment when done
+conda deactivate
+
+# Useful Additional Commands:
+# List all environments
+conda env list
+
+# Remove an environment
+conda env remove --name myproject</code></pre><p id="15e22494-5767-804b-b4a3-edf16b9110ab" class="">
+</p><p id="15e22494-5767-8074-be44-d5a0bcf07c5f" class="">You could also install <code>conda</code> in your desired location, </p><p id="15e22494-5767-80b1-95f0-f7a96b960c4c" class="">Visit <a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a> to download the appropriate installer</p><p id="15e22494-5767-80aa-a2dc-db680a2329ef" class="">
+</p><h1 id="15e22494-5767-802d-bb1f-c227b01ca1e3" class="">CUDA/Seisbench Setup</h1><p id="15e22494-5767-8072-9ef4-e5270873dbf2" class="">
+</p><p id="15e22494-5767-808f-923b-f9792753125e" class="">For <code>CUDA</code>, you could use <code>module load</code> to load any module you wanted including <code>CUDA</code></p><p id="15e22494-5767-8008-99ba-f9400b14803f" class="">By default, <code>module load CUDA</code> will load the <mark class="highlight-yellow_background"><strong>most recent version</strong></mark> of <code>CUDA</code>, for example </p><p id="15e22494-5767-806f-a5c7-d10dacec2fac" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="15e22494-5767-8001-878d-fa1b1a40cd9d" class="code"><code class="language-Python">[hongyux@schooner3 ~]$ module spider cuda
+
+
+--------------------------------------------------------------------------------------------
+  CUDA:
+--------------------------------------------------------------------------------------------
+    Description:
+      CUDA (formerly Compute Unified Device Architecture) is a parallel computing platform
+      and programming model created by NVIDIA and implemented by the graphics processing
+      units (GPUs) that they produce. CUDA gives developers access to the virtual
+      instruction set and memory of the parallel computational elements in CUDA GPUs.
+
+     Versions:
+        CUDA/5.5.22-GCC-4.8.2
+        CUDA/7.5.18-GCC-4.9.3-2.25
+        CUDA/7.5.18
+        CUDA/8.0.44-GCC-4.9.3-2.25
+        CUDA/8.0.44-intel-2016a
+        CUDA/8.0.61_375.26-GCC-5.4.0-2.26
+        CUDA/9.1.85-GCC-6.4.0-2.28
+        CUDA/9.2.88
+        CUDA/10.1.105-GCC-8.2.0-2.31.1
+        CUDA/10.1.243-GCC-8.3.0
+        CUDA/11.0.2-GCC-9.3.0
+        CUDA/11.1.1-GCC-10.2.0
+        CUDA/11.3.1
+        CUDA/11.5.0
+        CUDA/11.7.0
+        CUDA/11.8.0
+        CUDA/12.0.0
+        CUDA/12.1.1
+        CUDA/12.2.0
+        CUDA/12.3.0</code></pre><p id="15e22494-5767-8006-9da1-da9487496b7b" class="">
+</p><p id="15e22494-5767-8096-8cc6-d929ea98464a" class="">In this scenario , if you type <code>module load CUDA</code> , you will be getting the following:</p><p id="15e22494-5767-807b-bceb-e2ce668484ea" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="15e22494-5767-801d-8c11-ecb6b28db0d3" class="code"><code class="language-Python">[hongyux@schooner3 ~]$ module load CUDA
+[hongyux@schooner3 ~]$ module list
+
+Currently Loaded Modules:
+  1) binutils/2.38   2) M4/1.4.18   3) flex/2.6.4   4) CUDA/12.3.0</code></pre><p id="15e22494-5767-80a5-9bba-e27595c3cc4a" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="15e22494-5767-8075-a560-de9954facb55"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><h1 id="15e22494-5767-8094-ba3b-d7866680de4c" class=""><mark class="highlight-default"><mark class="highlight-yellow_background">Seisbench is compatible with CUDA but please be very careful about the CUDA version and seisbench version.</mark></mark></h1></div></figure><p id="15e22494-5767-8025-ac78-c7a94e72bd4a" class="">
+</p><p id="15e22494-5767-80c0-8ca7-d9c865d3b529" class="">Here is an example of installing seisbench </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="15e22494-5767-804f-93d9-c0618d6a3ac7" class="code"><code class="language-Python"># SeismoBench Installation Methods
+
+# 1. Using pip (recommended for most users)
+# Install a specific version
+pip install seisbench==0.1.0
+
+# Install the latest version
+pip install seisbench
+
+# 2. Conda Environment Installation
+conda create -n seisbench python=3.9
+conda activate seisbench
+pip install seisbench
+
+# 3. Additional Dependencies for Full Functionality
+pip install torch torchvision torchaudio
+pip install numpy pandas matplotlib</code></pre><p id="15e22494-5767-8068-857b-f475678a929b" class="">
+</p><p id="15e22494-5767-80e5-bc46-d0985434149e" class="">Here is an example of show seisbench version </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="15e22494-5767-80b0-bafe-d38d33429c05" class="code"><code class="language-Python">(TL) [hongyux@schooner3 ~]$ pip show seisbench
+Name: seisbench
+Version: 0.7.0
+Summary: The seismological machine learning benchmark collection
+Home-page: 
+Author: 
+Author-email: Jack Woolam &lt;jack.woollam@kit.edu&gt;, Jannes Münchmeyer &lt;munchmej@gfz-potsdam.de&gt;
+License: GPLv3
+Location: /home/hongyux/.conda/envs/TL/lib/python3.12/site-packages
+Requires: bottleneck, h5py, nest-asyncio, numpy, obspy, pandas, scipy, torch, tqdm</code></pre><p id="15e22494-5767-806a-be72-c60f74c15e13" class="">
+</p><p id="15e22494-5767-8058-b273-f7f5a8c0faa4" class="">And seisbench has a good release page on Github. Please do take advantage of it <a href="https://github.com/seisbench/seisbench/releases">https://github.com/seisbench/seisbench/releases</a></p><p id="15e22494-5767-801d-b503-ce08f6a1752f" class=""><mark class="highlight-yellow_background"><strong>Check the seisbench version and CUDA version compatibility first if your code is not running.</strong></mark></p><p id="15e22494-5767-8081-b973-e9773a241fd4" class="">
+</p><p id="15e22494-5767-808b-a41e-d1de2409e4c1" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
