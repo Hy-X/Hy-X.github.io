@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oklahoma Earthquake & Station Viewer</title>
+
+    <!-- Leaflet CSS for map styling -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <!-- Add custom CSS for the page layout -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        /* Left panel styling */
+        .left-panel {
+            width: 300px;
+            background-color: #97a197;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            height: 100%;
+            overflow-y: auto;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading inside the panel */
+        .left-panel h1 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .left-panel p {
+            font-size: 16px;
+        }
+
+        /* Map styling */
+        #map {
+            flex-grow: 1;
+            height: 100vh;
+        }
+
+        .leaflet-container {
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styling for layer control on the left panel */
+        .leaflet-control-layers {
+            margin-top: 20px;
+        }
+    </style>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+
+<body>
+
+    <!-- Left panel with title and description -->
+    <div class="left-panel">
+        <h1>Oklahoma Earthquake & Station Viewer</h1>
+        <p>Interactive map displaying earthquakes and stations in Oklahoma.</p>
+        <!-- This will contain the layers and options, we will inject the layer control here -->
+        <div id="layers-panel"></div>
+    </div>
+
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <script>
+        // Coordinates for Oklahoma City (map center)
+        const oklahomaCityLocation = [35.4676, -97.5164];
+
+        // Create the map
+        const map = L.map("map").setView(oklahomaCityLocation, 7);
+
+        // Esri basemaps
+        const baseMaps = {
+            "World Street Map": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Map data &copy; <a href="https://www.esri.com">Esri</a>'
+            }),
+            "National Geographic": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Map data &copy; <a href="https://www.esri.com">Esri</a>'
+            }),
+            "Topographic Map": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Map data &copy; <a href="https://www.esri.com">Esri</a>'
+            })
+        };
+
+        // Set default basemap
+        baseMaps["Topographic Map"].addTo(map);
+
+        // Layer groups for earthquakes and stations
+        const earthquakeLayer = L.layerGroup();
+        const stationLayer = L.layerGroup();
+
+        // Load Earthquake Data
+        fetch('earthquakes.json')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(earthquake => {
+                    const { latitude, longitude, magnitude, time, depth } = earthquake;
+
+                    let circleColor = "royalblue";
+                    let circleRadius = 1000;
+
+                    if (magnitude > 5) {
+                        circleColor = "red";
+                        circleRadius = magnitude * 2000;
+                    }
+
+                    const earthquakeMarker = L.circle([latitude, longitude], {
+                        color: circleColor,
+                        fillColor: circleColor,
+                        fillOpacity: 0.5,
+                        radius: circleRadius
+                    }).bindPopup(`
+                        <b>Magnitude:</b> ${magnitude}<br>
+                        <b>Depth:</b> ${depth} km<br>
+                        <b>Time:</b> ${time}
+                    `);
+
+                    earthquakeMarker.addTo(earthquakeLayer);
+                });
+            });
+
+        // Load Station Data (with network & elevation)
+        fetch('stations.json')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(station => {
+                    const { latitude, longitude, name, network, elevation } = station;
+
+                    L.marker([latitude, longitude])
+                        .bindPopup(`
+                            <b>Station:</b> ${name}<br>
+                            <b>Network:</b> ${network}<br>
+                            <b>Elevation:</b> ${elevation} m
+                        `)
+                        .addTo(stationLayer);
+                });
+            });
+
+        // Overlay layers
+        const overlayMaps = {
+            "Earthquakes": earthquakeLayer,
+            "Stations": stationLayer
+        };
+
+        // Add layer control to the map
+        L.control.layers(baseMaps, overlayMaps, {
+            position: 'topleft',
+            collapsed: false
+        }).addTo(map);
+    </script>
+
+</body>
+
+</html>
