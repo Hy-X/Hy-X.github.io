@@ -1,0 +1,2109 @@
+[
+    {
+        "network": "2V",
+        "name": "TG11",
+        "latitude": 35.2689,
+        "longitude": -97.8146,
+        "elevation": 407.0
+    },
+    {
+        "network": "AG",
+        "name": "HHAR",
+        "latitude": 36.282,
+        "longitude": -93.94,
+        "elevation": 421.0
+    },
+    {
+        "network": "AG",
+        "name": "WLAR",
+        "latitude": 33.688,
+        "longitude": -93.112,
+        "elevation": 77.0
+    },
+    {
+        "network": "GM",
+        "name": "IWM01",
+        "latitude": 36.72702,
+        "longitude": -96.5317,
+        "elevation": 328.0
+    },
+    {
+        "network": "GM",
+        "name": "OKAS1",
+        "latitude": 35.5351,
+        "longitude": -96.79954,
+        "elevation": 281.38
+    },
+    {
+        "network": "GM",
+        "name": "OKAS2",
+        "latitude": 35.51137,
+        "longitude": -96.77278,
+        "elevation": 266.0
+    },
+    {
+        "network": "GM",
+        "name": "OKAS3",
+        "latitude": 35.56151,
+        "longitude": -96.7678,
+        "elevation": 269.44
+    },
+    {
+        "network": "GM",
+        "name": "OKAS4",
+        "latitude": 35.535278,
+        "longitude": -96.771667,
+        "elevation": 282.41
+    },
+    {
+        "network": "GM",
+        "name": "OKAS5",
+        "latitude": 35.5203,
+        "longitude": -96.72347,
+        "elevation": 276.99
+    },
+    {
+        "network": "GS",
+        "name": "ADOK",
+        "latitude": 35.65205,
+        "longitude": -97.371117,
+        "elevation": 355.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN01",
+        "latitude": 37.15342,
+        "longitude": -97.75897,
+        "elevation": 360.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN05",
+        "latitude": 37.10865,
+        "longitude": -97.87228,
+        "elevation": 348.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN06",
+        "latitude": 37.248,
+        "longitude": -97.8586,
+        "elevation": 393.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN08",
+        "latitude": 37.22672,
+        "longitude": -97.970947,
+        "elevation": 375.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN09",
+        "latitude": 37.13613,
+        "longitude": -97.61832,
+        "elevation": 371.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN10",
+        "latitude": 37.1235,
+        "longitude": -98.095133,
+        "elevation": 417.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN12",
+        "latitude": 37.297383,
+        "longitude": -97.998,
+        "elevation": 425.5
+    },
+    {
+        "network": "GS",
+        "name": "KAN13",
+        "latitude": 37.012881,
+        "longitude": -97.477803,
+        "elevation": 340.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN14",
+        "latitude": 36.95682,
+        "longitude": -97.96302,
+        "elevation": 363.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN16",
+        "latitude": 37.225617,
+        "longitude": -98.064717,
+        "elevation": 435.0
+    },
+    {
+        "network": "GS",
+        "name": "KAN17",
+        "latitude": 37.04407,
+        "longitude": -97.76475,
+        "elevation": 355.0
+    },
+    {
+        "network": "GS",
+        "name": "KS20",
+        "latitude": 37.22973,
+        "longitude": -97.55432,
+        "elevation": 372.0
+    },
+    {
+        "network": "GS",
+        "name": "KS21",
+        "latitude": 37.28649,
+        "longitude": -97.66302,
+        "elevation": 414.0
+    },
+    {
+        "network": "GS",
+        "name": "KS26",
+        "latitude": 38.063055,
+        "longitude": -98.002222,
+        "elevation": 472.68
+    },
+    {
+        "network": "GS",
+        "name": "KS27",
+        "latitude": 38.02865,
+        "longitude": -97.93934,
+        "elevation": 463.0
+    },
+    {
+        "network": "GS",
+        "name": "KS28",
+        "latitude": 37.993611,
+        "longitude": -97.992777,
+        "elevation": 482.0
+    },
+    {
+        "network": "GS",
+        "name": "KS29",
+        "latitude": 37.71767,
+        "longitude": -97.2935,
+        "elevation": 424.05
+    },
+    {
+        "network": "GS",
+        "name": "OK001",
+        "latitude": 35.561089,
+        "longitude": -97.28949,
+        "elevation": 345.0
+    },
+    {
+        "network": "GS",
+        "name": "OK002",
+        "latitude": 35.549339,
+        "longitude": -97.196632,
+        "elevation": 347.0
+    },
+    {
+        "network": "GS",
+        "name": "OK003",
+        "latitude": 35.580101,
+        "longitude": -97.33786,
+        "elevation": 345.0
+    },
+    {
+        "network": "GS",
+        "name": "OK004",
+        "latitude": 35.523239,
+        "longitude": -97.474747,
+        "elevation": 352.0
+    },
+    {
+        "network": "GS",
+        "name": "OK005",
+        "latitude": 35.654861,
+        "longitude": -97.191101,
+        "elevation": 298.0
+    },
+    {
+        "network": "GS",
+        "name": "OK006",
+        "latitude": 35.477982,
+        "longitude": -97.278709,
+        "elevation": 345.0
+    },
+    {
+        "network": "GS",
+        "name": "OK007",
+        "latitude": 35.487679,
+        "longitude": -97.161148,
+        "elevation": 345.0
+    },
+    {
+        "network": "GS",
+        "name": "OK008",
+        "latitude": 35.507099,
+        "longitude": -97.383781,
+        "elevation": 345.0
+    },
+    {
+        "network": "GS",
+        "name": "OK009",
+        "latitude": 35.58131,
+        "longitude": -97.42292,
+        "elevation": 320.0
+    },
+    {
+        "network": "GS",
+        "name": "OK010",
+        "latitude": 35.624821,
+        "longitude": -97.224113,
+        "elevation": 340.0
+    },
+    {
+        "network": "GS",
+        "name": "OK011",
+        "latitude": 35.485229,
+        "longitude": -96.685783,
+        "elevation": 313.0
+    },
+    {
+        "network": "GS",
+        "name": "OK012",
+        "latitude": 35.503311,
+        "longitude": -96.900757,
+        "elevation": 272.0
+    },
+    {
+        "network": "GS",
+        "name": "OK020",
+        "latitude": 35.537525,
+        "longitude": -96.876846,
+        "elevation": 267.0
+    },
+    {
+        "network": "GS",
+        "name": "OK021",
+        "latitude": 35.602299,
+        "longitude": -96.718361,
+        "elevation": 259.0
+    },
+    {
+        "network": "GS",
+        "name": "OK022",
+        "latitude": 35.536839,
+        "longitude": -96.664909,
+        "elevation": 272.0
+    },
+    {
+        "network": "GS",
+        "name": "OK023",
+        "latitude": 35.724697,
+        "longitude": -97.162308,
+        "elevation": 291.0
+    },
+    {
+        "network": "GS",
+        "name": "OK024",
+        "latitude": 35.725056,
+        "longitude": -97.057915,
+        "elevation": 302.0
+    },
+    {
+        "network": "GS",
+        "name": "OK025",
+        "latitude": 35.5811,
+        "longitude": -97.337898,
+        "elevation": 348.0
+    },
+    {
+        "network": "GS",
+        "name": "OK027",
+        "latitude": 35.711956,
+        "longitude": -97.283646,
+        "elevation": 364.0
+    },
+    {
+        "network": "GS",
+        "name": "OK028",
+        "latitude": 35.561111,
+        "longitude": -97.061386,
+        "elevation": 330.0
+    },
+    {
+        "network": "GS",
+        "name": "OK029",
+        "latitude": 35.79657,
+        "longitude": -97.45486,
+        "elevation": 333.0
+    },
+    {
+        "network": "GS",
+        "name": "OK030",
+        "latitude": 35.92778,
+        "longitude": -96.78375,
+        "elevation": 289.0
+    },
+    {
+        "network": "GS",
+        "name": "OK031",
+        "latitude": 35.95309,
+        "longitude": -96.83911,
+        "elevation": 290.0
+    },
+    {
+        "network": "GS",
+        "name": "OK032",
+        "latitude": 36.80382,
+        "longitude": -98.21041,
+        "elevation": 345.0
+    },
+    {
+        "network": "GS",
+        "name": "OK033",
+        "latitude": 36.044375,
+        "longitude": -96.9382,
+        "elevation": 258.0
+    },
+    {
+        "network": "GS",
+        "name": "OK034",
+        "latitude": 36.010151,
+        "longitude": -96.713203,
+        "elevation": 254.0
+    },
+    {
+        "network": "GS",
+        "name": "OK035",
+        "latitude": 36.70819,
+        "longitude": -98.7097,
+        "elevation": 485.0
+    },
+    {
+        "network": "GS",
+        "name": "OK037",
+        "latitude": 36.508171,
+        "longitude": -98.744522,
+        "elevation": 468.0
+    },
+    {
+        "network": "GS",
+        "name": "OK038",
+        "latitude": 36.478211,
+        "longitude": -98.742223,
+        "elevation": 443.0
+    },
+    {
+        "network": "GS",
+        "name": "OK039",
+        "latitude": 36.381706,
+        "longitude": -98.651772,
+        "elevation": 400.0
+    },
+    {
+        "network": "GS",
+        "name": "OK040",
+        "latitude": 36.48288,
+        "longitude": -98.674149,
+        "elevation": 453.0
+    },
+    {
+        "network": "GS",
+        "name": "OK041",
+        "latitude": 36.467232,
+        "longitude": -98.53273,
+        "elevation": 445.0
+    },
+    {
+        "network": "GS",
+        "name": "OK042",
+        "latitude": 36.402988,
+        "longitude": -98.831459,
+        "elevation": 442.0
+    },
+    {
+        "network": "GS",
+        "name": "OK043",
+        "latitude": 36.433357,
+        "longitude": -98.745667,
+        "elevation": 406.0
+    },
+    {
+        "network": "GS",
+        "name": "OK044",
+        "latitude": 36.3727,
+        "longitude": -96.796333,
+        "elevation": 290.0
+    },
+    {
+        "network": "GS",
+        "name": "OK045",
+        "latitude": 36.44767,
+        "longitude": -96.92495,
+        "elevation": 284.0
+    },
+    {
+        "network": "GS",
+        "name": "OK046",
+        "latitude": 36.397251,
+        "longitude": -96.90741,
+        "elevation": 294.0
+    },
+    {
+        "network": "GS",
+        "name": "OK047",
+        "latitude": 36.468868,
+        "longitude": -96.723618,
+        "elevation": 253.0
+    },
+    {
+        "network": "GS",
+        "name": "OK048",
+        "latitude": 36.41622,
+        "longitude": -96.94374,
+        "elevation": 295.0
+    },
+    {
+        "network": "GS",
+        "name": "OK049",
+        "latitude": 36.406879,
+        "longitude": -97.304413,
+        "elevation": 327.0
+    },
+    {
+        "network": "GS",
+        "name": "OK050",
+        "latitude": 36.394501,
+        "longitude": -96.981796,
+        "elevation": 315.0
+    },
+    {
+        "network": "GS",
+        "name": "OK051",
+        "latitude": 36.50519,
+        "longitude": -96.83604,
+        "elevation": 261.0
+    },
+    {
+        "network": "GS",
+        "name": "OK051",
+        "latitude": 36.50485,
+        "longitude": -96.83562,
+        "elevation": 262.78
+    },
+    {
+        "network": "GS",
+        "name": "OK052",
+        "latitude": 35.993611,
+        "longitude": -96.802778,
+        "elevation": 259.0
+    },
+    {
+        "network": "GS",
+        "name": "OK052",
+        "latitude": 35.99514,
+        "longitude": -96.80188,
+        "elevation": 260.69
+    },
+    {
+        "network": "GS",
+        "name": "OK053",
+        "latitude": 36.014168,
+        "longitude": -96.787781,
+        "elevation": 280.0
+    },
+    {
+        "network": "GS",
+        "name": "OKR01",
+        "latitude": 35.490681,
+        "longitude": -96.620453,
+        "elevation": 289.0
+    },
+    {
+        "network": "GS",
+        "name": "OKR02",
+        "latitude": 35.51268,
+        "longitude": -96.569221,
+        "elevation": 296.0
+    },
+    {
+        "network": "GS",
+        "name": "OKR03",
+        "latitude": 35.494781,
+        "longitude": -96.483467,
+        "elevation": 277.0
+    },
+    {
+        "network": "GS",
+        "name": "OKR05",
+        "latitude": 35.429569,
+        "longitude": -96.303772,
+        "elevation": 273.0
+    },
+    {
+        "network": "GS",
+        "name": "OKR07",
+        "latitude": 35.4422,
+        "longitude": -96.018997,
+        "elevation": 205.0
+    },
+    {
+        "network": "GS",
+        "name": "OKR08",
+        "latitude": 35.51413,
+        "longitude": -95.875183,
+        "elevation": 202.0
+    },
+    {
+        "network": "GS",
+        "name": "OKR09",
+        "latitude": 35.515148,
+        "longitude": -95.752251,
+        "elevation": 192.0
+    },
+    {
+        "network": "N4",
+        "name": "MSTX",
+        "latitude": 33.9696,
+        "longitude": -102.7724,
+        "elevation": 1167.0
+    },
+    {
+        "network": "N4",
+        "name": "R32B",
+        "latitude": 38.4225,
+        "longitude": -98.7111,
+        "elevation": 568.0
+    },
+    {
+        "network": "N4",
+        "name": "S39B",
+        "latitude": 37.690899,
+        "longitude": -93.322601,
+        "elevation": 340.0
+    },
+    {
+        "network": "N4",
+        "name": "T35B",
+        "latitude": 36.9162,
+        "longitude": -96.5119,
+        "elevation": 413.0
+    },
+    {
+        "network": "N4",
+        "name": "TUL3",
+        "latitude": 35.9105,
+        "longitude": -95.7918,
+        "elevation": 265.0
+    },
+    {
+        "network": "N4",
+        "name": "U38B",
+        "latitude": 36.4394,
+        "longitude": -94.3857,
+        "elevation": 389.0
+    },
+    {
+        "network": "N4",
+        "name": "Z35B",
+        "latitude": 33.3309,
+        "longitude": -97.253,
+        "elevation": 234.0
+    },
+    {
+        "network": "N4",
+        "name": "Z38B",
+        "latitude": 33.2599,
+        "longitude": -94.9852,
+        "elevation": 115.0
+    },
+    {
+        "network": "NQ",
+        "name": "KAN01",
+        "latitude": 37.153519,
+        "longitude": -97.759216,
+        "elevation": 380.1
+    },
+    {
+        "network": "NQ",
+        "name": "KAN02",
+        "latitude": 37.197968,
+        "longitude": -97.879379,
+        "elevation": 403.0
+    },
+    {
+        "network": "NQ",
+        "name": "KAN05",
+        "latitude": 37.107979,
+        "longitude": -97.871513,
+        "elevation": 379.0
+    },
+    {
+        "network": "NQ",
+        "name": "KAN07",
+        "latitude": 36.984451,
+        "longitude": -97.948029,
+        "elevation": 370.0
+    },
+    {
+        "network": "NQ",
+        "name": "KAN08",
+        "latitude": 37.226719,
+        "longitude": -97.970917,
+        "elevation": 409.0
+    },
+    {
+        "network": "NQ",
+        "name": "OK914",
+        "latitude": 35.97084,
+        "longitude": -96.80481,
+        "elevation": 305.0
+    },
+    {
+        "network": "NQ",
+        "name": "OK915",
+        "latitude": 35.953548,
+        "longitude": -96.772636,
+        "elevation": 278.0
+    },
+    {
+        "network": "O2",
+        "name": "ALVA",
+        "latitude": 36.8696,
+        "longitude": -98.7931,
+        "elevation": 454.0
+    },
+    {
+        "network": "O2",
+        "name": "ARC2",
+        "latitude": 35.7431,
+        "longitude": -97.2725,
+        "elevation": 311.0
+    },
+    {
+        "network": "O2",
+        "name": "ARCA",
+        "latitude": 35.742987,
+        "longitude": -97.269528,
+        "elevation": 323.0
+    },
+    {
+        "network": "O2",
+        "name": "BOZZ",
+        "latitude": 34.08396,
+        "longitude": -95.88833,
+        "elevation": 137.0
+    },
+    {
+        "network": "O2",
+        "name": "CALT",
+        "latitude": 35.6719,
+        "longitude": -98.2205,
+        "elevation": 430.0
+    },
+    {
+        "network": "O2",
+        "name": "CHAN",
+        "latitude": 35.652956,
+        "longitude": -96.785491,
+        "elevation": 266.0
+    },
+    {
+        "network": "O2",
+        "name": "CRES",
+        "latitude": 36.037118,
+        "longitude": -97.534468,
+        "elevation": 311.0
+    },
+    {
+        "network": "O2",
+        "name": "CVNG",
+        "latitude": 36.3183,
+        "longitude": -97.4347,
+        "elevation": 358.0
+    },
+    {
+        "network": "O2",
+        "name": "DOVR",
+        "latitude": 35.954333,
+        "longitude": -97.988182,
+        "elevation": 337.0
+    },
+    {
+        "network": "O2",
+        "name": "DRIP",
+        "latitude": 35.6127,
+        "longitude": -96.065,
+        "elevation": 243.0
+    },
+    {
+        "network": "O2",
+        "name": "DRUM",
+        "latitude": 35.9192,
+        "longitude": -96.6054,
+        "elevation": 296.0
+    },
+    {
+        "network": "O2",
+        "name": "DUST",
+        "latitude": 35.2803,
+        "longitude": -96.1087,
+        "elevation": 268.0
+    },
+    {
+        "network": "O2",
+        "name": "ERNS",
+        "latitude": 35.4243,
+        "longitude": -98.0293,
+        "elevation": 418.0
+    },
+    {
+        "network": "O2",
+        "name": "FREE",
+        "latitude": 36.9301,
+        "longitude": -99.2706,
+        "elevation": 563.0
+    },
+    {
+        "network": "O2",
+        "name": "FW01",
+        "latitude": 36.494607,
+        "longitude": -98.940745,
+        "elevation": 431.0
+    },
+    {
+        "network": "O2",
+        "name": "FW02",
+        "latitude": 36.378467,
+        "longitude": -98.729327,
+        "elevation": 434.0
+    },
+    {
+        "network": "O2",
+        "name": "FW03",
+        "latitude": 36.52687,
+        "longitude": -99.17294,
+        "elevation": 628.0
+    },
+    {
+        "network": "O2",
+        "name": "FW04",
+        "latitude": 36.59611,
+        "longitude": -98.665,
+        "elevation": 448.0
+    },
+    {
+        "network": "O2",
+        "name": "FW05",
+        "latitude": 36.470407,
+        "longitude": -98.605392,
+        "elevation": 444.0
+    },
+    {
+        "network": "O2",
+        "name": "FW06",
+        "latitude": 36.513783,
+        "longitude": -98.499062,
+        "elevation": 420.0
+    },
+    {
+        "network": "O2",
+        "name": "FW07",
+        "latitude": 36.44981,
+        "longitude": -98.801017,
+        "elevation": 404.0
+    },
+    {
+        "network": "O2",
+        "name": "FW08",
+        "latitude": 36.238255,
+        "longitude": -98.79621,
+        "elevation": 554.0
+    },
+    {
+        "network": "O2",
+        "name": "FW09",
+        "latitude": 36.550787,
+        "longitude": -99.040665,
+        "elevation": 517.0
+    },
+    {
+        "network": "O2",
+        "name": "FW10",
+        "latitude": 36.50599,
+        "longitude": -98.718477,
+        "elevation": 457.0
+    },
+    {
+        "network": "O2",
+        "name": "FW10",
+        "latitude": 36.017058,
+        "longitude": -98.332692,
+        "elevation": 347.0
+    },
+    {
+        "network": "O2",
+        "name": "GORE",
+        "latitude": 36.785632,
+        "longitude": -97.947062,
+        "elevation": 348.0
+    },
+    {
+        "network": "O2",
+        "name": "MRSH",
+        "latitude": 36.13231,
+        "longitude": -97.69548,
+        "elevation": 309.0
+    },
+    {
+        "network": "O2",
+        "name": "PERK",
+        "latitude": 35.926079,
+        "longitude": -97.129544,
+        "elevation": 288.0
+    },
+    {
+        "network": "O2",
+        "name": "PERY",
+        "latitude": 36.26001,
+        "longitude": -97.23505,
+        "elevation": 209.0
+    },
+    {
+        "network": "O2",
+        "name": "POCA",
+        "latitude": 35.217682,
+        "longitude": -98.075301,
+        "elevation": 396.0
+    },
+    {
+        "network": "O2",
+        "name": "PW01",
+        "latitude": 36.401813,
+        "longitude": -96.929228,
+        "elevation": 322.0
+    },
+    {
+        "network": "O2",
+        "name": "PW02",
+        "latitude": 36.418833,
+        "longitude": -96.858167,
+        "elevation": 314.0
+    },
+    {
+        "network": "O2",
+        "name": "PW05",
+        "latitude": 36.48506,
+        "longitude": -96.964153,
+        "elevation": 289.0
+    },
+    {
+        "network": "O2",
+        "name": "PW06",
+        "latitude": 36.42073,
+        "longitude": -96.972008,
+        "elevation": 303.0
+    },
+    {
+        "network": "O2",
+        "name": "PW06",
+        "latitude": 35.15274,
+        "longitude": -96.87453,
+        "elevation": 322.0
+    },
+    {
+        "network": "O2",
+        "name": "PW07",
+        "latitude": 36.504198,
+        "longitude": -96.765075,
+        "elevation": 282.0
+    },
+    {
+        "network": "O2",
+        "name": "PW08",
+        "latitude": 36.40599,
+        "longitude": -96.732885,
+        "elevation": 275.0
+    },
+    {
+        "network": "O2",
+        "name": "PW09",
+        "latitude": 36.448013,
+        "longitude": -96.817045,
+        "elevation": 291.0
+    },
+    {
+        "network": "O2",
+        "name": "PW10",
+        "latitude": 36.365555,
+        "longitude": -96.831053,
+        "elevation": 297.0
+    },
+    {
+        "network": "O2",
+        "name": "PW13",
+        "latitude": 36.328488,
+        "longitude": -96.817845,
+        "elevation": 290.0
+    },
+    {
+        "network": "O2",
+        "name": "PW15",
+        "latitude": 36.468635,
+        "longitude": -97.013717,
+        "elevation": 270.0
+    },
+    {
+        "network": "O2",
+        "name": "PW17",
+        "latitude": 36.245382,
+        "longitude": -96.700188,
+        "elevation": 324.0
+    },
+    {
+        "network": "O2",
+        "name": "PW18",
+        "latitude": 36.278988,
+        "longitude": -97.044208,
+        "elevation": 299.0
+    },
+    {
+        "network": "O2",
+        "name": "PW19",
+        "latitude": 36.56854,
+        "longitude": -97.035507,
+        "elevation": 301.0
+    },
+    {
+        "network": "O2",
+        "name": "PW30",
+        "latitude": 36.4169,
+        "longitude": -96.8217,
+        "elevation": 314.0
+    },
+    {
+        "network": "O2",
+        "name": "QUIN",
+        "latitude": 35.2021,
+        "longitude": -95.4692,
+        "elevation": 227.0
+    },
+    {
+        "network": "O2",
+        "name": "RNSP",
+        "latitude": 35.9334,
+        "longitude": -98.4254,
+        "elevation": 453.0
+    },
+    {
+        "network": "O2",
+        "name": "ROSS",
+        "latitude": 36.9472,
+        "longitude": -99.8667,
+        "elevation": 607.0
+    },
+    {
+        "network": "O2",
+        "name": "SAND",
+        "latitude": 36.0576,
+        "longitude": -96.2499,
+        "elevation": 261.0
+    },
+    {
+        "network": "O2",
+        "name": "SC01",
+        "latitude": 35.1846,
+        "longitude": -97.8202,
+        "elevation": 373.0
+    },
+    {
+        "network": "O2",
+        "name": "SC02",
+        "latitude": 34.7977,
+        "longitude": -97.389,
+        "elevation": 310.0
+    },
+    {
+        "network": "O2",
+        "name": "SC03",
+        "latitude": 34.940182,
+        "longitude": -97.848978,
+        "elevation": 349.0
+    },
+    {
+        "network": "O2",
+        "name": "SC04",
+        "latitude": 34.36356,
+        "longitude": -97.473422,
+        "elevation": 300.0
+    },
+    {
+        "network": "O2",
+        "name": "SC05",
+        "latitude": 35.518658,
+        "longitude": -97.832768,
+        "elevation": 388.0
+    },
+    {
+        "network": "O2",
+        "name": "SC06",
+        "latitude": 35.073193,
+        "longitude": -97.521477,
+        "elevation": 342.0
+    },
+    {
+        "network": "O2",
+        "name": "SC07",
+        "latitude": 34.933695,
+        "longitude": -98.214027,
+        "elevation": 349.0
+    },
+    {
+        "network": "O2",
+        "name": "SC08",
+        "latitude": 34.687273,
+        "longitude": -96.393077,
+        "elevation": 200.0
+    },
+    {
+        "network": "O2",
+        "name": "SC09",
+        "latitude": 34.5451,
+        "longitude": -97.3657,
+        "elevation": 296.0
+    },
+    {
+        "network": "O2",
+        "name": "SC10",
+        "latitude": 35.422563,
+        "longitude": -98.271427,
+        "elevation": 502.0
+    },
+    {
+        "network": "O2",
+        "name": "SC11",
+        "latitude": 35.183265,
+        "longitude": -98.740663,
+        "elevation": 414.0
+    },
+    {
+        "network": "O2",
+        "name": "SC12",
+        "latitude": 34.921667,
+        "longitude": -99.3547,
+        "elevation": 472.0
+    },
+    {
+        "network": "O2",
+        "name": "SC12",
+        "latitude": 33.76622,
+        "longitude": -98.46455,
+        "elevation": 277.0
+    },
+    {
+        "network": "O2",
+        "name": "SC13",
+        "latitude": 34.727653,
+        "longitude": -96.945632,
+        "elevation": 363.0
+    },
+    {
+        "network": "O2",
+        "name": "SC14",
+        "latitude": 34.452052,
+        "longitude": -98.243927,
+        "elevation": 339.0
+    },
+    {
+        "network": "O2",
+        "name": "SC15",
+        "latitude": 35.606645,
+        "longitude": -99.50059,
+        "elevation": 550.0
+    },
+    {
+        "network": "O2",
+        "name": "SC16",
+        "latitude": 35.974933,
+        "longitude": -98.815308,
+        "elevation": 500.0
+    },
+    {
+        "network": "O2",
+        "name": "SC17",
+        "latitude": 34.915886,
+        "longitude": -97.598334,
+        "elevation": 343.2
+    },
+    {
+        "network": "O2",
+        "name": "SC18",
+        "latitude": 36.502615,
+        "longitude": -97.554242,
+        "elevation": 1051.0
+    },
+    {
+        "network": "O2",
+        "name": "SC19",
+        "latitude": 36.220151,
+        "longitude": -97.843067,
+        "elevation": 344.0
+    },
+    {
+        "network": "O2",
+        "name": "SC20",
+        "latitude": 35.4027,
+        "longitude": -98.4409,
+        "elevation": 490.0
+    },
+    {
+        "network": "O2",
+        "name": "SHWN",
+        "latitude": 35.342772,
+        "longitude": -97.022544,
+        "elevation": 320.0
+    },
+    {
+        "network": "O2",
+        "name": "SMNL",
+        "latitude": 35.29415,
+        "longitude": -96.56492,
+        "elevation": 317.0
+    },
+    {
+        "network": "O2",
+        "name": "STIG",
+        "latitude": 35.3406,
+        "longitude": -95.1056,
+        "elevation": 256.0
+    },
+    {
+        "network": "O2",
+        "name": "TUTT",
+        "latitude": 35.238272,
+        "longitude": -97.755588,
+        "elevation": 407.0
+    },
+    {
+        "network": "O2",
+        "name": "UCTY",
+        "latitude": 35.39033,
+        "longitude": -97.91585,
+        "elevation": 368.0
+    },
+    {
+        "network": "O2",
+        "name": "WADE",
+        "latitude": 34.1489,
+        "longitude": -97.6192,
+        "elevation": 268.0
+    },
+    {
+        "network": "O2",
+        "name": "WILZ",
+        "latitude": 35.536111,
+        "longitude": -96.737778,
+        "elevation": 274.3
+    },
+    {
+        "network": "O2",
+        "name": "YUKO",
+        "latitude": 35.5384,
+        "longitude": -97.8606,
+        "elevation": 392.0
+    },
+    {
+        "network": "OK",
+        "name": "AMES",
+        "latitude": 36.335587,
+        "longitude": -98.192787,
+        "elevation": 394.0
+    },
+    {
+        "network": "OK",
+        "name": "BCOK",
+        "latitude": 35.656729,
+        "longitude": -97.609276,
+        "elevation": 302.0
+    },
+    {
+        "network": "OK",
+        "name": "BLOK",
+        "latitude": 36.760615,
+        "longitude": -97.215026,
+        "elevation": 301.0
+    },
+    {
+        "network": "OK",
+        "name": "BLUF",
+        "latitude": 35.65666,
+        "longitude": -97.60933,
+        "elevation": 302.0
+    },
+    {
+        "network": "OK",
+        "name": "CCOK",
+        "latitude": 35.356842,
+        "longitude": -97.656074,
+        "elevation": 378.0
+    },
+    {
+        "network": "OK",
+        "name": "CHOK",
+        "latitude": 35.561127,
+        "longitude": -97.061303,
+        "elevation": 338.0
+    },
+    {
+        "network": "OK",
+        "name": "CROK",
+        "latitude": 36.504737,
+        "longitude": -97.983354,
+        "elevation": 403.0
+    },
+    {
+        "network": "OK",
+        "name": "CSTR",
+        "latitude": 35.645556,
+        "longitude": -98.688889,
+        "elevation": 516.3
+    },
+    {
+        "network": "OK",
+        "name": "DEOK",
+        "latitude": 35.842652,
+        "longitude": -96.498262,
+        "elevation": 291.0
+    },
+    {
+        "network": "OK",
+        "name": "ELIS",
+        "latitude": 36.065254,
+        "longitude": -99.418043,
+        "elevation": 641.0
+    },
+    {
+        "network": "OK",
+        "name": "FNO",
+        "latitude": 35.25738,
+        "longitude": -97.40115,
+        "elevation": 360.0
+    },
+    {
+        "network": "OK",
+        "name": "FRLY",
+        "latitude": 35.415272,
+        "longitude": -97.45177,
+        "elevation": 385.0
+    },
+    {
+        "network": "OK",
+        "name": "GC02",
+        "latitude": 36.8515,
+        "longitude": -97.85959,
+        "elevation": 354.0
+    },
+    {
+        "network": "OK",
+        "name": "KAY1",
+        "latitude": 36.762652,
+        "longitude": -97.212216,
+        "elevation": 308.0
+    },
+    {
+        "network": "OK",
+        "name": "LOOK",
+        "latitude": 33.992427,
+        "longitude": -97.17999,
+        "elevation": 286.0
+    },
+    {
+        "network": "OK",
+        "name": "LOV1",
+        "latitude": 34.059342,
+        "longitude": -97.240835,
+        "elevation": 267.0
+    },
+    {
+        "network": "OK",
+        "name": "LOV3",
+        "latitude": 34.012989,
+        "longitude": -97.084779,
+        "elevation": 204.8
+    },
+    {
+        "network": "OK",
+        "name": "LOV7",
+        "latitude": 33.999248,
+        "longitude": -97.268152,
+        "elevation": 217.0
+    },
+    {
+        "network": "OK",
+        "name": "MOOR",
+        "latitude": 35.341792,
+        "longitude": -97.65922,
+        "elevation": 371.0
+    },
+    {
+        "network": "OK",
+        "name": "NOKA",
+        "latitude": 36.63468,
+        "longitude": -98.93193,
+        "elevation": 476.0
+    },
+    {
+        "network": "OK",
+        "name": "OKCFA",
+        "latitude": 35.41531,
+        "longitude": -97.45177,
+        "elevation": 385.0
+    },
+    {
+        "network": "OK",
+        "name": "OKCSW",
+        "latitude": 35.40552,
+        "longitude": -97.438,
+        "elevation": 379.0
+    },
+    {
+        "network": "OK",
+        "name": "QUOK",
+        "latitude": 36.1714,
+        "longitude": -96.708,
+        "elevation": 296.0
+    },
+    {
+        "network": "OK",
+        "name": "RLO2",
+        "latitude": 36.168056,
+        "longitude": -95.0275,
+        "elevation": 395.0
+    },
+    {
+        "network": "OK",
+        "name": "RLOK",
+        "latitude": 36.167553,
+        "longitude": -95.026798,
+        "elevation": 395.0
+    },
+    {
+        "network": "OK",
+        "name": "SMO",
+        "latitude": 35.523142,
+        "longitude": -97.474662,
+        "elevation": 357.0
+    },
+    {
+        "network": "OK",
+        "name": "SWND",
+        "latitude": 35.40549,
+        "longitude": -97.437992,
+        "elevation": 390.0
+    },
+    {
+        "network": "OK",
+        "name": "TISH",
+        "latitude": 34.44016,
+        "longitude": -96.5436,
+        "elevation": 225.0
+    },
+    {
+        "network": "OK",
+        "name": "U32A",
+        "latitude": 36.3795,
+        "longitude": -99.0014,
+        "elevation": 525.0
+    },
+    {
+        "network": "OK",
+        "name": "WILB",
+        "latitude": 34.9488,
+        "longitude": -95.3881,
+        "elevation": 221.0
+    },
+    {
+        "network": "OK",
+        "name": "X34A",
+        "latitude": 34.60102,
+        "longitude": -97.83256,
+        "elevation": 364.0
+    },
+    {
+        "network": "OK",
+        "name": "X37A",
+        "latitude": 34.5892,
+        "longitude": -95.3713,
+        "elevation": 207.0
+    },
+    {
+        "network": "TA",
+        "name": "S31A",
+        "latitude": 37.619301,
+        "longitude": -99.484497,
+        "elevation": 700.0
+    },
+    {
+        "network": "TA",
+        "name": "S32A",
+        "latitude": 37.7001,
+        "longitude": -98.936302,
+        "elevation": 558.0
+    },
+    {
+        "network": "TA",
+        "name": "S33A",
+        "latitude": 37.593601,
+        "longitude": -98.001602,
+        "elevation": 471.0
+    },
+    {
+        "network": "TA",
+        "name": "S36A",
+        "latitude": 37.723999,
+        "longitude": -95.5923,
+        "elevation": 299.0
+    },
+    {
+        "network": "TA",
+        "name": "T32A",
+        "latitude": 37.179699,
+        "longitude": -98.924698,
+        "elevation": 596.0
+    },
+    {
+        "network": "TA",
+        "name": "T33A",
+        "latitude": 37.082401,
+        "longitude": -98.2444,
+        "elevation": 394.0
+    },
+    {
+        "network": "TA",
+        "name": "T34A",
+        "latitude": 37.022202,
+        "longitude": -97.188301,
+        "elevation": 361.0
+    },
+    {
+        "network": "TA",
+        "name": "T35A",
+        "latitude": 36.9161,
+        "longitude": -96.5121,
+        "elevation": 401.0
+    },
+    {
+        "network": "TA",
+        "name": "T36A",
+        "latitude": 37.060501,
+        "longitude": -95.878899,
+        "elevation": 243.0
+    },
+    {
+        "network": "TA",
+        "name": "TUL1",
+        "latitude": 35.9104,
+        "longitude": -95.791901,
+        "elevation": 256.0
+    },
+    {
+        "network": "TA",
+        "name": "TUL3",
+        "latitude": 35.9105,
+        "longitude": -95.791801,
+        "elevation": 265.0
+    },
+    {
+        "network": "TA",
+        "name": "U30A",
+        "latitude": 36.530399,
+        "longitude": -100.650902,
+        "elevation": 881.0
+    },
+    {
+        "network": "TA",
+        "name": "U31A",
+        "latitude": 36.369499,
+        "longitude": -99.8508,
+        "elevation": 725.0
+    },
+    {
+        "network": "TA",
+        "name": "U32A",
+        "latitude": 36.379501,
+        "longitude": -99.001404,
+        "elevation": 525.0
+    },
+    {
+        "network": "TA",
+        "name": "U33A",
+        "latitude": 36.432701,
+        "longitude": -98.113503,
+        "elevation": 393.0
+    },
+    {
+        "network": "TA",
+        "name": "U34A",
+        "latitude": 36.436501,
+        "longitude": -97.5354,
+        "elevation": 345.0
+    },
+    {
+        "network": "TA",
+        "name": "U35A",
+        "latitude": 36.370899,
+        "longitude": -96.731796,
+        "elevation": 303.0
+    },
+    {
+        "network": "TA",
+        "name": "U36A",
+        "latitude": 36.3927,
+        "longitude": -95.732498,
+        "elevation": 187.0
+    },
+    {
+        "network": "TA",
+        "name": "U37A",
+        "latitude": 36.405998,
+        "longitude": -95.116096,
+        "elevation": 248.0
+    },
+    {
+        "network": "TA",
+        "name": "U38A",
+        "latitude": 36.4394,
+        "longitude": -94.385696,
+        "elevation": 389.0
+    },
+    {
+        "network": "TA",
+        "name": "V31A",
+        "latitude": 35.773899,
+        "longitude": -99.842499,
+        "elevation": 687.0
+    },
+    {
+        "network": "TA",
+        "name": "V32A",
+        "latitude": 35.7202,
+        "longitude": -99.043701,
+        "elevation": 533.0
+    },
+    {
+        "network": "TA",
+        "name": "V33A",
+        "latitude": 35.8209,
+        "longitude": -98.286201,
+        "elevation": 420.0
+    },
+    {
+        "network": "TA",
+        "name": "V34A",
+        "latitude": 35.834499,
+        "longitude": -97.517601,
+        "elevation": 329.0
+    },
+    {
+        "network": "TA",
+        "name": "V35A",
+        "latitude": 35.7626,
+        "longitude": -96.837799,
+        "elevation": 280.0
+    },
+    {
+        "network": "TA",
+        "name": "V36A",
+        "latitude": 35.786301,
+        "longitude": -95.942497,
+        "elevation": 236.0
+    },
+    {
+        "network": "TA",
+        "name": "V37A",
+        "latitude": 35.882999,
+        "longitude": -95.140999,
+        "elevation": 219.0
+    },
+    {
+        "network": "TA",
+        "name": "V38A",
+        "latitude": 35.862598,
+        "longitude": -94.4077,
+        "elevation": 372.0
+    },
+    {
+        "network": "TA",
+        "name": "V39A",
+        "latitude": 35.838902,
+        "longitude": -93.644997,
+        "elevation": 744.0
+    },
+    {
+        "network": "TA",
+        "name": "W31A",
+        "latitude": 35.186401,
+        "longitude": -99.943497,
+        "elevation": 644.0
+    },
+    {
+        "network": "TA",
+        "name": "W32A",
+        "latitude": 35.123798,
+        "longitude": -99.245796,
+        "elevation": 494.0
+    },
+    {
+        "network": "TA",
+        "name": "W33A",
+        "latitude": 35.151798,
+        "longitude": -98.468597,
+        "elevation": 414.0
+    },
+    {
+        "network": "TA",
+        "name": "W34A",
+        "latitude": 35.235199,
+        "longitude": -97.7733,
+        "elevation": 428.0
+    },
+    {
+        "network": "TA",
+        "name": "W35A",
+        "latitude": 35.152699,
+        "longitude": -96.874496,
+        "elevation": 322.0
+    },
+    {
+        "network": "TA",
+        "name": "W36A",
+        "latitude": 35.139301,
+        "longitude": -96.226402,
+        "elevation": 251.0
+    },
+    {
+        "network": "TA",
+        "name": "W37A",
+        "latitude": 35.138,
+        "longitude": -95.426903,
+        "elevation": 281.0
+    },
+    {
+        "network": "TA",
+        "name": "W37B",
+        "latitude": 35.139,
+        "longitude": -95.431602,
+        "elevation": 279.0
+    },
+    {
+        "network": "TA",
+        "name": "W38A",
+        "latitude": 35.0704,
+        "longitude": -94.518402,
+        "elevation": 169.0
+    },
+    {
+        "network": "TA",
+        "name": "W39A",
+        "latitude": 35.195999,
+        "longitude": -93.783997,
+        "elevation": 162.0
+    },
+    {
+        "network": "TA",
+        "name": "X31A",
+        "latitude": 34.630901,
+        "longitude": -99.979301,
+        "elevation": 514.0
+    },
+    {
+        "network": "TA",
+        "name": "X32A",
+        "latitude": 34.421398,
+        "longitude": -99.2854,
+        "elevation": 401.0
+    },
+    {
+        "network": "TA",
+        "name": "X33A",
+        "latitude": 34.541,
+        "longitude": -98.500603,
+        "elevation": 346.0
+    },
+    {
+        "network": "TA",
+        "name": "X34A",
+        "latitude": 34.601002,
+        "longitude": -97.832603,
+        "elevation": 364.0
+    },
+    {
+        "network": "TA",
+        "name": "X35A",
+        "latitude": 34.399502,
+        "longitude": -96.973099,
+        "elevation": 300.0
+    },
+    {
+        "network": "TA",
+        "name": "X36A",
+        "latitude": 34.5704,
+        "longitude": -96.351997,
+        "elevation": 211.0
+    },
+    {
+        "network": "TA",
+        "name": "X37A",
+        "latitude": 34.589199,
+        "longitude": -95.3713,
+        "elevation": 207.0
+    },
+    {
+        "network": "TA",
+        "name": "X38A",
+        "latitude": 34.669201,
+        "longitude": -94.828796,
+        "elevation": 234.0
+    },
+    {
+        "network": "TA",
+        "name": "X39A",
+        "latitude": 34.510502,
+        "longitude": -94.1138,
+        "elevation": 326.0
+    },
+    {
+        "network": "TA",
+        "name": "Y33A",
+        "latitude": 34.008099,
+        "longitude": -98.625603,
+        "elevation": 321.0
+    },
+    {
+        "network": "TA",
+        "name": "Y34A",
+        "latitude": 33.957401,
+        "longitude": -97.757301,
+        "elevation": 262.0
+    },
+    {
+        "network": "TA",
+        "name": "Y35A",
+        "latitude": 33.905899,
+        "longitude": -97.037399,
+        "elevation": 214.0
+    },
+    {
+        "network": "TA",
+        "name": "Y36A",
+        "latitude": 33.899601,
+        "longitude": -96.284798,
+        "elevation": 186.0
+    },
+    {
+        "network": "TA",
+        "name": "Y37A",
+        "latitude": 33.978901,
+        "longitude": -95.621002,
+        "elevation": 165.0
+    },
+    {
+        "network": "TA",
+        "name": "Y38A",
+        "latitude": 33.927799,
+        "longitude": -94.731102,
+        "elevation": 118.0
+    },
+    {
+        "network": "TX",
+        "name": "APMT",
+        "latitude": 33.32512,
+        "longitude": -100.12155,
+        "elevation": 501.0
+    },
+    {
+        "network": "TX",
+        "name": "DKNS",
+        "latitude": 33.66653,
+        "longitude": -100.92365,
+        "elevation": 843.0
+    },
+    {
+        "network": "TX",
+        "name": "DKNS",
+        "latitude": 33.666531,
+        "longitude": -100.923653,
+        "elevation": 843.0
+    },
+    {
+        "network": "TX",
+        "name": "DRZT",
+        "latitude": 36.44401,
+        "longitude": -100.29688,
+        "elevation": 791.0
+    },
+    {
+        "network": "TX",
+        "name": "DRZT",
+        "latitude": 36.444012,
+        "longitude": -100.296883,
+        "elevation": 791.0
+    },
+    {
+        "network": "TX",
+        "name": "PH02",
+        "latitude": 35.39086,
+        "longitude": -101.946743,
+        "elevation": 1094.0
+    },
+    {
+        "network": "TX",
+        "name": "PH02",
+        "latitude": 35.390862,
+        "longitude": -101.947433,
+        "elevation": 1094.0
+    },
+    {
+        "network": "TX",
+        "name": "PH03",
+        "latitude": 35.3574,
+        "longitude": -101.551399,
+        "elevation": 1055.0
+    },
+    {
+        "network": "TX",
+        "name": "PH03",
+        "latitude": 35.357372,
+        "longitude": -101.551361,
+        "elevation": 1061.0
+    },
+    {
+        "network": "TX",
+        "name": "POST",
+        "latitude": 33.0662,
+        "longitude": -101.50105,
+        "elevation": 788.6
+    },
+    {
+        "network": "TX",
+        "name": "RTBA",
+        "latitude": 36.43795,
+        "longitude": -102.73743,
+        "elevation": 1284.0
+    },
+    {
+        "network": "TX",
+        "name": "RTBA",
+        "latitude": 36.43795,
+        "longitude": -102.737427,
+        "elevation": 1284.0
+    },
+    {
+        "network": "TX",
+        "name": "SMWD",
+        "latitude": 35.10455,
+        "longitude": -100.24248,
+        "elevation": 704.0
+    },
+    {
+        "network": "TX",
+        "name": "SMWD",
+        "latitude": 35.104549,
+        "longitude": -100.242477,
+        "elevation": 704.0
+    },
+    {
+        "network": "TX",
+        "name": "SN07",
+        "latitude": 33.09092,
+        "longitude": -100.89172,
+        "elevation": 620.0
+    },
+    {
+        "network": "TX",
+        "name": "WTFS",
+        "latitude": 33.76622,
+        "longitude": -98.464546,
+        "elevation": 277.0
+    },
+    {
+        "network": "US",
+        "name": "AMTX",
+        "latitude": 34.8837,
+        "longitude": -101.6808,
+        "elevation": 1010.0
+    },
+    {
+        "network": "US",
+        "name": "CBKS",
+        "latitude": 38.814,
+        "longitude": -99.7374,
+        "elevation": 677.0
+    },
+    {
+        "network": "US",
+        "name": "MIAR",
+        "latitude": 34.5454,
+        "longitude": -93.5765,
+        "elevation": 207.0
+    },
+    {
+        "network": "US",
+        "name": "WMOK",
+        "latitude": 34.7379,
+        "longitude": -98.7807,
+        "elevation": 486.0
+    },
+    {
+        "network": "Y7",
+        "name": "PW03",
+        "latitude": 36.419708,
+        "longitude": -96.822647,
+        "elevation": 306.0
+    },
+    {
+        "network": "Y7",
+        "name": "PW04",
+        "latitude": 36.393348,
+        "longitude": -96.869687,
+        "elevation": 281.0
+    },
+    {
+        "network": "Y7",
+        "name": "PW11",
+        "latitude": 36.573437,
+        "longitude": -96.864453,
+        "elevation": 297.0
+    },
+    {
+        "network": "Y7",
+        "name": "PW12",
+        "latitude": 36.47943,
+        "longitude": -96.59779,
+        "elevation": 271.0
+    },
+    {
+        "network": "Y7",
+        "name": "PW14",
+        "latitude": 36.341803,
+        "longitude": -96.946668,
+        "elevation": 302.0
+    },
+    {
+        "network": "Y7",
+        "name": "PW16",
+        "latitude": 36.555592,
+        "longitude": -96.806677,
+        "elevation": 249.0
+    },
+    {
+        "network": "Y7",
+        "name": "PW20",
+        "latitude": 36.387202,
+        "longitude": -96.62026,
+        "elevation": 243.0
+    },
+    {
+        "network": "ZD",
+        "name": "KNG1",
+        "latitude": 36.132305,
+        "longitude": -97.695503,
+        "elevation": 298.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH01",
+        "latitude": 35.919201,
+        "longitude": -96.6054,
+        "elevation": 296.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH02",
+        "latitude": 35.342773,
+        "longitude": -97.022545,
+        "elevation": 320.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH03",
+        "latitude": 35.652954,
+        "longitude": -96.785492,
+        "elevation": 266.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH04",
+        "latitude": 35.3036,
+        "longitude": -96.547821,
+        "elevation": 273.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH05",
+        "latitude": 35.217682,
+        "longitude": -98.075302,
+        "elevation": 396.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH06",
+        "latitude": 36.037117,
+        "longitude": -97.53447,
+        "elevation": 311.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH07",
+        "latitude": 35.926079,
+        "longitude": -97.129547,
+        "elevation": 288.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH08",
+        "latitude": 35.672211,
+        "longitude": -98.220543,
+        "elevation": 431.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH09",
+        "latitude": 35.954334,
+        "longitude": -97.988182,
+        "elevation": 337.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH10",
+        "latitude": 35.742989,
+        "longitude": -97.269531,
+        "elevation": 330.0
+    },
+    {
+        "network": "ZD",
+        "name": "RH11",
+        "latitude": 36.26001,
+        "longitude": -97.235046,
+        "elevation": 209.0
+    },
+    {
+        "network": "ZP",
+        "name": "SC01",
+        "latitude": 35.184613,
+        "longitude": -97.820307,
+        "elevation": 379.0
+    },
+    {
+        "network": "ZP",
+        "name": "SC02",
+        "latitude": 34.797712,
+        "longitude": -97.389037,
+        "elevation": 312.0
+    },
+    {
+        "network": "ZP",
+        "name": "SC09",
+        "latitude": 34.545088,
+        "longitude": -97.365705,
+        "elevation": 291.0
+    }
+]
