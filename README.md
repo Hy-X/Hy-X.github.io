@@ -17,6 +17,22 @@ My primary research interests include:
 -   **Machine Learning in Geosciences:** Applying advanced AI/ML techniques, such as transfer learning, for microseismic event detection and analysis.
 -   **Carbon Management:** Contributing to the safety and efficiency of geological carbon capture and storage (CCS) projects through seismological monitoring.
 
+
+## Publications
+
+*   **Xiao, H.**, et al. (2025). Moho depth (crustal thickness) variations under the northeastern midcontinent of North America, based on H-κ− c receiver-function analysis. *Earth and Planetary Science Letters*. [https://doi.org/10.1016/j.epsl.2025.119289](https://doi.org/10.1016/j.epsl.2025.119289)
+
+*For a complete list of publications and presentations, please see my [Curriculum Vitae](https://hy-x.github.io/HongyuX_cv_v_202503.pdf).*
+
+## Recent Presentations & Awards
+
+*   **3rd Place Poster Award**, *Innovating for Impact: DISC Inaugural Data Science Symposium*, University of Oklahoma, March 2025.
+*   **Best Poster Presentation Award**, *University of Oklahoma Sustainability Forum*, January 2025.
+*   **Invited Talk**, *John D. Pigott Colloquium Series*, School of Geosciences, University of Oklahoma, January 2025.
+*   **Presentation**, *AGU Annual Meeting 2024*, December 2024.
+
+*For more news, see the [archive](https://hy-x.github.io/archived_news.html) on my website.*
+
 ## About This Repository
 
 This repository contains the source code for my personal academic website, built with HTML, CSS, and Bootstrap. The site serves as a central hub for my research, publications, teaching materials, and coding projects.
