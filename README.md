@@ -26,12 +26,22 @@ My primary research interests include:
 
 ## Recent Presentations & Awards
 
-*   **3rd Place Poster Award**, *Innovating for Impact: DISC Inaugural Data Science Symposium*, University of Oklahoma, March 2025.
+*   **Poster Award**, *Innovating for Impact: DISC Inaugural Data Science Symposium*, University of Oklahoma, March 2025.
 *   **Best Poster Presentation Award**, *University of Oklahoma Sustainability Forum*, January 2025.
 *   **Invited Talk**, *John D. Pigott Colloquium Series*, School of Geosciences, University of Oklahoma, January 2025.
 *   **Presentation**, *AGU Annual Meeting 2024*, December 2024.
 
-*For more news, see the [archive](https://hy-x.github.io/archived_news.html) on my website.*
+*For more news, see the archive on my website.*
+
+## Teaching Experience
+
+As a Teaching Assistant at the University of Illinois, I have taught and supported a range of undergraduate courses, including:
+*   Planet Earth (GEOL 107)
+*   Geology of the National Parks (GEOL 104)
+*   Mineralogy and Mineral Optics (GEOL 432)
+*   Physical Geology (GEOL 101)
+*   The Oceans (GEOL 118)
+*   Structural Geology and Tectonics (GEOL 450)
 
 ## About This Repository
 
@@ -46,3 +56,9 @@ This repository contains the source code for my personal academic website, built
 ## Contact
 
 I am always open to collaboration and discussion. Please feel free to reach out via email at **hongyu.xiao-1 [at] ou.edu**.
+
+---
+
+## Keywords
+
+Seismology, Geophysics, Geology, Tectonics, Crustal Structure, North American Craton, Midcontinent, Illinois Basin, Michigan Basin, Induced Seismicity, Anthropogenic Earthquakes, Carbon Sequestration, Carbon Capture and Storage (CCS), Machine Learning, AI, Transfer Learning, Microseismic Event Detection, Receiver Functions, H-κ-c Analysis, Ambient Noise Tomography, Joint Inversion, Python, Obspy, SAC, High-Performance Computing (HPC).
