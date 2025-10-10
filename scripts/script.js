@@ -1,9 +1,11 @@
-const universityOfIllinoisLocation = [40.101952, -88.227161];
+//const universityOfIllinoisLocation = [40.101952, -88.227161];
+const universityOfIllinoisLocation = [35.2088, -97.4457];
 let terrainLayer;
 let satelliteLayer;
 
 function createMap() {
-    const map = L.map("map").setView([40.0, -89.0], 7);
+    //const map = L.map("map").setView([40.0, -89.0], 7);
+    const map = L.map("map").setView([35.2, -97.2], 7);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -15,7 +17,8 @@ function createMap() {
 function addUniversityMarker(map) {
     L.marker(universityOfIllinoisLocation)
         .addTo(map)
-        .bindPopup(`University of Illinois<br>Hongyu Xiao`)
+        //.bindPopup(`University of Illinois<br>Hongyu Xiao`)
+        .bindPopup(`University of Oklahoma <br>Dr.Hongyu Xiao`)
         .openPopup();
 }
 
@@ -39,11 +42,13 @@ function addEarthquakeCircles(map, earthquakeData) {
         const Etime = earthquake.querySelector("time").textContent;
 
         let circleColor = "royalblue"; // Default color
-        let circleRadius = 10000; // Default radius
+        //let circleRadius = 10000; // Default radius
+        let circleRadius = 7000; // Default radius
 
         if (magnitude > 5) {
             circleColor = "red"; // Change color for magnitude > 5
-            circleRadius = magnitude * 20000; // Adjust radius for magnitude > 5
+            //circleRadius = magnitude * 20000; // Adjust radius for magnitude > 5
+            circleRadius = magnitude * 15000; // Adjust radius for magnitude > 5
         }
 
         L.circle([parseFloat(latitude), parseFloat(longitude)], {
@@ -88,7 +93,8 @@ const twentyFourHoursAgo = new Date(currentTime.getTime() - 7*24 * 60 * 60 * 100
 const queryParams = new URLSearchParams({
     starttime: twentyFourHoursAgo.toISOString().substr(0, 19), // Format as "YYYY-MM-DDTHH:mm:ss"
     endtime: currentTime.toISOString().substr(0, 19),
-    minmagnitude: 2,
+    //minmagnitude: 0.5,
+    minmagnitude: 0.1
     // Add more query parameters as needed
 });
 
