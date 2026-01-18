@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:mobile="http://www.mobile.googlebot.com/schemas/mobile/1.0">
+  
+  <!-- English Homepage -->
+  <url>
+    <loc>https://hy-x.github.io/index.html</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://hy-x.github.io/images/Hongyu_Xiao.jpg</image:loc>
+      <image:title>Hongyu Xiao - Seismologist &amp; AI Geophysicist</image:title>
+    </image:image>
+  </url>
+
+  <!-- Chinese Homepage -->
+  <url>
+    <loc>https://hy-x.github.io/index_zh.html</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://hy-x.github.io/images/Hongyu_Xiao.jpg</image:loc>
+      <image:title>萧鸿宇 - 地震学家与人工智能地球物理学家</image:title>
+    </image:image>
+  </url>
+
+  <!-- Science Insights / Knowledge Page -->
+  <url>
+    <loc>https://hy-x.github.io/Knowledge.html</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://hy-x.github.io/images/Hongyu_Xiao.jpg</image:loc>
+      <image:title>Science Insights &amp; Research Stories</image:title>
+    </image:image>
+  </url>
+
+  <!-- Code Page -->
+  <url>
+    <loc>https://hy-x.github.io/Codes.html</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Earthquake Watch Page -->
+  <url>
+    <loc>https://hy-x.github.io/EarthquakeWatch.html</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Archived News Page -->
+  <url>
+    <loc>https://hy-x.github.io/archived_news.html</loc>
+    <lastmod>2026-01-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>
