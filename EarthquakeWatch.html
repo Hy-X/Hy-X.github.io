@@ -4,8 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hongyu Xiao</title>
-    <meta name="description" content="This is Hongyu(Jeff) Xiao's personal website. I will post all the things I cared online!"/>
+    <title>Earthquake Watch - Real-time Seismic Data Visualization | Hongyu Xiao</title>
+    <meta name="description" content="Real-time earthquake monitoring and visualization for the past 7 days. Interactive map with earthquake data, magnitude, depth, and location information. Seismic data analysis tool by Hongyu Xiao."/>
+    <meta name="keywords" content="earthquake monitoring, seismic data, real-time earthquakes, earthquake visualization, earthquake tracking, seismic monitoring">
+    <meta name="author" content="Hongyu Xiao">
+    <link rel="canonical" href="https://hy-x.github.io/EarthquakeWatch.html">
+    <link rel="alternate" hreflang="en" href="https://hy-x.github.io/EarthquakeWatch.html">
+    <meta property="og:title" content="Earthquake Watch - Real-time Seismic Data Visualization">
+    <meta property="og:description" content="Interactive earthquake monitoring map displaying real-time seismic data from the past 7 days with advanced visualization features.">
+    <meta property="og:url" content="https://hy-x.github.io/EarthquakeWatch.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://hy-x.github.io/images/cc-bg-hyx.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Earthquake Watch - Real-time Seismic Data Visualization">
+    <meta name="twitter:description" content="Interactive earthquake monitoring map displaying real-time seismic data from the past 7 days.">
+    <meta name="twitter:image" content="https://hy-x.github.io/images/cc-bg-hyx.jpg">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/aos.css" rel="stylesheet">
@@ -14,7 +28,27 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="styles/styles.css">
-
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Earthquake Watch",
+      "description": "Real-time earthquake monitoring and visualization tool for seismic data from the past 7 days",
+      "url": "https://hy-x.github.io/EarthquakeWatch.html",
+      "creator": {
+        "@type": "Person",
+        "name": "Hongyu Xiao",
+        "url": "https://hy-x.github.io/index.html",
+        "affiliation": "University of Oklahoma"
+      },
+      "applicationCategory": "UtilityApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
   </head>
   <body id="top">
     <header>
@@ -45,9 +79,9 @@
       <div class="page-header-image" data-parallax="true" style="background-image: url('images/cc-bg-hyx.jpg');"></div>
       <div class="container">
         <div class="content-center">
-          <div class="cc-profile-image"><a href="#"><img src="images/Hongyu_Xiao.jpg" alt="Image"/></a></div>
+          <div class="cc-profile-image"><a href="#"><img src="images/Hongyu_Xiao.jpg" alt="Hongyu Xiao - Seismology Researcher"/></a></div>
           <div class="h2 title">Hongyu Xiao</div>
-          <p class="category text-white">Seismology Researcher, Coder</p><a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Contact Me</a><a class="btn btn-primary" href="HongyuX_cv_PhD_v_1.3.pdf" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Curriculum Vitae</a>
+          <p class="category text-white">Seismology Researcher, Coder</p><a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Contact Me</a><a class="btn btn-primary" href="HongyuX_CV_20260107.pdf" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Curriculum Vitae</a>
         </div>
     </div>
   </div>
@@ -64,20 +98,20 @@
       <div class="row">
         <div class="col-lg-12 col-md-12">
           <div class="card-body">
-	    <div class="h4 mt-0 title"><h4 style="text-align:left;">Earthquakes happened in last 7 days </h4></div>
-	    <div class="h5 mt-0 title" style="text-align:left;">Hongyu Xiao@ UIUC</div>
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">Earthquakes in the Past 7 Days</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">Hongyu Xiao @ University of Oklahoma</div>
 	    <p> Here is the map track map of all the earthquakes that happened in the past 7 days </p>
 
 
       <div class="container">
         <h1 data-aos="fade-up" data-aos-duration="800"></h1>
-        <div id="map" data-aos="fade-up" data-aos-duration="800"></div>
+        <div id="map" data-aos="fade-up" data-aos-duration="800" aria-label="Earthquake map visualization"></div>
         <div class="checkbox" >
             <label>
-                <input type="checkbox" id="terrainCheckbox"> Show Terrain
+                <input type="checkbox" id="terrainCheckbox" aria-label="Toggle terrain layer on earthquake map"> Show Terrain
             </label>
             <label>
-                <input type="checkbox" id="satelliteCheckbox"> Show Satellite Imagery
+                <input type="checkbox" id="satelliteCheckbox" aria-label="Toggle satellite imagery on earthquake map"> Show Satellite Imagery
             </label>
       </div>
       <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -105,7 +139,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="card-body">
-                    <form action="https://formspree.io/jeff.xiao.uchicago@gmail.com" method="POST">
+                    <form action="https://formspree.io/hongyu.xiao-1@ou.edu" method="POST">
                       <div class="p pb-3"><strong>Feel free to contact me </strong></div>
                       <div class="row mb-3">
                         <div class="col">
