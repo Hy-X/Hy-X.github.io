@@ -1,0 +1,32 @@
+# robots.txt for Hongyu Xiao's Personal Website
+# https://hy-x.github.io/
+
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Disallow crawling of unnecessary directories (if any)
+Disallow: /js/
+Disallow: /css/
+Disallow: /images/
+Disallow: /styles/
+Disallow: /scripts/
+Disallow: /ISGS/
+Disallow: /OU_Tutorial_Ver_2/
+Disallow: /Jupter_Notebooks/
+Disallow: /GMT/
+Disallow: /papers/
+Disallow: /pdf_files/
+
+# Point to sitemap for better SEO
+Sitemap: https://hy-x.github.io/sitemap.xml
+
+# Crawl delay (optional - adjust if needed)
+# Crawl-delay: 1
+
+# Additional search engine specific rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
