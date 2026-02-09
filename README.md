@@ -3,7 +3,7 @@
 **[Visit My Website: hy-x.github.io](https://hy-x.github.io/)**
 
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0001--5403--4650-A6CE39?style=flat&logo=orcid)](https://orcid.org/0000-0001-5403-4650)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Hongyu%20Xiao-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/hongyu-xiao-73177491)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Hongyu%20Xiao-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/hongyuxiao-ai/)
 
 ---
 
@@ -26,6 +26,13 @@ My primary research interests include:
 *   **Xiao, H.**, DeLucia, M., Song, X., Li, J., & Marshak, S. (2022). Crustal Thickness Variations in the Central Midcontinent, USA, and Their Tectonic Implications. *Geophysical Research Letters*. [https://doi.org/10.1029/2022GL099257](https://doi.org/10.1029/2022GL099257)
 
 *For a complete list of publications and presentations, please see my [Curriculum Vitae](https://hy-x.github.io/HongyuX_CV_20260107.pdf).*
+
+## Professional Service
+
+*   **National Science Foundation (NSF)** — Proposal review panelist (panel name confidential), 2024.
+*   **University of Illinois Urbana-Champaign (UIUC), Department of Geology** — Climate Working Group (member).
+*   **UIUC Geology Graduate Student Council** — Vice President.
+*   **UIUC School of Earth, Society, and Environment (SESE)** — Research Review Committee (member).
 
 ## Recent Presentations & Awards
 
@@ -60,6 +67,7 @@ This repository contains the source code for my personal academic website, built
 
 *   **[Research](https://hy-x.github.io/#Research):** An overview of my key research projects, including visualizations from my work on the Illinois and Michigan Basins, machine learning applications in seismology, and edge computing for seismic monitoring.
 *   **[Science Insights](https://hy-x.github.io/Knowledge.html):** A collection of articles and FAQs explaining complex topics like receiver functions, ambient noise tomography, induced seismicity, and AI in seismology for a broader audience.
+*   **[Professional Service](https://hy-x.github.io/#Service):** Selected academic and community service, including NSF proposal review and departmental service.
 *   **[Code & Tutorials](https://hy-x.github.io/Codes.html):** A showcase of my programming skills with practical tutorials on Python, Shell scripting, SAC, GMT, HPC workflows, SeisBench, PyGMT, and data analysis in Jupyter Notebooks.
 
 ## Contact
@@ -72,11 +80,11 @@ I am always open to collaboration and discussion. Please feel free to reach out:
 
 **Social Media:**
 *   [ORCID](https://orcid.org/0000-0001-5403-4650)
-*   [LinkedIn](https://www.linkedin.com/in/hongyu-xiao-73177491)
+*   [LinkedIn](https://www.linkedin.com/in/hongyuxiao-ai/)
 *   [GitHub](https://github.com/Hy-X)
 
 ---
 
 ## Keywords
 
-Seismology, Geophysics, Geology, Tectonics, Crustal Structure, North American Craton, Midcontinent, Illinois Basin, Michigan Basin, Induced Seismicity, Anthropogenic Earthquakes, Carbon Sequestration, Carbon Capture and Storage (CCS), Machine Learning, AI, Artificial Intelligence, Transfer Learning, Few-Shot Learning, Deep Learning, Edge Computing, Microseismic Event Detection, Receiver Functions, H-κ-c Analysis, Ambient Noise Tomography, Joint Inversion, Python, PyTorch, TensorFlow, ObsPy, SeisBench, SAC, GMT, PyGMT, High-Performance Computing (HPC), Slurm, Seismic Monitoring, Real-Time Detection, Nodal Arrays, Oklahoma Geological Survey.
+Seismology, Geophysics, Geology, Tectonics, Crustal Structure, North American Craton, Midcontinent, Illinois Basin, Michigan Basin, Induced Seismicity, Anthropogenic Earthquakes, Carbon Sequestration, Carbon Capture and Storage (CCS), Machine Learning, AI, Artificial Intelligence, Transfer Learning, Few-Shot Learning, Deep Learning, Edge Computing, Microseismic Event Detection, Receiver Functions, H-κ-c Analysis, Ambient Noise Tomography, Joint Inversion, Python, PyTorch, TensorFlow, ObsPy, SeisBench, SAC, GMT, PyGMT, High-Performance Computing (HPC), Slurm, Seismic Monitoring, Real-Time Detection, Nodal Arrays, Oklahoma Geological Survey, NSF proposal review, academic service.
