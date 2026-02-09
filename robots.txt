@@ -5,18 +5,8 @@
 User-agent: *
 Allow: /
 
-# Disallow crawling of unnecessary directories (if any)
-Disallow: /js/
-Disallow: /css/
-Disallow: /images/
-Disallow: /styles/
-Disallow: /scripts/
-Disallow: /ISGS/
-Disallow: /OU_Tutorial_Ver_2/
-Disallow: /Jupter_Notebooks/
-Disallow: /GMT/
-Disallow: /papers/
-Disallow: /pdf_files/
+# Allow all assets and content to be indexed (Crucial for AI/LLMs)
+# We want PDFs, Code, and Images to be found.
 
 # Point to sitemap for better SEO
 Sitemap: https://hy-x.github.io/sitemap.xml
