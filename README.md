@@ -12,7 +12,7 @@
 I am a **Research Associate** at the **University of Oklahoma | Oklahoma Geological Survey**, with a **Ph.D. in Seismology and Tectonics** from the **University of Illinois at Urbana-Champaign**. My work centers on the intersection of seismology, tectonics, and data science to address critical questions in Earth science.
 
 My primary research interests include:
--   **Crustal Structure & Tectonics:** Investigating the crustal morphology of the North American Midcontinent using receiver functions (H-κ-c) and ambient noise tomography.
+-   **Crustal Structure & Tectonics:** Investigating the crustal morphology of the North American Midcontinent using receiver functions (H-κ-c) and ambient noise surface wave tomography.
 -   **Induced Seismicity:** Monitoring and analyzing anthropogenic earthquakes, particularly those related to energy production and carbon sequestration.
 -   **Machine Learning & AI in Seismology:** Applying advanced AI/ML techniques, including transfer learning and few-shot learning, for microseismic event detection and analysis.
 -   **Edge Computing for Seismic Monitoring:** Developing lightweight AI models for real-time, edge-enabled seismic detection systems.
