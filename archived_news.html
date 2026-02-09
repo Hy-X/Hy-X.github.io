@@ -36,20 +36,19 @@
         <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-primary" color-on-scroll="400">
           <div class="container">
             <div class="navbar-translate">
-              <a class="navbar-brand" href="#" rel="tooltip">Hongyu Xiao</a>
+              <a class="navbar-brand" href="index.html" rel="tooltip">Hongyu Xiao</a>
               <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar bar1"></span><span class="navbar-toggler-bar bar2"></span><span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
             <div class="collapse navbar-collapse justify-content-end" id="navigation">
               <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="#About">About Me</a></li>
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="#Research">Research</a></li>
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="#Education_updated">Education</a></li>
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="#Skill">Skill</a></li>
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="#Teaching">Teaching</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="index.html">Index Page</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#ArchivedNews">Archived News</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="Knowledge.html">Science Insights</a></li>
                 <li class="nav-item"><a class="nav-link smooth-scroll" href="Codes.html">Code</a></li>
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="#Contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="EarthquakeWatch.html">Earthquake Watch</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="index.html#Contact">Contact</a></li>
               </ul>
             </div>
           </div>
@@ -58,100 +57,118 @@
     </header>
 
     <div class="page-content">
-      <div class="container mt-5">
-        <h1 class="h4 text-center mb-4">Archived News</h1>
+      <section id="ArchivedNews" class="news-section" aria-labelledby="archived-news-heading">
+        <div class="container">
+          <h1 id="archived-news-heading" class="h4 text-center mb-4 title">Archived News</h1>
 
-        <ul class="list-unstyled">
+          <div class="card shadow-sm p-4 mb-5 bg-white rounded">
+            <div class="card-body">
+              <ul class="list-unstyled mb-0">
 
-          <article class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
-            <meta itemprop="datePublished" content="2025-03-01">
-            <meta itemprop="author" content="Hongyu Xiao">
-            <div class="news-header d-flex align-items-center mb-2">
-              <i class="fa fa-calendar text-primary mr-2" aria-hidden="true"></i>
-              <h2 class="news-title mb-0" itemprop="headline">Poster Award at DISC Inaugural Data Science Symposium</h2>
+                <li class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
+                  <article class="news-article" itemprop="article">
+                    <meta itemprop="datePublished" content="2025-03-01">
+                    <meta itemprop="author" content="Hongyu Xiao">
+                    <header class="news-header d-flex align-items-center mb-2">
+                      <i class="fa fa-calendar text-primary mr-2" aria-hidden="true"></i>
+                      <h3 class="news-title mb-0" itemprop="headline">Poster Award at DISC Inaugural Data Science Symposium</h3>
+                    </header>
+                    <p class="news-content" itemprop="description">
+                      In March 2025, I attended and presented at the <strong>"Innovating for Impact: DISC Inaugural Data Science Symposium"</strong>, hosted by the <strong>Data Institute for Societal Challenges (DISC)</strong>. This symposium focused on cutting-edge <strong>artificial intelligence (AI) research</strong>. I was honored to receive the <strong>3rd place Poster Award</strong> for my research on applying <em>AI techniques to induced seismicity analysis</em>.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="news-item mb-4" itemscope itemtype="https://schema.org/ScholarlyArticle">
+                  <article class="news-article" itemprop="article">
+                    <meta itemprop="datePublished" content="2025-03-01">
+                    <meta itemprop="author" content="Hongyu Xiao">
+                    <header class="news-header d-flex align-items-center mb-2">
+                      <i class="fa fa-book text-primary mr-2" aria-hidden="true"></i>
+                      <h3 class="news-title mb-0" itemprop="headline">Paper Published in Earth and Planetary Science Letters</h3>
+                    </header>
+                    <p class="news-content" itemprop="description">
+                      My paper <strong>"Moho depth (crustal thickness) variations under the northeastern midcontinent of North America"</strong> was published in <em>Earth and Planetary Science Letters</em> (EPSL). Using enhanced <strong>H-κ-c receiver-function analysis</strong>, this study reveals significant crustal boundaries correlating with the <strong>Illinois Basin</strong> and <strong>Precambrian tectonic fabrics</strong>, challenging previous flat-slab models of the craton. <br>
+                      <a href="https://doi.org/10.1016/j.epsl.2025.119289" target="_blank" rel="noopener noreferrer">DOI: 10.1016/j.epsl.2025.119289</a>
+                    </p>
+                  </article>
+                </li>
+
+                <li class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
+                  <article class="news-article" itemprop="article">
+                    <meta itemprop="datePublished" content="2025-01-15">
+                    <meta itemprop="author" content="Hongyu Xiao">
+                    <header class="news-header d-flex align-items-center mb-2">
+                      <i class="fa fa-calendar text-primary mr-2" aria-hidden="true"></i>
+                      <h3 class="news-title mb-0" itemprop="headline">John D. Pigott Colloquium Series Presentation</h3>
+                    </header>
+                    <p class="news-content" itemprop="description">
+                      In January 2025, I was invited to present my research on <strong>Midcontinent tectonic processes</strong> at the <strong>School of Geosciences, University of Oklahoma</strong>, as part of their prestigious <em>John D. Pigott Colloquium Series</em>. This event provided an excellent platform to showcase my work and engage with leading experts in the field.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
+                  <article class="news-article" itemprop="article">
+                    <meta itemprop="datePublished" content="2025-01-20">
+                    <meta itemprop="author" content="Hongyu Xiao">
+                    <header class="news-header d-flex align-items-center mb-2">
+                      <i class="fa fa-calendar text-primary mr-2" aria-hidden="true"></i>
+                      <h3 class="news-title mb-0" itemprop="headline">Best Poster Award at OU Sustainability Forum</h3>
+                    </header>
+                    <p class="news-content" itemprop="description">
+                      In January 2025, I participated in the <strong>University of Oklahoma Sustainability Forum</strong> and won the <strong>Best Poster Presentation Award</strong>. My poster showcased the application of <strong>transfer learning</strong> in <em>micro seismic event detection</em>, highlighting innovative methodologies to enhance data analysis and environmental sustainability efforts.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
+                  <article class="news-article" itemprop="article">
+                    <meta itemprop="datePublished" content="2024-12-15">
+                    <meta itemprop="author" content="Hongyu Xiao">
+                    <header class="news-header d-flex align-items-center mb-2">
+                      <i class="fa fa-calendar text-primary mr-2" aria-hidden="true"></i>
+                      <h3 class="news-title mb-0" itemprop="headline">AGU Meeting 2024: AL/ML in Induced Seismicity Monitoring</h3>
+                    </header>
+                    <p class="news-content" itemprop="description">
+                      In December 2024, I presented our research on <strong>transfer learning techniques</strong> for <em>induced seismicity monitoring</em> at the <strong>AGU Annual Meeting</strong>. Representing the <strong>University of Oklahoma</strong>, the presentation highlighted the potential of applying <strong>machine learning in seismology</strong> to detect and analyze seismic events with greater efficiency. The work was well-received by scientists worldwide, sparking insightful discussions and fostering new collaborations.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
+                  <article class="news-article" itemprop="article">
+                    <meta itemprop="datePublished" content="2024-04-01">
+                    <meta itemprop="author" content="Hongyu Xiao">
+                    <header class="news-header d-flex align-items-center mb-2">
+                      <i class="fa fa-briefcase text-primary mr-2" ariJoined Oklahoma Geological Survey</h3>
+                    </header>
+                    <p class="news-content" itemprop="description">
+                      In April 2024, I joined the <strong>University of Oklahoma</strong> and the <strong>Oklahoma Geological Survey (OGS)</strong> as a Research Associate. My research focuses on <strong>induced seismicity monitoring</strong> and <strong>carbon storage safety (CCS)</strong>, developing real-time detection systems for anthropogenic earthquake mitigation
+                      In April 2024, I joined the <strong>University of Oklahoma</strong> as a Research Associate. My work focuses on <em>induced seismicity monitoring</em> and <em>carbon sequestration</em>, addressing critical challenges in anthropogenic earthquake research and sustainable environmental solutions.
+                    </p>
+                  </article>
+                </li>
+
+                <li class="news-item mb-0" itemscope itemtype="https://schema.org/NewsArticle">
+                  <article class="news-article" itemprop="article">
+                    <meta itemprop="datePublished" content="2023-12-15">
+                    <meta itemprop="author" content="Hongyu Xiao">
+                    <header class="news-header d-flex align-items-center mb-2">
+                      <i class="fa fa-graduation-cap text-primary mr-2" aria-hidden="true"></i>
+                      <h3 class="news-title mb-0" itemprop="headline">Ph.D. Dissertation Submitted</h3>
+                    </header>
+                    <p class="news-content" itemprop="description">
+                      In December 2023, I submitted my Ph.D. dissertation, which explores seismic activity and crustal morphology in the <strong>Midcontinent of North America</strong>. The research provides valuable insights into earthquake studies and tectonic processes.
+                    </p>
+                  </article>
+                </li>
+
+              </ul>
             </div>
-            <p class="news-content" itemprop="description">
-              In March 2025, I attended and presented at the <strong>"Innovating for Impact: DISC Inaugural Data Science Symposium"</strong>, hosted by the <strong>Data Institute for Societal Challenges (DISC)</strong>. This symposium focused on cutting-edge <strong>artificial intelligence (AI) research</strong>. I was honored to receive the <strong>3rd place Poster Award</strong> for my research on applying <em>AI techniques to induced seismicity analysis</em>.
-            </p>
-          </article>
-
-          <article class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
-            <meta itemprop="datePublished" content="2025-03-01">
-            <meta itemprop="author" content="Hongyu Xiao">
-            <div class="news-header d-flex align-items-center mb-2">
-              <i class="fa fa-calendar text-primary mr-2" aria-hidden="true"></i>
-              <h2 class="news-title mb-0" itemprop="headline">Paper Published in Earth and Planetary Science Letters</h2>
-            </div>
-            <p class="news-content" itemprop="description">
-              In March 2025, my peer-reviewed paper titled <strong>"Moho depth (crustal thickness) variations under the northeastern midcontinent of North America, based on H-κ− c receiver-function analysis"</strong> was published in <em>Earth and Planetary Science Letters</em>. This study provides key insights into <strong>crustal structure variations in the northeastern Midcontinent</strong>, enhancing our understanding of regional tectonic processes. Read the full paper here: <a href="https://doi.org/10.1016/j.epsl.2025.119289" target="_blank" rel="external">https://doi.org/10.1016/j.epsl.2025.119289</a>.
-            </p>
-          </article>
-
-          <article class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
-            <meta itemprop="datePublished" content="2025-01-15">
-            <meta itemprop="author" content="Hongyu Xiao">
-            <div class="news-header d-flex align-items-center mb-2">
-              <i class="fa fa-calendar text-primary mr-2" aria-hidden="true"></i>
-              <h2 class="news-title mb-0" itemprop="headline">John D. Pigott Colloquium Series Presentation</h2>
-            </div>
-            <p class="news-content" itemprop="description">
-              In January 2025, I was invited to present my research on <strong>Midcontinent tectonic processes</strong> at the <strong>School of Geosciences, University of Oklahoma</strong>, as part of their prestigious <em>John D. Pigott Colloquium Series</em>. This event provided an excellent platform to showcase my work and engage with leading experts in the field.
-            </p>
-          </article>
-
-
-          <article class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
-            <meta itemprop="datePublished" content="2025-01-20">
-            <meta itemprop="author" content="Hongyu Xiao">
-            <div class="news-header d-flex align-items-center mb-2">
-              <i class="fa fa-calendar text-primary mr-2" aria-hidden="true"></i>
-              <h2 class="news-title mb-0" itemprop="headline">Best Poster Award at OU Sustainability Forum</h2>
-            </div>
-            <p class="news-content" itemprop="description">
-              In January 2025, I participated in the <strong>University of Oklahoma Sustainability Forum</strong> and won the <strong>Best Poster Presentation Award</strong>. My poster showcased the application of <strong>transfer learning</strong> in <em>micro seismic event detection</em>, highlighting innovative methodologies to enhance data analysis and environmental sustainability efforts.
-            </p>
-          </article>
-
-          <article class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
-            <meta itemprop="datePublished" content="2024-12-15">
-            <meta itemprop="author" content="Hongyu Xiao">
-            <div class="news-header d-flex align-items-center mb-2">
-              <i class="fa fa-calendar text-primary mr-2" aria-hidden="true"></i>
-              <h2 class="news-title mb-0" itemprop="headline">AGU Meeting 2024: AL/ML in Induced Seismicity Monitoring</h2>
-            </div>
-            <p class="news-content" itemprop="description">
-              In December 2024, I presented our research on <strong>transfer learning techniques</strong> for <em>induced seismicity monitoring</em> at the <strong>AGU Annual Meeting</strong>. Representing the <strong>University of Oklahoma</strong>, the presentation highlighted the potential of applying <strong>machine learning in seismology</strong> to detect and analyze seismic events with greater efficiency. The work was well-received by scientists worldwide, sparking insightful discussions and fostering new collaborations.
-            </p>
-          </article>
-
-          <!-- Previous news items moved from main page -->
-           
-
-          <article class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
-            <meta itemprop="datePublished" content="2024-04-01">
-            <meta itemprop="author" content="Hongyu Xiao">
-            <div class="news-header d-flex align-items-center mb-2">
-              <i class="fa fa-briefcase text-primary mr-2" aria-hidden="true"></i>
-              <h2 class="news-title mb-0" itemprop="headline">New Research Associate Position at University of Oklahoma</h2>
-            </div>
-            <p class="news-content" itemprop="description">
-              In April 2024, I joined the <strong>University of Oklahoma</strong> as a Research Associate. My work focuses on <em>induced seismicity monitoring</em> and <em>carbon sequestration</em>, addressing critical challenges in anthropogenic earthquake research and sustainable environmental solutions.
-            </p>
-          </article>
-
-          <article class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
-            <meta itemprop="datePublished" content="2023-12-15">
-            <meta itemprop="author" content="Hongyu Xiao">
-            <div class="news-header d-flex align-items-center mb-2">
-              <i class="fa fa-graduation-cap text-primary mr-2" aria-hidden="true"></i>
-              <h2 class="news-title mb-0" itemprop="headline">Ph.D. Dissertation Submitted</h2>
-            </div>
-            <p class="news-content" itemprop="description">
-              In December 2023, I submitted my Ph.D. dissertation, which explores seismic activity and crustal morphology in the <strong>Midcontinent of North America</strong>. The research provides valuable insights into earthquake studies and tectonic processes.
-            </p>
-          </article>
-        </ul>
-      </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- JSON-LD Structured Data -->
@@ -172,7 +189,12 @@
           "name": "University of Oklahoma",
           "url": "https://www.ou.edu"
         },
-        "knowsAbout": ["Seismology", "Crustal Structure Analysis", "Machine Learning", "Induced Seismicity", "Geoscience Research"]
+        "knowsAbout": ["Seismology", "Crustal Structure Analysis", "Machine Learning", "Induced Seismicity", "Geoscience Research"],
+        "sameAs": [
+          "https://orcid.org/0000-0001-5403-4650",
+          "https://www.linkedin.com/in/hongyuxiao-ai/",
+          "https://github.com/Hy-X"
+        ]
       }
     }
     </script>
