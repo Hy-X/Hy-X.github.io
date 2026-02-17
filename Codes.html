@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hongyu Xiao</title>
-    <meta name="description" content="This is Hongyu(Jeff) Xiao's personal website. I will post all the things I cared online!"/>
+    <title>Hongyu Xiao - Research Code & Tutorials</title>
+    <meta name="description" content="Hongyu Xiao's research code releases, tutorials, and projects. Explore deep learning frameworks for seismic analysis, Python tutorials, GMT/SAC guides, and HPC resources for geophysical research."/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/aos.css" rel="stylesheet">
@@ -468,6 +468,29 @@
         <h3>SeisBench with Synthetic Seismogram</h3>
         <p class="text-muted">Open-source Code Release · PyTorch · SeisBench · Author: Hongyu</p>
 
+        <!-- Schema.org SoftwareSourceCode Markup -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          "name": "SeisBench with Synthetic Seismogram",
+          "description": "Deep learning framework for seismic phase picking using PyTorch, SeisBench, and synthetic training data. Provides end-to-end tools for detecting and picking seismic phase arrivals (P and S waves) from three-component seismograms using neural networks.",
+          "url": "https://github.com/Hy-X/seisbench_with_synthetic_seismogram",
+          "author": {
+            "@type": "Person",
+            "name": "Hongyu Xiao"
+          },
+          "programmingLanguage": "Python",
+          "runtimePlatform": ["PyTorch", "SeisBench"],
+          "applicationCategory": "Scientific Research Software",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+        </script>
+
         <h4 style="margin-top: 20px; margin-bottom: 10px;">Project Overview</h4>
         <p>
           A comprehensive deep learning framework for seismic phase picking using
@@ -519,6 +542,17 @@
           <code style="background-color: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-family: monospace;">
             git clone git@github.com:Hy-X/seisbench_with_synthetic_seismogram.git
           </code>
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">Getting Started</h4>
+        <p style="font-size: 0.95em; line-height: 1.6;">
+          <code style="background-color: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-family: monospace;">
+            pip install seisbench torch
+          </code>
+        </p>
+        <p style="font-size: 0.95em; line-height: 1.6;">
+          Visit the <a href="https://github.com/Hy-X/seisbench_with_synthetic_seismogram#readme" target="_blank" rel="noopener" style="color: #0066cc; text-decoration: none;">GitHub README</a> for detailed installation and usage instructions. 
+          See our <a href="#seisbench-tutorial" style="color: #0066cc; text-decoration: none;">SeisBench tutorial →</a> for data loading and visualization examples.
         </p>
 
         <h4 style="margin-top: 15px; margin-bottom: 10px;">Use Cases</h4>
