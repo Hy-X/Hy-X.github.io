@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>萧鸿宇 - 研究代码与教程</title>
+    <meta name="description" content="萧鸿宇的研究代码发布、教程和项目。探索用于地震分析的深度学习框架、Python 教程、GMT/SAC 指南以及地球物理研究的高性能计算资源。"/>
+    <link rel="canonical" href="https://hy-x.github.io/Codes_zh.html"/>
+    <link rel="alternate" hreflang="en" href="https://hy-x.github.io/Codes.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://hy-x.github.io/Codes_zh.html">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="萧鸿宇 - 研究代码与教程"/>
+    <meta property="og:description" content="地震分析、深度学习、地球物理学和 HPC 领域的研究代码发布、教程和项目。"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://hy-x.github.io/Codes_zh.html"/>
+    <meta property="og:image" content="https://hy-x.github.io/images/Hongyu_Xiao.jpg"/>
+    <meta property="og:site_name" content="萧鸿宇"/>
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="萧鸿宇 - 研究代码与教程"/>
+    <meta name="twitter:description" content="地震分析、深度学习、地球物理学和 HPC 领域的研究代码发布、教程和项目。"/>
+    <meta name="twitter:image" content="https://hy-x.github.io/images/Hongyu_Xiao.jpg"/>
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "萧鸿宇",
+      "jobTitle": "地震学研究员, 程序员",
+      "url": "https://hy-x.github.io/index_zh.html",
+      "image": "https://hy-x.github.io/images/Hongyu_Xiao.jpg",
+      "sameAs": [
+        "https://github.com/Hy-X"
+      ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "萧鸿宇 - 研究代码与教程",
+      "url": "https://hy-x.github.io/Codes_zh.html",
+      "description": "地震分析、深度学习、地球物理学和 HPC 领域的研究代码发布、教程和项目。"
+    }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/aos.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+  </head>
+  <body id="top">
+    <header>
+      <div class="profile-page sidebar-collapse">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-primary" color-on-scroll="400">
+          <div class="container">
+            <div class="navbar-translate"><a class="navbar-brand" href="index_zh.html" rel="tooltip">萧鸿宇</a>
+              <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-bar bar1"></span><span class="navbar-toggler-bar bar2"></span><span class="navbar-toggler-bar bar3"></span></button>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+              <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="EarthquakeWatch.html">地震监测</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#code-releases">代码发布</a></li>
+		<li class="nav-item"><a class="nav-link smooth-scroll" href="#Python">Python</a></li>
+		<li class="nav-item"><a class="nav-link smooth-scroll" href="#CSH">CSH</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#GMT">GMT</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#SAC">SAC</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#Miscellaneous">杂项</a></li>
+                <li class="nav-item"><a class="nav-link" href="Codes.html">English</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="page-content">
+      <div>
+<div class="profile-page">
+  <div class="wrapper">
+    <div class="page-header page-header-small" filter-color="blue">
+      <div class="page-header-image" data-parallax="true" style="background-image: url('images/cc-bg-hyx.jpg');"></div>
+      <div class="container">
+        <div class="content-center">
+          <div class="cc-profile-image"><a href="#"><img src="images/Hongyu_Xiao.jpg" alt="Hongyu Xiao - Seismology Researcher and Coder"/></a></div>
+          <div class="h2 title">萧鸿宇</div>
+          <p class="category text-white">地震学研究员，程序员</p><a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">联系我</a><a class="btn btn-primary" href="HongyuX_CV_20260107.pdf" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">个人简历</a>
+        </div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="ou-hpc-tutorial">
+  <div class="container">
+
+    <!-- Section Header -->
+    <header class="mb-4">
+      <h2><strong>HPC 教程 – 俄克拉荷马大学</strong></h2>
+      <p>
+        关于使用<strong>俄克拉荷马大学</strong><strong>高性能计算 (HPC)</strong> 资源的结构化分步教程系列，重点介绍 <strong>OSCER</strong> 和 <strong>DISC</strong>。
+      </p>
+    </header>
+
+    <!-- Overview -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+        <h3>OU HPC 集群工作流设置（概述）</h3>
+        <p class="text-muted">HPC 教程 2024 · 俄克拉荷马大学 · 作者：Hongyu</p>
+
+        <p>
+          在 OU HPC 系统上工作的端到端概述，专为首次使用的用户和过渡到集群计算的研究人员设计。
+        </p>
+        <p>
+          包含简明的快速入门清单，可立即使用。
+        </p>
+
+        <p>
+          <a href="OU_Tutorial_Ver_2/Setting Up Workflow On OU-Cluster (HPC) A Step-by- 15e2249457678077bff3ee885fdbe943.html"
+             target="_blank" rel="noopener">
+            查看教程概述 →
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <!-- Part 0 -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+        <h3>HPC 的 Linux 命令行基础（第 0 部分）</h3>
+        <p class="text-muted">HPC 教程 2024 · OU OSCER & DISC</p>
+
+        <p>
+          在共享 HPC 环境中有效工作所需的核心 Linux 命令行技能。
+        </p>
+        <p>
+          重点关注导航、文件操作、权限和进程感知。
+        </p>
+
+        <p>
+          <a href="OU_Tutorial_Ver_2/Setting Up Workflow On OU-Cluster (HPC) A Step-by- 15e2249457678077bff3ee885fdbe943/Fundamental command-line commands (0) 15e22494576780d8a7cedbf310b6a06b.html"
+             target="_blank" rel="noopener">
+            阅读第 0 部分：命令行基础 →
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <!-- Part 1 -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+        <h3>访问 OSCER 和 DISC 资源（第 1 部分）</h3>
+        <p class="text-muted">HPC 教程 2024 · 俄克拉荷马大学</p>
+
+        <p>
+          申请 OU HPC 和 GPU 访问权限的实用指南。
+        </p>
+        <p>
+          涵盖帐户设置、审批流程和基于 SSH 的登录测试。
+        </p>
+
+        <p>
+          <a href="OU_Tutorial_Ver_2/Setting Up Workflow On OU-Cluster (HPC) A Step-by- 15e2249457678077bff3ee885fdbe943/Introduction and Getting Access (1) 15e22494576780d08a7cf710c0b75f19.html"
+             target="_blank" rel="noopener">
+            阅读第 1 部分：访问与登录 →
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <!-- Part 2 -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+        <h3>HPC 环境配置（第 2 部分）</h3>
+        <p class="text-muted">HPC 教程 2024 · OU OSCER & DISC</p>
+
+        <p>
+          配置可复现且高效的 HPC 工作环境的指南。
+        </p>
+        <p>
+          主题包括 <code>.bashrc</code>、别名、环境模块、Slurm 基础、Conda、CUDA 和 SeisBench。
+        </p>
+
+        <p>
+          <a href="OU_Tutorial_Ver_2/Setting Up Workflow On OU-Cluster (HPC) A Step-by- 15e2249457678077bff3ee885fdbe943/Environment Setup Guide (2) 15e22494576780ada078dbd9f0b1d0ce.html"
+             target="_blank" rel="noopener">
+            阅读第 2 部分：环境设置 →
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <!-- Part 3 -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+        <h3>OU HPC 系统上的数据管理（第 3 部分）</h3>
+        <p class="text-muted">HPC 教程 2024 · OU OSCER</p>
+
+        <p>
+          在共享 HPC 文件系统上组织、传输和存储数据的最佳实践。
+        </p>
+        <p>
+          涵盖 SCP、SFTP、存储位置、配额和常见陷阱。
+        </p>
+
+        <p>
+          <a href="OU_Tutorial_Ver_2/Setting Up Workflow On OU-Cluster (HPC) A Step-by- 15e2249457678077bff3ee885fdbe943/Data Management Guide (3) 15e22494576780d4bc98f02c677b01d1.html"
+             target="_blank" rel="noopener">
+            阅读第 3 部分：数据管理 →
+          </a>
+        </p>
+      </div>
+    </article>
+
+    <!-- Part 4 -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+        <h3>Slurm 作业提交与监控（第 4 部分）</h3>
+        <p class="text-muted">HPC 教程 2024 · 俄克拉荷马大学</p>
+
+        <p>
+          使用 Slurm 工作负载管理器运行、监控和故障排除作业的实践指南。
+        </p>
+        <p>
+          关键命令：<code>sbatch</code>、<code>squeue</code>、
+          <code>sacct</code>、<code>sstat</code>。
+        </p>
+
+        <p>
+          <a href="OU_Tutorial_Ver_2/Setting Up Workflow On OU-Cluster (HPC) A Step-by- 15e2249457678077bff3ee885fdbe943/Job Management Guide (4) 15e22494576780378594c92ed9d4102b.html"
+             target="_blank" rel="noopener">
+            阅读第 4 部分：作业管理 →
+          </a>
+        </p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="section" id="seisbench-tutorial">
+  <div class="container">
+
+    <!-- Section Header -->
+    <header class="mb-4">
+      <h2><strong>SeisBench 教程</strong></h2>
+      <p>
+        使用 <strong>SeisBench</strong> 加载、检查和可视化地震数据集以进行基于机器学习的地震学的实践教程。
+      </p>
+    </header>
+
+    <!-- Tutorial Card -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+
+        <h3>加载 SeisBench 数据与数据集统计可视化</h3>
+        <p class="text-muted">SeisBench 教程 2025 · 作者：Hongyu</p>
+
+        <p>
+          加载 SeisBench 数据集并执行基本数据集检查的实用演练。
+        </p>
+
+        <p>
+          演示如何使用条形图可视化数据集组成，以总结标签和类别分布。
+        </p>
+
+        <p>
+          快速入门工作流：加载数据集，检查标签，并生成显示每个类别样本计数的条形图。
+        </p>
+
+        <p>
+          <a href="OU_Tutorial_Ver_2/SeisBench Tutorial Loading, Inspecting, and Visual.html"
+             target="_blank" rel="noopener">
+            查看 SeisBench 教程 →
+          </a>
+        </p>
+
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- Code Releases Section -->
+<section class="section" id="code-releases">
+  <div class="container">
+
+    <!-- Section Header -->
+    <header class="mb-4">
+      <h2><strong>研究代码发布</strong></h2>
+      <p>
+        用于地震数据分析、深度学习和地球物理研究的开源科学软件项目。
+      </p>
+    </header>
+
+    <!-- Project Card: SeisBench with Synthetic Seismogram -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+
+        <h3>包含合成地震图的 SeisBench</h3>
+        <p class="text-muted">开源代码发布 · PyTorch · SeisBench · 作者：Hongyu</p>
+
+        <!-- Schema.org SoftwareSourceCode Markup -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          "name": "SeisBench with Synthetic Seismogram",
+          "description": "Deep learning framework for seismic phase picking using PyTorch, SeisBench, and synthetic training data. Provides end-to-end tools for detecting and picking seismic phase arrivals (P and S waves) from three-component seismograms using neural networks.",
+          "url": "https://github.com/Hy-X/seisbench_with_synthetic_seismogram",
+          "author": {
+            "@type": "Person",
+            "name": "Hongyu Xiao"
+          },
+          "programmingLanguage": "Python",
+          "runtimePlatform": ["PyTorch", "SeisBench"],
+          "applicationCategory": "Scientific Research Software",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+        </script>
+
+        <h4 style="margin-top: 20px; margin-bottom: 10px;">项目概述</h4>
+        <p>
+          一个使用 <strong>PyTorch</strong>、<strong>SeisBench</strong> 和合成训练数据的地震震相拾取综合深度学习框架。
+          该管道提供了端到端工具，用于使用神经网络从三分量地震图中检测和拾取地震震相到达（P 波和 S 波）。
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">主要功能</h4>
+        <ul style="margin-left: 20px; line-height: 1.8;">
+          <li>
+            <strong>合成数据生成：</strong> 创建具有可配置参数的逼真三分量合成地震图，用于训练数据集
+          </li>
+          <li>
+            <strong>数据预处理：</strong> 标准化转换为 SeisBench 格式，以实现可互操作的工作流和可复现的结果
+          </li>
+          <li>
+            <strong>深度学习模型：</strong> 训练 PhaseNet 和其他神经网络架构以进行自动震相拾取
+          </li>
+          <li>
+            <strong>模型评估：</strong> 用于预测分析和性能指标的综合评估工具集
+          </li>
+          <li>
+            <strong>可视化工具：</strong> 用于地震图检查、模型输出和结果分析的高级绘图实用程序
+          </li>
+        </ul>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">技术栈</h4>
+        <p>
+          <strong>Python</strong> · <strong>PyTorch</strong> · <strong>SeisBench</strong> · 
+          <strong>NumPy</strong> · <strong>Matplotlib</strong> · <strong>ObsPy</strong>
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">仓库与文档</h4>
+        <p>
+          <a href="https://github.com/Hy-X/seisbench_with_synthetic_seismogram" 
+             target="_blank" rel="noopener noreferrer"
+             style="font-weight: 500; text-decoration: none; color: #0066cc;">
+            在 GitHub 上查看：seisbench_with_synthetic_seismogram →
+          </a>
+        </p>
+        <p style="font-size: 0.95em; color: #666; margin-top: 10px;">
+          克隆：
+          <code style="background-color: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-family: monospace;">
+            git clone git@github.com:Hy-X/seisbench_with_synthetic_seismogram.git
+          </code>
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">入门指南</h4>
+        <p style="font-size: 0.95em; line-height: 1.6;">
+          <code style="background-color: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-family: monospace;">
+            pip install seisbench torch
+          </code>
+        </p>
+        <p style="font-size: 0.95em; line-height: 1.6;">
+          访问 <a href="https://github.com/Hy-X/seisbench_with_synthetic_seismogram#readme" target="_blank" rel="noopener noreferrer" style="color: #0066cc; text-decoration: none;">GitHub README</a> 获取详细的安装和使用说明。
+          查看我们的 <a href="#seisbench-tutorial" style="color: #0066cc; text-decoration: none;">SeisBench 教程 →</a> 获取数据加载和可视化示例。
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">用例</h4>
+        <ul style="margin-left: 20px; line-height: 1.8;">
+          <li>使用合成地震数据训练震相拾取模型</li>
+          <li>对地震信号检测的深度学习架构进行基准测试</li>
+          <li>自动地震事件检测和定位研究</li>
+          <li>地球物理学机器学习的教育资源</li>
+        </ul>
+
+      </div>
+    </article>
+
+    <!-- Project Card: Oklad Annotation Workflow -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+
+        <h3>Oklad 标注工作流</h3>
+        <p class="text-muted">开源代码发布 · Python 3.7+ · 标注工具 · 作者：Hongyu</p>
+
+        <!-- Schema.org SoftwareSourceCode Markup -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          "name": "Oklad Annotation Workflow",
+          "description": "Comprehensive workflow for annotation tasks using the Oklad model. Contains optimized, independent scripts and tools for automated annotation processing with Python 3.7+ support.",
+          "url": "https://github.com/Hy-X/oklad_annotate_workflow",
+          "author": {
+            "@type": "Person",
+            "name": "Hongyu Xiao"
+          },
+          "programmingLanguage": "Python",
+          "runtimePlatform": "Python 3.7+",
+          "applicationCategory": "Scientific Research Software",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+        </script>
+
+        <h4 style="margin-top: 20px; margin-bottom: 10px;">项目概述</h4>
+        <p>
+          使用 <strong>Oklad 模型</strong>进行标注任务的综合工作流。
+          该仓库提供了用于自动标注处理的<strong>优化、独立脚本和工具</strong>，实现了高效且可扩展的数据标注管道。
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">主要功能</h4>
+        <ul style="margin-left: 20px; line-height: 1.8;">
+          <li>
+            <strong>Oklad 模型集成：</strong> 利用 Oklad 模型进行高质量的自动标注处理和语义理解
+          </li>
+          <li>
+            <strong>模块化脚本架构：</strong> 独立、可重用的脚本，可以单独运行或链接在一起以实现灵活的工作流
+          </li>
+          <li>
+            <strong>批处理：</strong> 高效处理大规模标注任务，针对生产环境进行了优化
+          </li>
+          <li>
+            <strong>数据预处理：</strong> 内置工具，用于在标注前进行数据验证、清理和格式化
+          </li>
+          <li>
+            <strong>结果导出：</strong> 多种输出格式，可与下游分析工具无缝集成
+          </li>
+        </ul>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">技术栈</h4>
+        <p>
+          <strong>Python 3.7+</strong> · <strong>Seisbench</strong> · <strong>NumPy</strong> · 
+          <strong>Pandas</strong> · <strong>JSON/YAML</strong>
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">仓库与文档</h4>
+        <p>
+          <a href="https://github.com/Hy-X/oklad_annotate_workflow" 
+             target="_blank" rel="noopener noreferrer"
+             style="font-weight: 500; text-decoration: none; color: #0066cc;">
+            在 GitHub 上查看：oklad_annotate_workflow →
+          </a>
+        </p>
+        <p style="font-size: 0.95em; color: #666; margin-top: 10px;">
+          克隆：
+          <code style="background-color: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-family: monospace;">
+            git clone git@github.com:Hy-X/oklad_annotate_workflow.git
+          </code>
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">入门指南</h4>
+        <p style="font-size: 0.95em; line-height: 1.6;">
+          需要 <strong>Python 3.7 或更高版本</strong>。克隆仓库并按照 README 中的设置说明进行操作。
+        </p>
+        <p style="font-size: 0.95em; line-height: 1.6;">
+          访问 <a href="https://github.com/Hy-X/oklad_annotate_workflow#readme" target="_blank" rel="noopener noreferrer" style="color: #0066cc; text-decoration: none;">GitHub README</a> 获取详细的安装和使用说明，包括示例工作流和配置选项。
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">用例</h4>
+        <ul style="margin-left: 20px; line-height: 1.8;">
+          <li>研究数据集的自动大规模标注</li>
+          <li>语义分析和文本/数据标注管道</li>
+          <li>生产环境中标注任务的批处理</li>
+          <li>集成到机器学习项目的数据预处理工作流中</li>
+        </ul>
+
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<div class="section" id="Python">
+  <div class="container">
+	   <div class="h4 mt-0 title"><h4 style="text-align:left;"><b> Python </b> </h4></div>
+   
+     
+
+<div class="card" 
+    data-aos="fade-right" 
+    data-aos-offset="10" 
+    data-aos-duration="800">
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <div class="card-body">
+        <div class="h4 mt-0 title">
+          <h4 style="text-align:left;">俄克拉荷马地震流图</h4>
+        </div>
+        <div class="h5 mt-0 title" style="text-align:left;">[Python 教程] @ Hongyu</div>
+        <p>
+          使用俄克拉荷马地质调查局 (OGS) 地震目录的数据，探索 2010 年至 2024 年俄克拉荷马地区的地震活动趋势。本 Python 教程演示了如何创建流图以随时间可视化地震数据。学习如何处理地震数据集并生成有见地的地震分析可视化。
+        </p>
+        <img src="images/Oklahoma_Events_Streamgraph.png" alt="Oklahoma Events Streamgraph" style="width:100%; height:auto; border:1px solid #ddd; border-radius:4px; padding:5px;"/>
+        <p>
+          <a href="Jupter_Notebooks\OK_Event_Lat_Lon_Time_Depth_Mag.txt" target="_blank">下载示例数据文件</a> 以跟随本示例并重新创建可视化。
+        </p>
+        <p>
+          <a href="Jupter_Notebooks\Publish_OK_Event_Plot.html" target="_blank">点击查看详细内容！</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+    
+     <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">在 pandas 中读取 CSV 文件并制作散点图</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[Python 教程] @ Hongyu</div>
+	    <p> 如何将 CSV 文件读取到 pandas 中？这是一个如何加载 CSV 文件并制作散点图的示例。示例包括简单散点图、带有对称误差棒的散点图、带有非对称误差棒的散点图以及 plotly 散点图。</p>
+	    <p><a href="Jupter_Notebooks\Scatter_Plot_Example_Data.csv" target="_blank"> 本示例使用的 CSV 文件 </a> 以及 <a href="Jupter_Notebooks\1.0%20Read_CSV_File_in_Pandas_And_Make_Scatter_Plot.ipynb" target="_blank"> Notebook 文件 </a></p> 
+	    <p><a href="Jupter_Notebooks\1.0%20Read_CSV_File_in_Pandas_And_Make_Scatter_Plot.html" target="_blank"> 点击查看详细内容！</a></p>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">设置 Anaconda/jupyter notebook/模块</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[Python 教程] @ Hongyu</div>
+	    <p> 如何设置 Anaconda 环境以在地球科学中使用 python？这是使用它之前的一切开始。这篇文章展示了安装 Anaconda、Jupyter notebook、Pandas 和其他有用模块的说明。</p>
+	    <p><a href="Jupter_Notebooks\0%20Setting_Up_Environment%26Install_Packages.html" target="_blank"> 点击查看内容！</a></p>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>	
+
+
+ <div class="container">
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">北京大学2020年暑期学内容大纲</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[PKU Summer School 2020] @ Hongyu</div>
+	    <p> 北京大学2020年地球物理暑期学校</p>
+	    <p> 实验部分 课程涵盖内容 </p>
+	    <p><a href="Jupter_Notebooks\Intro.html" target="_blank"> 点击查看内容 !</a></p>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>	
+
+
+
+
+ <div class="container">
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">Jupyter Notebook简介和使用入门</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[PKU Summer School 2020] @ Hongyu</div>
+	    <p> 什么是Jupyter notebook？ 为什么要使用Jupyter Notebook？</p>
+	    <p> 如何安装Jupyter Notebook，入门的的安装和调试是怎样的？为什么大家喜欢使用这个平台进行调试？ </p>
+	    <p><a href="Jupter_Notebooks\Intro_JupyterLab.html" target="_blank"> 点击查看内容 !</a></p>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>	
+
+
+
+
+ <div class="container">
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">Numpy 简介和使用入门</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[PKU Summer School 2020] @ Hongyu</div>
+	    <p> 什么是Numpy？ 为什么要使用Numpy？</p>
+	    <p> 如何安装Numpy ，入门是怎样的? 有什么基本的使用方法？ </p>
+	    <p><a href="Jupter_Notebooks\Intro_Numpy.html" target="_blank"> 点击查看内容 !</a></p>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>	
+
+
+
+ <div class="container">
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">Python 简介和使用入门</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[PKU Summer School 2020] @ Hongyu</div>
+	    <p> 什么是Python？ 为什么要使用Python？</p>
+	    <p> 快速入门Python，什么是基本的语法？有什么基本的结构 或者 变量？ 如何看懂最基本的Python代码？ </p>
+	    <p><a href="Jupter_Notebooks\Intro_Python.html" target="_blank"> 点击查看内容 !</a></p>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>	
+</div>		
+
+<div class="section" id="pygmt-tutorial">
+  <div class="container">
+
+    <!-- Section Header -->
+    <header class="mb-4">
+      <h2><strong>PyGMT 教程：台站地图可视化</strong></h2>
+      <p>
+        使用 <strong>PyGMT</strong> 创建带有台站位置的高分辨率地形图的实践教程。示例使用<strong>俄克拉荷马城</strong>。
+      </p>
+    </header>
+
+    <!-- Tutorial Card -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+
+        <h3>使用 PyGMT 创建台站地图</h3>
+        <p class="text-muted">PyGMT 教程 2026 · 作者：Hongyu</p>
+
+        <p>
+          使用 PyGMT 在高分辨率地形图上绘制地震台站的分步指南。非常适合可视化地震研究的台站布局和区域地形。
+        </p>
+
+        <p>
+          包括用于加载台站坐标、自定义地图外观和添加注释以提高清晰度的 Python 代码示例。
+        </p>
+
+        <p>
+          快速入门工作流：导入 PyGMT，加载地形，绘制台站，添加地图特征。
+        </p>
+
+        <p>
+          <a href="Jupter_Notebooks/station-example-oklahoma-pygmt.html"
+             target="_blank" rel="noopener">
+            查看 Jupyter Notebook：台站地图示例 →
+          </a>
+        </p>
+      </div>
+    </article>
+        <!-- Second Tutorial Card -->
+    <article class="card"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+
+
+            <!-- Optional figure -->
+
+
+        <h3>查找阿巴拉契亚长期 BH 台站并使用 GMT 绘图</h3>
+        <p class="text-muted">PyGMT + ObsPy 教程 2026 · 作者：Hongyu</p>
+
+        <p>
+          使用 <strong>ObsPy</strong> 查询阿巴拉契亚地区地震台站的指南，包括边界框、时间范围和通道选择（此处使用 BH 通道）的过滤器。
+        </p>
+
+        <p>
+          将台站元数据保存为 CSV 文件以供进一步分析，然后使用 <strong>PyGMT</strong> 在区域地图上绘制台站以进行可视化。
+        </p>
+
+        <p>
+          快速入门工作流：定义区域和时间过滤器，通过 ObsPy 查询台站，导出 CSV，并使用 PyGMT 创建高分辨率台站地图。
+        </p>
+
+        <p>
+          <a href="Jupter_Notebooks/find_appalachian_longterm_BH_stations.html"
+             target="_blank" rel="noopener">
+            查看 Jupyter Notebook：阿巴拉契亚 BH 台站 →
+          </a>
+        </p>
+        <img src="images/appalachian_stations_map.png" 
+         alt="Map of Appalachian BH seismic stations" 
+         class="img-fluid mb-3">
+
+          <figcaption>使用 PyGMT 的俄克拉荷马城台站地图示例。</figcaption>
+        </figure>
+
+      </div>
+    </article>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+<div class="section" id="CSH">
+  <div class="container">
+	 <div class="h4 mt-0 title"><h4 style="text-align:left;"><b> CShell </b> </h4></div>
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">地震学Shell常用命令</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[PKU Summer School 2020] @ Hongyu</div>
+	    <p> 在服务器上常用的Shell命令都有哪些？如何使用？ </p>
+	    <p> 如何进行删改增查？如何既定重定向？如何组合使用多种命令？ </p>
+	    <p><a href="Jupter_Notebooks\Shell_Tutorial.html" target="_blank"> 点击查看内容 !</a></p>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+	
+<div class="section" id="GMT">
+  <div class="container">
+	 <div class="h4 mt-0 title"><h4 style="text-align:left;" ><a href="GMT/GMT.html"> <b> GMT </b> </a> </h4></div>
+
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">地震活动性绘图</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[GMT 绘图] @ Hongyu</div>
+	    <p> 如何使用 PSXY 制作带有地震活动性的 GMT 图？如何为 psxy 组织数据？ </p>
+	    <p> 如何设置背景底图以及如何添加色标？ </p>
+	    <p><a href="GMT/GMT.html#SeismicityPlot" target="_blank"> 点击查看内容！</a></p>  
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">位置绘图</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[GMT 绘图] @ Hongyu</div>
+	    <p> 如何使用 PSXY 在 CRUST 1.0 之上制作台站位置图？如何为 psxy 组织数据？ </p>
+	    <p> 如何设置背景底图以及如何添加色标？ </p>
+	    <p><a href="GMT/GMT.html#LocationPlot" target="_blank"> 点击查看内容！</a></p>  
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>	
+
+
+
+<div class="section" id="SAC">
+  <div class="container">
+	 <div class="h4 mt-0 title"><h4 style="text-align:left;"><b> SAC </b> </h4></div>
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;">地震学SAC常用命令</h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[PKU Summer School 2020] @ Hongyu</div>
+	    <p> 在服务器上常用的SAC命令都有哪些？如何使用？ </p>
+	    <p> 如何进行查看SAC表头信息？如何进行基本的绘图？ 如何脚本调用？如何做基本的滤波等处理？</p>
+	    <p><a href="Jupter_Notebooks\SAC_Tutorial.html" target="_blank"> 点击查看内容 !</a></p>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>	
+
+
+<div class="section" id="Miscellaneous">
+  <div class="container">
+	  <div class="h4 mt-0 title"><h4 style="text-align:left;"><b> 杂项 </b> </h4></div>
+    <div class="card" 
+	    data-aos="fade-right" 
+	    data-aos-offset="10" 
+	    data-aos-duration="800"
+	    >
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;"> 使用 youtube-dl 下载 AGU2020 视频 </h4></div>
+	    <div class="h5 mt-0 title" style="text-align:left;">[AGU2020_笔记] @ Hongyu</div>
+	    <p> AGU2020 上线了！如何从 AGU 网站保存数百万个高质量的科学讲座并在以后学习？尝试使用 youtube-dl，免费的命令行视频下载器来下载这些视频！ </p>
+	    <p><a href="Jupter_Notebooks\Youtube-dl download AGU videos.html" target="_blank"> 点击查看详细内容！</a></p>  
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  <div class="card" 
+    data-aos="fade-right" 
+    data-aos-offset="10" 
+    data-aos-duration="800">
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <div class="card-body">
+        <div class="h4 mt-0 title">
+          <h4 style="text-align:left;">伊利诺伊州地质调查局 2022 夏季 HVSR</h4>
+        </div>
+        <div class="h5 mt-0 title" style="text-align:left;">[总结报告] @ Hongyu</div>
+        <p>
+          在 2022 年夏季，作为伊利诺伊州地质调查局项目的一部分，我探索了用于估算伊利诺伊州沉积物厚度的水平垂直谱比 (HVSR) 方法。本总结包括我使用 IRIS-HVSR 软件包的工作，并将其与 ResShake3D 集成以用于沉积盆地分析的实际应用。
+        </p>
+        <img src="images/HVSR.png" alt="HVSR Analysis" style="width:100%; height:auto; border:1px solid #ddd; border-radius:4px; padding:5px; margin-top:10px;"/>
+        <p>
+          了解 HVSR 方法如何有效地应用于实地研究，以及如何桥接软件工具以进行高效的地质分析。
+        </p>
+        <p>
+          <a href="ISGS\Illinois State Geological Survey 248a86b754ef4c4d9ccddaeb87602394.html" target="_blank">点击查看详细内容！</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  </div>
+</div>	
+
+
+<div class="section" id="contact">
+  <div class="cc-contact-information" style="background-image: url('images/staticmap (2).png');">
+    <div class="container">
+      <div class="cc-contact">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="card mb-0" data-aos="zoom-in">
+              <h2 class="h4 text-center title">联系我</h2>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <form action="https://formspree.io/jeff.xiao.uchicago@gmail.com" method="POST">
+                      <div class="p pb-3"><strong>欢迎随时联系我 </strong></div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                            <input class="form-control" type="text" name="name" placeholder="姓名" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-file-text"></i></span>
+                            <input class="form-control" type="text" name="Subject" placeholder="主题" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input class="form-control" type="email" name="_replyto" placeholder="电子邮箱" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="form-group">
+                            <textarea class="form-control" name="message" placeholder="您的留言" required="required"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <button class="btn btn-primary" type="submit">发送</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <p class="mb-0"><strong>地址 </strong></p>
+                    <p class="pb-2">1301 W, Green St., Urbana, U.S.A</p>
+                    <p class="mb-0"><strong>电话</strong></p>
+                    <p class="pb-2">+1779-232-3992</p>
+                    <p class="mb-0"><strong>电子邮箱</strong></p>
+                    <p>hongyux2@illinois.edu</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+    </div>
+    <footer class="footer">
+      <div class="container text-center"><a class="cc-facebook btn btn-link" href="#"><i class="fa fa-facebook fa-2x " aria-hidden="true"></i></a><a class="cc-twitter btn btn-link " href="#"><i class="fa fa-twitter fa-2x " aria-hidden="true"></i></a><a class="cc-google-plus btn btn-link" href="#"><i class="fa fa-google-plus fa-2x" aria-hidden="true"></i></a><a class="cc-instagram btn btn-link" href="#"><i class="fa fa-instagram fa-2x " aria-hidden="true"></i></a></div>
+      <div class="h4 title text-center">萧鸿宇</div>
+      <div class="text-center text-muted">
+        <p>&copy; 简历页面。版权所有。<br>设计 - <a class="credit" href="https://templateflip.com" target="_blank">TemplateFlip</a></p>
+      </div>
+    </footer>
+    <script src="js/core/jquery.3.2.1.min.js"></script>
+    <script src="js/core/popper.min.js"></script>
+    <script src="js/core/bootstrap.min.js"></script>
+    <script src="js/now-ui-kit.js?v=1.1.0"></script>
+    <script src="js/aos.js"></script>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
