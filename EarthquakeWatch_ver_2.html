@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Earthquake Watch - Real-time Seismic Data Visualization | Hongyu Xiao</title>
+    <meta name="description" content="Real-time earthquake monitoring and visualization for the past 7 days. Interactive map with earthquake data, magnitude, depth, and location information. Seismic data analysis tool by Hongyu Xiao."/>
+    <meta name="keywords" content="earthquake monitoring, seismic data, real-time earthquakes, earthquake visualization, earthquake tracking, seismic monitoring">
+    <meta name="author" content="Hongyu Xiao">
+    <link rel="canonical" href="https://hy-x.github.io/EarthquakeWatch_ver_2.html">
+    <link rel="alternate" hreflang="en" href="https://hy-x.github.io/EarthquakeWatch_ver_2.html">
+    <meta property="og:title" content="Earthquake Watch - Real-time Seismic Data Visualization">
+    <meta property="og:description" content="Interactive earthquake monitoring map displaying real-time seismic data from the past 7 days with advanced visualization features.">
+    <meta property="og:url" content="https://hy-x.github.io/EarthquakeWatch_ver_2.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://hy-x.github.io/images/cc-bg-hyx.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Earthquake Watch - Real-time Seismic Data Visualization">
+    <meta name="twitter:description" content="Interactive earthquake monitoring map displaying real-time seismic data from the past 7 days.">
+    <meta name="twitter:image" content="https://hy-x.github.io/images/cc-bg-hyx.jpg">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/aos.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles/styles.css">
+    
+    <style>
+      /* Integrated Dashboard Styles */
+      .map-wrapper {
+        position: relative;
+        height: 600px;
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        background: #f8f9fa;
+      }
+      #map_global, #map_local, #map_stations {
+        height: 100%;
+        width: 100%;
+      }
+      .map-legend {
+        position: absolute;
+        bottom: 25px;
+        left: 20px;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(4px);
+        color: #333;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 13px;
+        line-height: 1.6;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        border: 1px solid rgba(0,0,0,0.05);
+      }
+      .map-info {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(4px);
+        color: #333;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        font-weight: 500;
+      }
+      .map-stats {
+        position: absolute;
+        top: 20px;
+        left: 60px; /* Offset from zoom controls */
+        background: rgba(44, 62, 80, 0.9);
+        color: white;
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 13px;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      }
+      #loading_global, #loading_local, #loading_stations {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 30px;
+        font-weight: 600;
+        z-index: 1001;
+        letter-spacing: 0.5px;
+      }
+      .data-source {
+        text-align: right;
+        padding: 10px 5px;
+        font-size: 11px;
+        color: #888;
+        font-style: italic;
+      }
+      .section-subtitle {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+      .badge-seismic {
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-right: 10px;
+      }
+      /* Custom Tooltip Styling */
+      .leaflet-popup-content-wrapper {
+        border-radius: 12px;
+        padding: 5px;
+      }
+      .local-event-popup {
+        font-family: 'Montserrat', sans-serif;
+        min-width: 180px;
+      }
+      .local-event-popup h6 {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        color: #2c3e50;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+      }
+      .local-event-popup .data-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4px;
+        font-size: 12px;
+      }
+      .local-event-popup .label { color: #7f8c8d; }
+      .local-event-popup .value { font-weight: 700; color: #2c3e50; }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Earthquake Watch",
+      "description": "Real-time earthquake monitoring and visualization tool for seismic data from the past 7 days",
+      "url": "https://hy-x.github.io/EarthquakeWatch_ver_2.html",
+      "creator": {
+        "@type": "Person",
+        "name": "Hongyu Xiao",
+        "url": "https://hy-x.github.io/index.html",
+        "affiliation": "University of Oklahoma"
+      },
+      "applicationCategory": "UtilityApplication",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+  </head>
+  <body id="top">
+    <header>
+      <div class="profile-page sidebar-collapse">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-primary" color-on-scroll="400">
+          <div class="container">
+            <div class="navbar-translate"><a class="navbar-brand" href="index.html" rel="tooltip">Hongyu Xiao</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-bar bar1"></span><span class="navbar-toggler-bar bar2"></span><span class="navbar-toggler-bar bar3"></span></button>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+              <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#GlobalWatch">Global Watch</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#LocalWatch">Local Watch</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="#StationWatch">Station Watch</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="index.html">Main Page</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="Codes.html">Codes</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="page-content">
+      <div>
+<div class="profile-page">
+  <div class="wrapper">
+    <div class="page-header page-header-small" filter-color="blue">
+      <div class="page-header-image" data-parallax="true" style="background-image: url('images/cc-bg-hyx.jpg');"></div>
+      <div class="container">
+        <div class="content-center">
+          <div class="cc-profile-image"><a href="#"><img src="images/Hongyu_Xiao.jpg" alt="Hongyu Xiao - Seismology Researcher"/></a></div>
+          <div class="h2 title">Hongyu Xiao</div>
+          <p class="category text-white">Seismology Researcher, Coder</p><a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Contact Me</a><a class="btn btn-primary" href="HongyuX_CV_20260107.pdf" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Curriculum Vitae</a>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= GLOBAL WATCH SECTION ================= -->
+<div class="section" id="GlobalWatch">
+  <div class="container">
+	   <div class="h4 mt-0 title"><h4 style="text-align:left;"><b> Earthquake Watch </b> </h4></div>
+    <div class="card" data-aos="fade-right" data-aos-offset="10" data-aos-duration="800">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;"><span class="badge badge-primary badge-seismic">Phase 1</span>Global Seismicity Analysis</h4></div>
+	    <div class="h5 mt-0 title text-primary" style="text-align:left; font-weight: 600;">Past 7 Days Mapping Interface</div>
+	    <p class="section-subtitle"> Comprehensive visualization of planetary seismic activity. This interface correlates event magnitude with symbol radius and depth with color chromaticity, providing a multi-dimensional view of USGS real-time data. </p>
+
+      <div class="map-wrapper" data-aos="fade-up" data-aos-duration="800">
+        <div id="loading_global">Initializing Global Dataset...</div>
+        <div id="map_global" role="application" aria-label="Global earthquake map"></div>
+
+        <div id="legend_global" class="map-legend">
+          <h6 style="font-size: 14px; margin-bottom: 10px;"><b>Global Parameters</b></h6>
+          <div style="margin-bottom: 8px;"><b>Magnitude</b>: Radius &propto; 2<sup>M</sup></div>
+          <hr style="margin: 8px 0;">
+          <b>Source Depth</b><br />
+          <span style="color: #2c7bb6">●</span> Shallow (< 70km)<br />
+          <span style="color: #fdae61">●</span> Intermediate (70-300km)<br />
+          <span style="color: #d7191c">●</span> Deep (> 300km)
+        </div>
+
+        <!--<div class="map-info">
+          <div><i class="fa fa-database"></i> USGS GEOJSON FEED</div>
+          <div id="updateTime_global">Syncing...</div>
+        </div>-->
+      </div>
+      
+      <p class="data-source">
+        System Node: USGS Earthquakes · High Dynamic Range Visualization
+      </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LOCAL WATCH SECTION ================= -->
+<div class="section" id="LocalWatch" style="padding-top: 0;">
+  <div class="container">
+    <div class="card" data-aos="fade-left" data-aos-offset="10" data-aos-duration="800">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;"><span class="badge badge-info badge-seismic">Phase 2</span>Regional Seismicity: Oklahoma</h4></div>
+	    <div class="h5 mt-0 title text-info" style="text-align:left; font-weight: 600;">High-Resolution OGS Network Monitoring</div>
+	    <p class="section-subtitle"> Optimized for regional monitoring, this container utilizes IRIS FDSNWS protocols to capture local tremors near the University of Oklahoma. Enhanced with specialized mapping layers for geophysical context. </p>
+
+      <div class="map-wrapper" data-aos="fade-up" data-aos-duration="800">
+        <div id="loading_local">Querying Data Repository...</div>
+        <div id="map_local" role="application" aria-label="Local earthquake map"></div>
+        
+        <div id="stats_local" class="map-stats" style="display:none;">
+          <span id="event_count">0</span> Events Detected
+        </div>
+
+        <div id="legend_local" class="map-legend">
+          <h6 style="font-size: 14px; margin-bottom: 10px;"><b>Regional Profile</b></h6>
+          <b>Magnitude Intensity</b><br />
+          <span style="color: royalblue">●</span> Standard Event (M < 4)<br />
+          <span style="color: #e67e22">●</span> Moderate Event (M 4-5)<br />
+          <span style="color: #c0392b">●</span> Major Event (M > 5)<br />
+          <hr style="margin: 8px 0;">
+          <i class="fa fa-university text-danger"></i> University of Oklahoma
+        </div>
+
+        <!--<div class="map-info">
+          <div><i class="fa fa-satellite"></i> IRIS FDSNWS XML FEED</div>
+        </div>-->
+      </div>
+      
+      <p class="data-source">
+        Data Integrity: IRIS Management Center · Normalized Seismic Profile
+      </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= STATION WATCH SECTION ================= -->
+<div class="section" id="StationWatch" style="padding-top: 0;">
+  <div class="container">
+    <div class="card" data-aos="fade-right" data-aos-offset="10" data-aos-duration="800">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card-body">
+	    <div class="h4 mt-0 title"><h4 style="text-align:left;"><span class="badge badge-warning badge-seismic">Phase 3</span>Seismic Network: OK Stations</h4></div>
+	    <div class="h5 mt-0 title text-warning" style="text-align:left; font-weight: 600;">OGS/IRIS (OK Network) Station Inventory</div>
+	    <p class="section-subtitle"> High-resolution mapping of the current seismic sensor network across the regional monitoring area. This section displays the active OGS (Oklahoma Geological Survey) stations providing data for this dashboard. </p>
+
+      <div class="map-wrapper" data-aos="fade-up" data-aos-duration="800">
+        <div id="loading_stations">Initializing Station Inventory...</div>
+        <div id="map_stations" role="application" aria-label="Regional station map"></div>
+        
+        <div id="stats_stations" class="map-stats" style="display:none;">
+          <span id="station_count">0</span> Active Sensors
+        </div>
+
+        <div id="legend_stations" class="map-legend">
+          <h6 style="font-size: 14px; margin-bottom: 10px;"><b>Network Inventory</b></h6>
+          <span style="color: #27ae60">▲</span> OGS (OK) Monitoring Station<br />
+          <hr style="margin: 8px 0;">
+          <i class="fa fa-university text-danger"></i> University of Oklahoma
+        </div>
+      </div>
+      
+      <p class="data-source">
+        Network Status: OGS/IRIS Station Metadata Interface
+      </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="contact">
+  <div class="cc-contact-information" style="background-image: url('images/staticmap (2).png');">
+    <div class="container">
+      <div class="cc-contact">
+        <div class="row">
+          <div class="col-md-9">
+            <div class="card mb-0" data-aos="zoom-in">
+              <div class="h4 text-center title">Contact Me</div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <form action="https://formspree.io/hongyu.xiao-1@ou.edu" method="POST">
+                      <div class="p pb-3"><strong>Feel free to contact me </strong></div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                            <input class="form-control" type="text" name="name" placeholder="Name" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-file-text"></i></span>
+                            <input class="form-control" type="text" name="Subject" placeholder="Subject" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                            <input class="form-control" type="email" name="_replyto" placeholder="E-mail" required="required"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col">
+                          <div class="form-group">
+                            <textarea class="form-control" name="message" placeholder="Your Message" required="required"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <button class="btn btn-primary" type="submit">Send</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card-body">
+                    <p class="mb-0"><strong>Address </strong></p>
+                    <p class="pb-2">Sarkeys Energy Center, Norman, Oklahoma, USA</p>
+                    <p class="mb-0"><strong>Phone</strong></p>
+                    <p class="pb-2">+1 (872) 203-0968</p>
+                    <p class="mb-0"><strong>Email</strong></p>
+                    <p>hongyu.xiao-1@ou.edu</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+    </div>
+    <footer class="footer">
+      <div class="container text-center"><a class="cc-facebook btn btn-link" href="#"><i class="fa fa-facebook fa-2x " aria-hidden="true"></i></a><a class="cc-twitter btn btn-link " href="#"><i class="fa fa-twitter fa-2x " aria-hidden="true"></i></a><a class="cc-google-plus btn btn-link" href="#"><i class="fa fa-google-plus fa-2x" aria-hidden="true"></i></a><a class="cc-instagram btn btn-link" href="#"><i class="fa fa-instagram fa-2x " aria-hidden="true"></i></a></div>
+      <div class="h4 title text-center">Hongyu Xiao</div>
+      <div class="text-center text-muted">
+        <p>&copy; Creative CV. All rights reserved.<br>Design - <a class="credit" href="https://templateflip.com" target="_blank">TemplateFlip</a></p>
+      </div>
+    </footer>
+    <script src="js/core/jquery.3.2.1.min.js"></script>
+    <script src="js/core/popper.min.js"></script>
+    <script src="js/core/bootstrap.min.js"></script>
+    <script src="js/now-ui-kit.js?v=1.1.0"></script>
+    <script src="js/aos.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+      /* =============================================================
+         GLOBAL WATCH SHARED LOGIC
+         ============================================================= */
+      function markerSize(mag) { return Math.pow(2, mag) * 0.8; }
+      function depthColor(depth) { return depth > 300 ? "#d7191c" : depth > 70 ? "#fdae61" : "#2c7bb6"; }
+      function timeOpacity(time) { return Math.max(0.3, 1 - (Date.now() - time) / (1000 * 60 * 60 * 168)); }
+
+      /* =============================================================
+         GLOBAL WATCH MAP
+         ============================================================= */
+      const mapGlobal = L.map("map_global", {
+        center: [20, 0], zoom: 2, worldCopyJump: true,
+      });
+
+      const streetGlobal = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        attribution: '&copy; OpenStreetMap &copy; CARTO'
+      }).addTo(mapGlobal);
+
+      const satelliteGlobal = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+        attribution: "&copy; Esri"
+      });
+
+      L.control.layers({ "Light Style": streetGlobal, "Satellite View": satelliteGlobal }, null, { collapsed: true }).addTo(mapGlobal);
+
+      fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("loading_global").style.display = "none";
+          L.geoJSON(data, {
+            pointToLayer: (feat, latlng) => {
+              return L.circleMarker(latlng, {
+                radius: markerSize(feat.properties.mag),
+                fillColor: depthColor(feat.geometry.coordinates[2]),
+                color: "#000", weight: 0.5, fillOpacity: timeOpacity(feat.properties.time),
+              });
+            },
+            onEachFeature: (feat, layer) => {
+              layer.bindPopup(`<div class="local-event-popup"><h6>Global Seismic Event</h6><div class="data-row"><span class="label">Location:</span><span class="value">${feat.properties.place}</span></div><div class="data-row"><span class="label">Magnitude:</span><span class="value">${feat.properties.mag}</span></div><div class="data-row"><span class="label">Depth:</span><span class="value">${feat.geometry.coordinates[2]} km</span></div><div class="data-row"><span class="label">Time (UTC):</span><span class="value">${new Date(feat.properties.time).toISOString().split('T')[1].substr(0,8)}</span></div></div>`);
+            },
+          }).addTo(mapGlobal);
+          document.getElementById("updateTime_global").innerHTML = "Last Refresh: " + new Date().toLocaleTimeString();
+        });
+
+      /* =============================================================
+         LOCAL WATCH MAP (BEST PRACTICES UPGRADE)
+         ============================================================= */
+      const universityLocation = [35.2088, -97.4457];
+      const mapLocal = L.map("map_local", {
+        scrollWheelZoom: false // Better UX on long pages
+      }).setView([35.2088, -97.4457], 8);
+
+      const lightLocal = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+          attribution: '&copy; OpenStreetMap &copy; CARTO'
+      });
+
+      const terrainLocal = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+      }).addTo(mapLocal);
+
+      const satelliteLocal = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          attribution: '&copy; Esri'
+      });
+
+      L.control.layers({
+        "Light Style": lightLocal,
+        "Terrain Profile": terrainLocal,
+        "Satellite Image": satelliteLocal
+      }, null, { collapsed: true }).addTo(mapLocal);
+
+      // Enhanced University Marker
+      const ouIcon = L.divIcon({
+        html: '<i class="fa fa-university fa-2x" style="color:#841617; text-shadow: 0 0 10px #fff;"></i>',
+        className: 'custom-university-icon',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+      });
+
+      L.marker(universityLocation, { icon: ouIcon })
+        .addTo(mapLocal)
+        .bindPopup(`<strong>University of Oklahoma</strong><br>Sarkeys Energy Center<br>Dr. Hongyu Xiao`);
+
+      function getLocalColor(mag) {
+        return mag > 5 ? "#c0392b" : mag > 4 ? "#e67e22" : "royalblue";
+      }
+
+      function getLocalWeight(mag) {
+        return mag > 5 ? 2 : 1;
+      }
+
+      const startTime = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().substr(0, 19);
+      const endTime = new Date().toISOString().substr(0, 19);
+      const irisUrl = `https://service.iris.edu/fdsnws/event/1/query?starttime=${startTime}&endtime=${endTime}&minmagnitude=0.1`;
+
+      fetch(irisUrl)
+        .then(res => res.text())
+        .then(xmlStr => {
+          document.getElementById("loading_local").style.display = "none";
+          const xml = new DOMParser().parseFromString(xmlStr, "text/xml");
+          const events = xml.querySelectorAll("event");
+          
+          if(events.length > 0) {
+            document.getElementById("stats_local").style.display = "block";
+            document.getElementById("event_count").innerText = events.length;
+          }
+
+          events.forEach(ev => {
+              const lat = parseFloat(ev.querySelector("latitude").textContent);
+              const lng = parseFloat(ev.querySelector("longitude").textContent);
+              const mag = parseFloat(ev.querySelector("magnitude").textContent);
+              const time = ev.querySelector("time").textContent;
+              const place = ev.querySelector("description text") ? ev.querySelector("description text").textContent : "Local Region";
+
+              // Best Practice: Use circleMarker for fixed-pixel radius point data
+              L.circleMarker([lat, lng], {
+                  radius: Math.max(5, mag * 4), 
+                  fillColor: getLocalColor(mag),
+                  color: "#fff",
+                  weight: getLocalWeight(mag),
+                  fillOpacity: 0.7
+              }).bindPopup(`
+                <div class="local-event-popup">
+                  <h6>Local Seismic Activity</h6>
+                  <div class="data-row"><span class="label">Magnitude:</span><span class="value" style="color:${getLocalColor(mag)}">${mag}</span></div>
+                  <div class="data-row"><span class="label">Latitude:</span><span class="value">${lat.toFixed(3)}°</span></div>
+                  <div class="data-row"><span class="label">Longitude:</span><span class="value">${lng.toFixed(3)}°</span></div>
+                  <div class="data-row"><span class="label">Time:</span><span class="value">${time.replace('T', ' ').substr(0,19)}</span></div>
+                </div>
+              `).addTo(mapLocal);
+          });
+        })
+        .catch(err => {
+          console.error("IRIS Fetch Error:", err);
+          document.getElementById("loading_local").innerText = "Data Temporarily Unavailable";
+        });
+
+      /* =============================================================
+         STATION WATCH (OGS Network)
+         ============================================================= */
+      const mapStations = L.map("map_stations", {
+        scrollWheelZoom: false
+      }).setView([35.2088, -97.4457], 8);
+
+      const terrainStations = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+          attribution: '&copy; Esri'
+      }).addTo(mapStations);
+
+      const streetStations = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+          attribution: '&copy; OpenStreetMap &copy; CARTO'
+      });
+
+      const satelliteStations = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          attribution: '&copy; Esri'
+      });
+
+      L.control.layers({
+        "Terrain Profile": terrainStations,
+        "Light Style": streetStations,
+        "Satellite Image": satelliteStations
+      }, null, { collapsed: true }).addTo(mapStations);
+
+      L.marker(universityLocation, { icon: ouIcon })
+        .addTo(mapStations)
+        .bindPopup(`<strong>University of Oklahoma</strong>`);
+
+      const stationUrl = `https://service.iris.edu/fdsnws/station/1/query?net=OK&level=station&format=xml&minlat=33.0&maxlat=38.0&minlon=-101.0&maxlon=-94.0`;
+
+      fetch(stationUrl)
+        .then(res => res.text())
+        .then(xmlStr => {
+          const loadingEl = document.getElementById("loading_stations");
+          if(loadingEl) loadingEl.style.display = "none";
+
+          const xml = new DOMParser().parseFromString(xmlStr, "text/xml");
+          const stations = xml.querySelectorAll("Station");
+          
+          console.log(`Stations found: ${stations.length}`);
+
+          if(stations.length > 0) {
+            const statsEl = document.getElementById("stats_stations");
+            const countEl = document.getElementById("station_count");
+            if(statsEl) statsEl.style.display = "block";
+            if(countEl) countEl.innerText = stations.length;
+          } else {
+            const loadingEl = document.getElementById("loading_stations");
+            if(loadingEl) {
+              loadingEl.style.display = "block";
+              loadingEl.innerText = "No stations found in this range.";
+              loadingEl.style.background = "rgba(192, 57, 43, 0.8)";
+            }
+          }
+
+          stations.forEach(sta => {
+              // FDSN XML uses PascalCase
+              const latEl = sta.querySelector("Latitude");
+              const lonEl = sta.querySelector("Longitude");
+              
+              if (!latEl || !lonEl) return;
+
+              const lat = parseFloat(latEl.textContent);
+              const lng = parseFloat(lonEl.textContent);
+              const code = sta.getAttribute("code") || "STA";
+              
+              const nameEl = sta.querySelector("Name") || sta.querySelector("Site Name") || sta.querySelector("Site");
+              const siteName = nameEl ? nameEl.textContent : "Seismic Station";
+
+              // Using a green triangle for stations
+              const stationIcon = L.divIcon({
+                html: '<i class="fa fa-caret-up fa-2x" style="color:#27ae60; text-shadow: 0 0 5px #000; filter: drop-shadow(0 0 2px #fff);"></i>',
+                className: 'custom-station-icon',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+              });
+
+              L.marker([lat, lng], { icon: stationIcon })
+                .bindPopup(`
+                  <div class="local-event-popup">
+                    <h6>Seismic Network Node</h6>
+                    <div class="data-row"><span class="label">Station:</span><span class="value">${code}</span></div>
+                    <div class="data-row"><span class="label">Site:</span><span class="value">${siteName}</span></div>
+                    <div class="data-row"><span class="label">Lat/Lon:</span><span class="value">${lat.toFixed(3)}, ${lng.toFixed(3)}</span></div>
+                  </div>
+                `).addTo(mapStations);
+          });
+        })
+        .catch(err => {
+          console.error("IRIS Station Error:", err);
+          const loadingEl = document.getElementById("loading_stations");
+          if(loadingEl) {
+            loadingEl.style.display = "block";
+            loadingEl.innerText = "Network Status Offline";
+          }
+        });
+
+      AOS.init();
+    </script>
+  </body>
+</html>

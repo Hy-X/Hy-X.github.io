@@ -6,7 +6,7 @@
   <!-- English Homepage -->
   <url>
     <loc>https://hy-x.github.io/index.html</loc>
-    <lastmod>2026-01-18</lastmod>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -18,7 +18,7 @@
   <!-- Chinese Homepage -->
   <url>
     <loc>https://hy-x.github.io/index_zh.html</loc>
-    <lastmod>2026-01-18</lastmod>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -30,7 +30,7 @@
   <!-- Science Insights / Knowledge Page -->
   <url>
     <loc>https://hy-x.github.io/Knowledge.html</loc>
-    <lastmod>2026-02-08</lastmod>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -38,11 +38,27 @@
       <image:title>Science Insights &amp; Research Stories</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://hy-x.github.io/Knowledge_zh.html</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://hy-x.github.io/images/Hongyu_Xiao.jpg</image:loc>
+      <image:title>科学见解与研究故事</image:title>
+    </image:image>
+  </url>
 
   <!-- Code Page -->
   <url>
     <loc>https://hy-x.github.io/Codes.html</loc>
-    <lastmod>2026-01-18</lastmod>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hy-x.github.io/Codes_zh.html</loc>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -50,15 +66,29 @@
   <!-- Earthquake Watch Page -->
   <url>
     <loc>https://hy-x.github.io/EarthquakeWatch.html</loc>
-    <lastmod>2026-01-18</lastmod>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Visitor Track Page -->
+  <url>
+    <loc>https://hy-x.github.io/VisitorTrack.html</loc>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <!-- Archived News Page -->
   <url>
     <loc>https://hy-x.github.io/archived_news.html</loc>
-    <lastmod>2026-01-18</lastmod>
+    <lastmod>2026-02-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hy-x.github.io/archived_news_zh.html</loc>
+    <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
