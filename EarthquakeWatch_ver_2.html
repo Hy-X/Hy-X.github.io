@@ -908,6 +908,17 @@
                       </div>
                     </div>
 
+                    <div class="row">
+                      <div class="col-md-12 mb-2">
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                          <h6 style="text-align: center; margin-bottom: 10px; color: #555;">Oklahoma Seismic Depth Profile (Longitude vs. Depth)</h6>
+                          <div style="position: relative; height: 350px;">
+                            <div id="depthProfilePlot" style="height: 100%; width: 100%;"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <p
                       class="data-source mt-2"
                       style="
@@ -1064,6 +1075,7 @@
     <script src="scripts/main.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
 
     <script>
       /* =============================================================
@@ -1417,6 +1429,11 @@
             const dailyCounts = {};
             const monthlyCounts = {};
             const magnitudeDist = { "< 2": 0, "2 - 3": 0, "3 - 4": 0, "4+": 0 };
+            
+            const lons = [];
+            const depths = [];
+            const mags = [];
+            const hoverTexts = [];
 
             let recentSigEvent = null;
 
@@ -1443,6 +1460,15 @@
               if (mag === null) return;
 
               const time = new Date(f.properties.time);
+              const lon = f.geometry.coordinates[0];
+              const depth = f.geometry.coordinates[2];
+              
+              if (depth !== null && depth !== undefined) {
+                lons.push(lon);
+                depths.push(depth);
+                mags.push(mag);
+                hoverTexts.push(`Mag: ${mag.toFixed(1)}<br>Depth: ${depth.toFixed(1)} km<br>Date: ${formatYMD(time)}`);
+              }
               const ymd = formatYMD(time);
               const yMonth =
                 time.getFullYear() +
@@ -1593,6 +1619,39 @@
                 },
               },
             });
+
+            // Render Depth Profile Chart (Plotly)
+            const trace = {
+              x: lons,
+              y: depths,
+              mode: 'markers',
+              type: 'scatter',
+              text: hoverTexts,
+              hoverinfo: 'text',
+              marker: {
+                size: mags.map(m => Math.max(4, m * 3)),
+                color: mags,
+                cmin: 0.0,
+                cmax: 6.0,
+                colorscale: 'Portland',
+                showscale: true,
+                colorbar: { title: 'Mag', thickness: 15 },
+                opacity: 0.8,
+                line: { color: 'rgba(255,255,255,0.5)', width: 0.5 }
+              }
+            };
+            
+            const layout = {
+              margin: { l: 50, r: 20, t: 20, b: 40 },
+              xaxis: { title: 'Longitude (degrees)' },
+              yaxis: { title: 'Depth (km)', autorange: 'reversed' },
+              plot_bgcolor: '#f8f9fa',
+              paper_bgcolor: '#f8f9fa',
+              hovermode: 'closest'
+            };
+            
+            Plotly.newPlot('depthProfilePlot', [trace], layout, {responsive: true, displayModeBar: false});
+
           })
           .catch((err) => console.error("Dashboard Fetch Error:", err));
       }
