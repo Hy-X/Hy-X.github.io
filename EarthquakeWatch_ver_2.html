@@ -199,7 +199,19 @@
           "affiliation": "University of Oklahoma"
         },
         "applicationCategory": "UtilityApplication",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "hasPart": [
+          {
+            "@type": "Dataset",
+            "name": "USGS Real-time Earthquake Data",
+            "description": "Real-time global seismic events parsed from the USGS GeoJSON feed."
+          },
+          {
+            "@type": "Dataset",
+            "name": "OGS Regional Network Data",
+            "description": "High-resolution localized seismic events from the IRIS FDSNWS XML feed specifically targeting Oklahoma."
+          }
+        ]
       }
     </script>
   </head>
@@ -345,8 +357,21 @@
         <div class="section" id="GlobalWatch">
           <div class="container">
             <div class="h4 mt-0 title">
-              <h4 style="text-align: left"><b> Earthquake Watch </b></h4>
+              <h2 class="h4" style="text-align: left">
+                <b> Earthquake Watch </b>
+              </h2>
             </div>
+            <p
+              style="
+                font-size: 1.1rem;
+                color: #555;
+                max-width: 800px;
+                margin-bottom: 30px;
+              ">
+              This interactive dashboard aggregates localized seismic feeds from
+              the USGS / OGS and IRIS to provide real-time, high-fidelity
+              monitoring of global and Oklahoma earthquakes.
+            </p>
             <div
               class="card"
               data-aos="fade-right"
@@ -356,11 +381,11 @@
                 <div class="col-lg-12 col-md-12">
                   <div class="card-body">
                     <div class="h4 mt-0 title">
-                      <h4 style="text-align: left">
+                      <h3 class="h4" style="text-align: left">
                         <span class="badge badge-primary badge-seismic"
                           >Phase 1</span
                         >Global Seismicity Analysis
-                      </h4>
+                      </h3>
                     </div>
                     <div
                       class="h5 mt-0 title text-primary"
@@ -371,7 +396,9 @@
                       Comprehensive visualization of planetary seismic activity.
                       This interface correlates event magnitude with symbol
                       radius and depth with color chromaticity, providing a
-                      multi-dimensional view of USGS real-time data.
+                      multi-dimensional view of
+                      <abbr title="United States Geological Survey">USGS</abbr>
+                      real-time data.
                     </p>
 
                     <div
@@ -431,20 +458,26 @@
                 <div class="col-lg-12 col-md-12">
                   <div class="card-body">
                     <div class="h4 mt-0 title">
-                      <h4 style="text-align: left">
+                      <h3 class="h4" style="text-align: left">
                         <span class="badge badge-info badge-seismic"
                           >Phase 2</span
                         >Regional Seismicity: Oklahoma
-                      </h4>
+                      </h3>
                     </div>
                     <div
                       class="h5 mt-0 title text-info"
                       style="text-align: left; font-weight: 600">
-                      High-Resolution OGS Network Monitoring
+                      High-Resolution
+                      <abbr title="Oklahoma Geological Survey">OGS</abbr>
+                      Network Monitoring
                     </div>
                     <p class="section-subtitle">
                       Optimized for regional monitoring, this container utilizes
-                      IRIS FDSNWS protocols to capture local tremors near the
+                      <abbr
+                        title="Incorporated Research Institutions for Seismology"
+                        >IRIS</abbr
+                      >
+                      FDSNWS protocols to capture local tremors near the
                       University of Oklahoma. Enhanced with specialized mapping
                       layers for geophysical context.
                     </p>
@@ -510,22 +543,28 @@
                 <div class="col-lg-12 col-md-12">
                   <div class="card-body">
                     <div class="h4 mt-0 title">
-                      <h4 style="text-align: left">
+                      <h3 class="h4" style="text-align: left">
                         <span class="badge badge-warning badge-seismic"
                           >Phase 3</span
                         >Seismic Network: OK Stations
-                      </h4>
+                      </h3>
                     </div>
                     <div
                       class="h5 mt-0 title text-warning"
                       style="text-align: left; font-weight: 600">
-                      OGS/IRIS (OK Network) Station Inventory
+                      <abbr title="Oklahoma Geological Survey">OGS</abbr>/<abbr
+                        title="Incorporated Research Institutions for Seismology"
+                        >IRIS</abbr
+                      >
+                      (OK Network) Station Inventory
                     </div>
                     <p class="section-subtitle">
                       High-resolution mapping of the current seismic sensor
                       network across the regional monitoring area. This section
-                      displays the active OGS (Oklahoma Geological Survey)
-                      stations providing data for this dashboard.
+                      displays the active
+                      <abbr title="Oklahoma Geological Survey">OGS</abbr>
+                      (Oklahoma Geological Survey) stations providing data for
+                      this dashboard.
                     </p>
 
                     <div
@@ -581,11 +620,11 @@
                 <div class="col-lg-12 col-md-12">
                   <div class="card-body">
                     <div class="h4 mt-0 title">
-                      <h4 style="text-align: left">
+                      <h3 class="h4" style="text-align: left">
                         <span class="badge badge-success badge-seismic"
                           >Phase 4</span
                         >Oklahoma Seismicity Dashboard
-                      </h4>
+                      </h3>
                     </div>
                     <div
                       class="h5 mt-0 title text-success"
@@ -857,7 +896,10 @@
                             Daily Events (Last 30 Days)
                           </h6>
                           <div style="position: relative; height: 250px">
-                            <canvas id="dailyChart"></canvas>
+                            <canvas
+                              id="dailyChart"
+                              role="img"
+                              aria-label="Bar chart showing the daily count of Oklahoma earthquakes over the past 30 days"></canvas>
                           </div>
                         </div>
                       </div>
@@ -878,7 +920,10 @@
                             Monthly Events (Last 12 Months)
                           </h6>
                           <div style="position: relative; height: 250px">
-                            <canvas id="monthlyChart"></canvas>
+                            <canvas
+                              id="monthlyChart"
+                              role="img"
+                              aria-label="Line chart showing the monthly count of Oklahoma earthquakes over the past 12 months"></canvas>
                           </div>
                         </div>
                       </div>
@@ -902,7 +947,10 @@
                             Magnitude Distribution (Target: Last 12 Months)
                           </h6>
                           <div style="position: relative; height: 180px">
-                            <canvas id="magnitudeChart"></canvas>
+                            <canvas
+                              id="magnitudeChart"
+                              role="img"
+                              aria-label="Bar chart showing the magnitude distribution of Oklahoma earthquakes over the past 12 months"></canvas>
                           </div>
                         </div>
                       </div>
@@ -910,10 +958,27 @@
 
                     <div class="row">
                       <div class="col-md-12 mb-2">
-                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                          <h6 style="text-align: center; margin-bottom: 10px; color: #555;">Oklahoma Seismic Depth Profile (Longitude vs. Depth)</h6>
-                          <div style="position: relative; height: 350px;">
-                            <div id="depthProfilePlot" style="height: 100%; width: 100%;"></div>
+                        <div
+                          style="
+                            background: #f8f9fa;
+                            padding: 15px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+                          ">
+                          <h6
+                            style="
+                              text-align: center;
+                              margin-bottom: 10px;
+                              color: #555;
+                            ">
+                            Oklahoma Seismic Depth Profile (Longitude vs. Depth)
+                          </h6>
+                          <div style="position: relative; height: 350px">
+                            <div
+                              id="depthProfilePlot"
+                              role="img"
+                              aria-label="Interactive 2D scatter plot visualizing earthquake longitude versus downward depth profiles across the region."
+                              style="height: 100%; width: 100%"></div>
                           </div>
                         </div>
                       </div>
@@ -1075,7 +1140,9 @@
     <script src="scripts/main.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+    <script
+      src="https://cdn.plot.ly/plotly-2.27.0.min.js"
+      charset="utf-8"></script>
 
     <script>
       /* =============================================================
@@ -1429,7 +1496,7 @@
             const dailyCounts = {};
             const monthlyCounts = {};
             const magnitudeDist = { "< 2": 0, "2 - 3": 0, "3 - 4": 0, "4+": 0 };
-            
+
             const lons = [];
             const depths = [];
             const mags = [];
@@ -1462,12 +1529,14 @@
               const time = new Date(f.properties.time);
               const lon = f.geometry.coordinates[0];
               const depth = f.geometry.coordinates[2];
-              
+
               if (depth !== null && depth !== undefined) {
                 lons.push(lon);
                 depths.push(depth);
                 mags.push(mag);
-                hoverTexts.push(`Mag: ${mag.toFixed(1)}<br>Depth: ${depth.toFixed(1)} km<br>Date: ${formatYMD(time)}`);
+                hoverTexts.push(
+                  `Mag: ${mag.toFixed(1)}<br>Depth: ${depth.toFixed(1)} km<br>Date: ${formatYMD(time)}`,
+                );
               }
               const ymd = formatYMD(time);
               const yMonth =
@@ -1624,34 +1693,36 @@
             const trace = {
               x: lons,
               y: depths,
-              mode: 'markers',
-              type: 'scatter',
+              mode: "markers",
+              type: "scatter",
               text: hoverTexts,
-              hoverinfo: 'text',
+              hoverinfo: "text",
               marker: {
-                size: mags.map(m => Math.max(4, m * 3)),
+                size: mags.map((m) => Math.max(4, m * 3)),
                 color: mags,
                 cmin: 0.0,
                 cmax: 6.0,
-                colorscale: 'Portland',
+                colorscale: "Portland",
                 showscale: true,
-                colorbar: { title: 'Mag', thickness: 15 },
+                colorbar: { title: "Mag", thickness: 15 },
                 opacity: 0.8,
-                line: { color: 'rgba(255,255,255,0.5)', width: 0.5 }
-              }
+                line: { color: "rgba(255,255,255,0.5)", width: 0.5 },
+              },
             };
-            
+
             const layout = {
               margin: { l: 50, r: 20, t: 20, b: 40 },
-              xaxis: { title: 'Longitude (degrees)' },
-              yaxis: { title: 'Depth (km)', autorange: 'reversed' },
-              plot_bgcolor: '#f8f9fa',
-              paper_bgcolor: '#f8f9fa',
-              hovermode: 'closest'
+              xaxis: { title: "Longitude (degrees)" },
+              yaxis: { title: "Depth (km)", autorange: "reversed" },
+              plot_bgcolor: "#f8f9fa",
+              paper_bgcolor: "#f8f9fa",
+              hovermode: "closest",
             };
-            
-            Plotly.newPlot('depthProfilePlot', [trace], layout, {responsive: true, displayModeBar: false});
 
+            Plotly.newPlot("depthProfilePlot", [trace], layout, {
+              responsive: true,
+              displayModeBar: false,
+            });
           })
           .catch((err) => console.error("Dashboard Fetch Error:", err));
       }
