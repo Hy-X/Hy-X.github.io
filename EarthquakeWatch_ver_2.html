@@ -247,6 +247,11 @@
                   >
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link smooth-scroll" href="#DashboardWatch"
+                    >OK Dashboard</a
+                  >
+                </li>
+                <li class="nav-item">
                   <a class="nav-link smooth-scroll" href="index.html"
                     >Main Page</a
                   >
@@ -564,6 +569,195 @@
           </div>
         </div>
 
+        <!-- ================= DASHBOARD WATCH SECTION ================= -->
+        <div class="section" id="DashboardWatch" style="padding-top: 0">
+          <div class="container">
+            <div
+              class="card"
+              data-aos="fade-left"
+              data-aos-offset="10"
+              data-aos-duration="800">
+              <div class="row">
+                <div class="col-lg-12 col-md-12">
+                  <div class="card-body">
+                    <div class="h4 mt-0 title">
+                      <h4 style="text-align: left">
+                        <span class="badge badge-success badge-seismic"
+                          >Phase 4</span
+                        >Oklahoma Seismicity Dashboard
+                      </h4>
+                    </div>
+                    <div
+                      class="h5 mt-0 title text-success"
+                      style="text-align: left; font-weight: 600">
+                      Daily & Monthly Event Statistics
+                    </div>
+                    <p class="section-subtitle">
+                      Analytical dashboard displaying the frequency and
+                      magnitude distribution of seismic events within the State
+                      of Oklahoma. Data spans the past 30 days (daily) and past
+                      12 months (monthly).
+                    </p>
+
+                    <div class="row mb-3">
+                      <div class="col-md-3 col-6 mb-3">
+                        <div class="card text-white text-center bg-success">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px">
+                            <h5
+                              class="card-title"
+                              id="dash_month_total"
+                              style="font-size: 2rem; margin-bottom: 5px">
+                              0
+                            </h5>
+                            <p
+                              class="card-text"
+                              style="font-size: 13px; margin-bottom: 0">
+                              Events (Past 30 Days)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-6 mb-3">
+                        <div class="card text-white text-center bg-info">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px">
+                            <h5
+                              class="card-title"
+                              id="dash_year_total"
+                              style="font-size: 2rem; margin-bottom: 5px">
+                              0
+                            </h5>
+                            <p
+                              class="card-text"
+                              style="font-size: 13px; margin-bottom: 0">
+                              Events (Past Year)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-6 mb-3">
+                        <div class="card text-white text-center bg-warning">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px">
+                            <h5
+                              class="card-title"
+                              id="dash_max_mag"
+                              style="font-size: 2rem; margin-bottom: 5px">
+                              -
+                            </h5>
+                            <p
+                              class="card-text"
+                              style="font-size: 13px; margin-bottom: 0">
+                              Max Mag (Past Year)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-6 mb-3">
+                        <div class="card text-white text-center bg-danger">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px">
+                            <h5
+                              class="card-title"
+                              id="dash_avg_mag"
+                              style="font-size: 2rem; margin-bottom: 5px">
+                              -
+                            </h5>
+                            <p
+                              class="card-text"
+                              style="font-size: 13px; margin-bottom: 0">
+                              Avg Mag (Past Year)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+                        <div
+                          style="
+                            background: #f8f9fa;
+                            padding: 15px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+                          ">
+                          <h6
+                            style="
+                              text-align: center;
+                              margin-bottom: 10px;
+                              color: #555;
+                            ">
+                            Daily Events (Last 30 Days)
+                          </h6>
+                          <div style="position: relative; height: 250px">
+                            <canvas id="dailyChart"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                        <div
+                          style="
+                            background: #f8f9fa;
+                            padding: 15px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+                          ">
+                          <h6
+                            style="
+                              text-align: center;
+                              margin-bottom: 10px;
+                              color: #555;
+                            ">
+                            Monthly Events (Last 12 Months)
+                          </h6>
+                          <div style="position: relative; height: 250px">
+                            <canvas id="monthlyChart"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12 mb-2">
+                        <div
+                          style="
+                            background: #f8f9fa;
+                            padding: 15px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+                          ">
+                          <h6
+                            style="
+                              text-align: center;
+                              margin-bottom: 10px;
+                              color: #555;
+                            ">
+                            Magnitude Distribution (Target: Last 12 Months)
+                          </h6>
+                          <div style="position: relative; height: 180px">
+                            <canvas id="magnitudeChart"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p
+                      class="data-source mt-2"
+                      style="
+                        font-style: italic;
+                        color: #888;
+                        text-align: right;
+                        font-size: 11px;
+                      ">
+                      Data Aggregation: USGS (Official report by OGS) (Oklahoma
+                      bounds: 33.5&deg;N - 37.1&deg;N, -103.1&deg;W -
+                      -94.4&deg;W)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="section" id="contact">
           <div
             class="cc-contact-information"
@@ -700,6 +894,7 @@
     <script src="js/aos.js"></script>
     <script src="scripts/main.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
       /* =============================================================
@@ -1009,6 +1204,209 @@
             loadingEl.innerText = "Network Status Offline";
           }
         });
+
+      /* =============================================================
+         OK DASHBOARD WATCH
+         ============================================================= */
+      function loadDashboard() {
+        const now = new Date();
+        const oneYearAgo = new Date();
+        oneYearAgo.setFullYear(now.getFullYear() - 1);
+
+        const formatYMD = (date) => {
+          const m = String(date.getMonth() + 1).padStart(2, "0");
+          const d = String(date.getDate()).padStart(2, "0");
+          return `${date.getFullYear()}-${m}-${d}`;
+        };
+
+        const endTimeStr = formatYMD(now);
+        const startTimeStr = formatYMD(oneYearAgo);
+
+        // Oklahoma rough bounding box
+        const minlat = 33.5;
+        const maxlat = 37.1;
+        const minlon = -103.1;
+        const maxlon = -94.4;
+
+        // Fetch last year of data
+        const dashboardUrl = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${startTimeStr}&endtime=${endTimeStr}&minlatitude=${minlat}&maxlatitude=${maxlat}&minlongitude=${minlon}&maxlongitude=${maxlon}`;
+
+        fetch(dashboardUrl)
+          .then((res) => res.json())
+          .then((data) => {
+            const features = data.features || [];
+
+            let totalYear = features.length;
+            let totalMonth = 0;
+            let maxMag = 0;
+            let sumMag = 0;
+            let countMag = 0;
+
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(now.getDate() - 30);
+
+            const dailyCounts = {};
+            const monthlyCounts = {};
+            const magnitudeDist = { "< 2": 0, "2 - 3": 0, "3 - 4": 0, "4+": 0 };
+
+            // Initialize last 30 days
+            for (let i = 29; i >= 0; i--) {
+              let d = new Date();
+              d.setDate(now.getDate() - i);
+              dailyCounts[formatYMD(d)] = 0;
+            }
+
+            // Initialize last 12 months (e.g., 2025-03)
+            for (let i = 11; i >= 0; i--) {
+              let d = new Date();
+              d.setMonth(now.getMonth() - i);
+              let monthKey =
+                d.getFullYear() +
+                "-" +
+                String(d.getMonth() + 1).padStart(2, "0");
+              monthlyCounts[monthKey] = 0;
+            }
+
+            features.forEach((f) => {
+              let mag = f.properties.mag;
+              if (mag === null) return;
+
+              const time = new Date(f.properties.time);
+              const ymd = formatYMD(time);
+              const yMonth =
+                time.getFullYear() +
+                "-" +
+                String(time.getMonth() + 1).padStart(2, "0");
+
+              if (mag > maxMag) maxMag = mag;
+              if (mag >= 0) {
+                sumMag += mag;
+                countMag++;
+              }
+
+              if (time >= thirtyDaysAgo) {
+                totalMonth++;
+                if (dailyCounts[ymd] !== undefined) {
+                  dailyCounts[ymd]++;
+                }
+              }
+
+              if (monthlyCounts[yMonth] !== undefined) {
+                monthlyCounts[yMonth]++;
+              }
+
+              if (mag < 2) magnitudeDist["< 2"]++;
+              else if (mag < 3) magnitudeDist["2 - 3"]++;
+              else if (mag < 4) magnitudeDist["3 - 4"]++;
+              else magnitudeDist["4+"]++;
+            });
+
+            const avgMag = countMag > 0 ? (sumMag / countMag).toFixed(1) : 0;
+
+            document.getElementById("dash_year_total").innerText = totalYear;
+            document.getElementById("dash_month_total").innerText = totalMonth;
+            document.getElementById("dash_max_mag").innerText =
+              maxMag > 0 ? maxMag.toFixed(1) : "-";
+            document.getElementById("dash_avg_mag").innerText = avgMag;
+
+            // Render Daily Chart
+            const ctxDaily = document
+              .getElementById("dailyChart")
+              .getContext("2d");
+            new Chart(ctxDaily, {
+              type: "bar",
+              data: {
+                labels: Object.keys(dailyCounts).map((d) => d.substring(5)), // MM-DD
+                datasets: [
+                  {
+                    label: "Events",
+                    data: Object.values(dailyCounts),
+                    backgroundColor: "#2ecc71",
+                    borderRadius: 3,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                  y: { beginAtZero: true, ticks: { precision: 0 } },
+                  x: { ticks: { maxRotation: 45, minRotation: 45 } },
+                },
+              },
+            });
+
+            // Render Monthly Chart
+            const ctxMonthly = document
+              .getElementById("monthlyChart")
+              .getContext("2d");
+            new Chart(ctxMonthly, {
+              type: "line",
+              data: {
+                labels: Object.keys(monthlyCounts),
+                datasets: [
+                  {
+                    label: "Events",
+                    data: Object.values(monthlyCounts),
+                    borderColor: "#3498db",
+                    backgroundColor: "rgba(52, 152, 219, 0.2)",
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: "#2980b9",
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                  y: { beginAtZero: true, ticks: { precision: 0 } },
+                  x: { ticks: { maxRotation: 45, minRotation: 45 } },
+                },
+              },
+            });
+
+            // Render Magnitude Distribution Chart
+            const ctxMag = document
+              .getElementById("magnitudeChart")
+              .getContext("2d");
+            new Chart(ctxMag, {
+              type: "bar",
+              data: {
+                labels: Object.keys(magnitudeDist),
+                datasets: [
+                  {
+                    label: "Events",
+                    data: Object.values(magnitudeDist),
+                    backgroundColor: [
+                      "#3498db",
+                      "#f1c40f",
+                      "#e67e22",
+                      "#e74c3c",
+                    ],
+                    borderRadius: 4,
+                  },
+                ],
+              },
+              options: {
+                indexAxis: "y",
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                  x: { beginAtZero: true, ticks: { precision: 0 } },
+                },
+              },
+            });
+          })
+          .catch((err) => console.error("Dashboard Fetch Error:", err));
+      }
+
+      // Initialize Dashboard
+      loadDashboard();
 
       AOS.init();
     </script>
