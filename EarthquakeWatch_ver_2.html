@@ -601,68 +601,68 @@
 
                     <div class="row mb-3">
                       <div class="col-md-3 col-6 mb-3">
-                        <div class="card text-white text-center bg-success">
-                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px">
+                        <div class="card text-center" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 4px solid #18ce0f;">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px; padding: 15px;">
                             <h5
-                              class="card-title"
+                              class="card-title text-success"
                               id="dash_month_total"
-                              style="font-size: 2rem; margin-bottom: 5px">
+                              style="font-size: 2.2rem; margin-bottom: 5px; font-weight: 700;">
                               0
                             </h5>
                             <p
-                              class="card-text"
-                              style="font-size: 13px; margin-bottom: 0">
+                              class="card-text text-muted"
+                              style="font-size: 13px; margin-bottom: 0; font-weight: 600; letter-spacing: 0.5px;">
                               Events (Past 30 Days)
                             </p>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-3 col-6 mb-3">
-                        <div class="card text-white text-center bg-info">
-                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px">
+                        <div class="card text-center" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 4px solid #2CA8FF;">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px; padding: 15px;">
                             <h5
-                              class="card-title"
+                              class="card-title text-info"
                               id="dash_year_total"
-                              style="font-size: 2rem; margin-bottom: 5px">
+                              style="font-size: 2.2rem; margin-bottom: 5px; font-weight: 700;">
                               0
                             </h5>
                             <p
-                              class="card-text"
-                              style="font-size: 13px; margin-bottom: 0">
+                              class="card-text text-muted"
+                              style="font-size: 13px; margin-bottom: 0; font-weight: 600; letter-spacing: 0.5px;">
                               Events (Past Year)
                             </p>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-3 col-6 mb-3">
-                        <div class="card text-white text-center bg-warning">
-                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px">
+                        <div class="card text-center" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 4px solid #FFB236;">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px; padding: 15px;">
                             <h5
-                              class="card-title"
+                              class="card-title text-warning"
                               id="dash_max_mag"
-                              style="font-size: 2rem; margin-bottom: 5px">
+                              style="font-size: 2.2rem; margin-bottom: 5px; font-weight: 700;">
                               -
                             </h5>
                             <p
-                              class="card-text"
-                              style="font-size: 13px; margin-bottom: 0">
+                              class="card-text text-muted"
+                              style="font-size: 13px; margin-bottom: 0; font-weight: 600; letter-spacing: 0.5px;">
                               Max Mag (Past Year)
                             </p>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-3 col-6 mb-3">
-                        <div class="card text-white text-center bg-danger">
-                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px">
+                        <div class="card text-center" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 4px solid #f96332;">
+                          <div class="card-body d-flex flex-column justify-content-center align-items-center" style="min-height: 120px; padding: 15px;">
                             <h5
-                              class="card-title"
+                              class="card-title text-primary"
                               id="dash_avg_mag"
-                              style="font-size: 2rem; margin-bottom: 5px">
+                              style="font-size: 2.2rem; margin-bottom: 5px; font-weight: 700;">
                               -
                             </h5>
                             <p
-                              class="card-text"
-                              style="font-size: 13px; margin-bottom: 0">
+                              class="card-text text-muted"
+                              style="font-size: 13px; margin-bottom: 0; font-weight: 600; letter-spacing: 0.5px;">
                               Avg Mag (Past Year)
                             </p>
                           </div>
@@ -1321,7 +1321,7 @@
                   {
                     label: "Events",
                     data: Object.values(dailyCounts),
-                    backgroundColor: "#2ecc71",
+                    backgroundColor: "#18ce0f",
                     borderRadius: 3,
                   },
                 ],
@@ -1349,12 +1349,12 @@
                   {
                     label: "Events",
                     data: Object.values(monthlyCounts),
-                    borderColor: "#3498db",
-                    backgroundColor: "rgba(52, 152, 219, 0.2)",
+                    borderColor: "#f96332",
+                    backgroundColor: "rgba(249, 99, 50, 0.15)",
                     borderWidth: 2,
                     fill: true,
                     tension: 0.3,
-                    pointBackgroundColor: "#2980b9",
+                    pointBackgroundColor: "#f96332",
                   },
                 ],
               },
@@ -1382,10 +1382,10 @@
                     label: "Events",
                     data: Object.values(magnitudeDist),
                     backgroundColor: [
-                      "#3498db",
-                      "#f1c40f",
-                      "#e67e22",
-                      "#e74c3c",
+                      "#2CA8FF",
+                      "#18ce0f",
+                      "#FFB236",
+                      "#f96332",
                     ],
                     borderRadius: 4,
                   },
