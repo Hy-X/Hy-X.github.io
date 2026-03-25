@@ -1378,7 +1378,7 @@
         .addTo(mapStations)
         .bindPopup(`<strong>University of Oklahoma</strong>`);
 
-      const stationUrl = `https://service.iris.edu/fdsnws/station/1/query?net=OK&level=station&format=xml&minlat=33.0&maxlat=38.0&minlon=-101.0&maxlon=-94.0`;
+      const stationUrl = `https://service.iris.edu/fdsnws/station/1/query?net=OK&level=station&format=xml&minlat=33.4&maxlat=37.05&minlon=-102.97&maxlon=-94.2`;
 
       fetch(stationUrl)
         .then((res) => res.text())
