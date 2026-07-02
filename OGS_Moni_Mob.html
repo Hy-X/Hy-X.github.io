@@ -414,10 +414,16 @@
         const color = timeDiff < oneDay ? "#e31a1c" : timeDiff < sevenDays ? "#fc8d00" : "#4292c6";
         const lg    = timeDiff < oneDay ? layerGroups.past24Hours : timeDiff < sevenDays ? layerGroups.past7Days : layerGroups.past30Days;
         const radius = 1.75 * (mag + 1.01) ** 1.6;
+        const userLoc = window.userLocation;
+        const nearUser = userLoc
+          && !pointInPolygon(userLoc.lng, userLoc.lat, oklahomaPolygonLngLat)
+          && Math.abs(lat - userLoc.lat) < 4
+          && Math.abs(lng - userLoc.lng) < 4;
+        const usgsOpacity = nearUser ? 0.72 : 0.3;
         const marker = L.marker([lat, lng], {
           icon: L.divIcon({
             className: "",
-            html: `<div style="width:${radius*2}px;height:${radius*2}px;background:${color};border:1px solid rgba(0,0,0,0.4);opacity:0.3;"></div>`,
+            html: `<div style="width:${radius*2}px;height:${radius*2}px;background:${color};border:1px solid rgba(0,0,0,0.4);opacity:${usgsOpacity};"></div>`,
             iconSize: [radius*2, radius*2], iconAnchor: [radius, radius],
           }),
         });
@@ -514,9 +520,17 @@
       const startStr  = toApiStr(startDate);
       const endStr    = toApiStr(endDate);
 
-      // USGS fetch
+      // USGS fetch — expand bounding box to include user's location if outside Oklahoma
       try {
-        const url = `${USGS_API_BASE_URL}?format=geojson&starttime=${startStr}&endtime=${endStr}&minlatitude=25&maxlatitude=45&minlongitude=-108&maxlongitude=-90&minmagnitude=${QUERY_MIN_MAG}&maxmagnitude=${QUERY_MAX_MAG}`;
+        let minLat = 25.0, maxLat = 45.0, minLng = -108.0, maxLng = -90.0;
+        if (window.userLocation && !pointInPolygon(window.userLocation.lng, window.userLocation.lat, oklahomaPolygonLngLat)) {
+          const buf = 4, u = window.userLocation;
+          minLat = Math.min(minLat, u.lat - buf);
+          maxLat = Math.max(maxLat, u.lat + buf);
+          minLng = Math.min(minLng, u.lng - buf);
+          maxLng = Math.max(maxLng, u.lng + buf);
+        }
+        const url = `${USGS_API_BASE_URL}?format=geojson&starttime=${startStr}&endtime=${endStr}&minlatitude=${minLat}&maxlatitude=${maxLat}&minlongitude=${minLng}&maxlongitude=${maxLng}&minmagnitude=${QUERY_MIN_MAG}&maxmagnitude=${QUERY_MAX_MAG}`;
         const resp = await fetch(url);
         if (resp.ok) { const data = await resp.json(); plotEarthquakes(data.features); }
         else if (resp.status !== 400) console.warn("USGS API error:", resp.status);
@@ -809,6 +823,7 @@
         navigator.geolocation.getCurrentPosition(
           (pos) => {
             const { latitude, longitude } = pos.coords;
+            window.userLocation = { lat: latitude, lng: longitude };
             map.flyTo([latitude, longitude], 7, { animate: true, duration: 1.5 });
             // "You are here" blue dot
             L.circleMarker([latitude, longitude], {
@@ -819,6 +834,10 @@
               weight: 2.5,
               pane: "markerPane",
             }).addTo(map).bindPopup("<strong>Your Location</strong>");
+            // If outside Oklahoma, silently re-fetch USGS with expanded bounding box
+            if (!pointInPolygon(longitude, latitude, oklahomaPolygonLngLat)) {
+              updateMap(false);
+            }
           },
           (err) => {
             // Permission denied or unavailable — stay on default Oklahoma center
