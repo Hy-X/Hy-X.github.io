@@ -1576,23 +1576,52 @@
 </div>
 </div>
 
-        <!--
-        
         <div class="section" id="visitor-track">
           <div class="container">
-            <div class="card shadow-sm p-4 mb-5 bg-white rounded" data-aos="fade-up" data-aos-offset="10">
+            <div class="card shadow-sm p-4 mb-5 bg-white rounded visitor-track-card" data-aos="fade-up" data-aos-offset="10">
               <div class="card-body text-center">
-                <h2 class="h4 mb-4 title">Visitor Tracker</h2>
-                <p class="mb-4">This section visualizes the global distribution of visitors to this page.</p>
-                <div class="d-flex justify-content-center flex-column align-items-center">
-                  
-                  <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=tt&d=I-LdD0QnWjcP6omFOwIGARETtyufZf0TZgn_-ika49A&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
+                <span class="visitor-pill">Live</span>
+                <h2 class="h4 mb-3 title">Visitor Counter</h2>
+                <p class="mb-4 visitor-subtitle">A simple running total of page visits, updated in real time.</p>
+                <div class="visitor-counter-shell d-flex justify-content-center flex-column align-items-center">
+                  <div class="visitor-counter-label">Total Visits</div>
+                  <div id="visitor-count-value" class="visitor-counter-value" aria-live="polite">Loading...</div>
+                  <div id="visitor-count-meta" class="visitor-counter-meta">Updating counter...</div>
                 </div>
+                <p class="visitor-note mb-0">Counter data is displayed via external tracking services.</p>
+                <script>
+                  (function () {
+                    const valueEl = document.getElementById("visitor-count-value");
+                    const metaEl = document.getElementById("visitor-count-meta");
+                    const namespace = "hy-x.github.io";
+                    const key = "index-visitor-counter";
+
+                    fetch("https://api.countapi.xyz/hit/" + encodeURIComponent(namespace) + "/" + encodeURIComponent(key), {
+                      cache: "no-store"
+                    })
+                      .then((response) => {
+                        if (!response.ok) {
+                          throw new Error("Counter request failed");
+                        }
+                        return response.json();
+                      })
+                      .then((data) => {
+                        if (typeof data.value !== "number") {
+                          throw new Error("Invalid counter response");
+                        }
+                        valueEl.textContent = data.value.toLocaleString("en-US");
+                        metaEl.textContent = "Updated just now";
+                      })
+                      .catch(() => {
+                        valueEl.textContent = "Unavailable";
+                        metaEl.textContent = "Counter service is temporarily unavailable.";
+                      });
+                  })();
+                </script>
               </div>
             </div>
           </div>
         </div>
-        -->
         
 
 <div class="section" id="Contact">
