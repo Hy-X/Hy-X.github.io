@@ -3,7 +3,58 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>OGS Earthquake Monitor</title>
+  <title>OGS Earthquake Monitor — Real-Time Oklahoma Seismic Map (Mobile)</title>
+  <meta name="description" content="Real-time mobile earthquake map for Oklahoma and surrounding regions. Powered by the Oklahoma Geological Survey (OGS) and USGS, showing seismic events from the past 7 days with magnitude, depth, and location details." />
+  <meta name="keywords" content="Oklahoma earthquake, OGS seismic monitor, real-time earthquake map, Oklahoma seismicity, earthquake tracker mobile, USGS earthquakes, OGS network, seismic activity Oklahoma" />
+  <meta name="author" content="Hongyu Xiao" />
+  <link rel="canonical" href="https://hy-x.github.io/OGS_Moni_Mob.html" />
+  <link rel="alternate" hreflang="en" href="https://hy-x.github.io/OGS_Moni_Mob.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://hy-x.github.io/OGS_Moni_Mob.html" />
+  <meta property="og:title"       content="OGS Earthquake Monitor — Real-Time Oklahoma Seismic Map" />
+  <meta property="og:description" content="Interactive mobile earthquake map showing the latest OGS and USGS seismic events across Oklahoma and nearby states. Tap any marker for magnitude, depth, and time details." />
+  <meta property="og:image"       content="https://hy-x.github.io/images/cc-bg-hyx.jpg" />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="OGS Earthquake Monitor — Real-Time Oklahoma Seismic Map" />
+  <meta name="twitter:description" content="Live earthquake map for Oklahoma. OGS + USGS data, past 7 days, location-aware." />
+  <meta name="twitter:image"       content="https://hy-x.github.io/images/cc-bg-hyx.jpg" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "OGS Earthquake Monitor (Mobile)",
+    "description": "A lightweight, mobile-optimised real-time earthquake map for Oklahoma powered by the Oklahoma Geological Survey (OGS) and USGS seismic data feeds.",
+    "url": "https://hy-x.github.io/OGS_Moni_Mob.html",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "creator": {
+      "@type": "Person",
+      "name": "Hongyu Xiao",
+      "url": "https://hy-x.github.io/index.html",
+      "affiliation": "University of Oklahoma"
+    },
+    "hasPart": [
+      {
+        "@type": "Dataset",
+        "name": "OGS Earthquake Catalog",
+        "description": "High-resolution seismic events within Oklahoma from the Oklahoma Geological Survey public catalog API, past 7 days."
+      },
+      {
+        "@type": "Dataset",
+        "name": "USGS Real-Time Feed",
+        "description": "Regional earthquake events from the USGS GeoJSON feed, expanding to the viewer's location when outside Oklahoma."
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet" />
