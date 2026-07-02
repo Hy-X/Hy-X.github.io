@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>OGS Earthquake Monitor</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet" />
+  <style>
+    /* === OGS Monitor — Mobile UI === */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%;
+      margin: 0; padding: 0;
+      overflow: hidden;
+      font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #map { position: absolute; inset: 0; z-index: 0; }
+
+    /* ── Leaflet controls ── */
+    .leaflet-bottom.leaflet-right .leaflet-control-layers {
+      margin-right: 10px !important;
+      margin-bottom: 58px !important;
+    }
+    .leaflet-control-layers {
+      background: rgba(255,255,255,0.97) !important;
+      border-radius: 10px !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12) !important;
+      border: 1px solid rgba(0,0,0,0.06) !important;
+      font-size: 12px !important;
+      font-family: 'Montserrat', sans-serif !important;
+    }
+    .leaflet-control-zoom { margin-right: 10px !important; margin-bottom: 8px !important; }
+    .leaflet-control-zoom a {
+      width: 36px !important; height: 36px !important;
+      line-height: 36px !important; font-size: 20px !important;
+      border-radius: 8px !important;
+    }
+
+    /* ── Panel badge ── */
+    .panel-badge {
+      display: inline-block;
+      padding: 2px 8px; border-radius: 10px;
+      font-size: 9px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-right: 5px; vertical-align: middle; line-height: 1.8;
+    }
+    .badge-purple { background: #f5f3ff; color: #7c3aed; }
+
+    /* ── Shared card style ── */
+    .overlay-panel {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    /* ── Top-right legend wrap ── */
+    #legend-wrap {
+      position: absolute; top: 12px; right: 12px;
+      z-index: 10;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+    }
+
+    /* ── Legend toggle button ── */
+    #legend-toggle-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 9px 14px;
+      background: linear-gradient(135deg, #374151, #1f2937);
+      color: #fff; border: none; border-radius: 20px;
+      font-family: inherit; font-size: 12px; font-weight: 700;
+      box-shadow: 0 2px 10px rgba(31,41,55,0.28);
+      cursor: pointer; touch-action: manipulation;
+      user-select: none; -webkit-user-select: none;
+      min-height: 40px; transition: box-shadow 0.2s;
+    }
+    #legend-toggle-btn:active { box-shadow: 0 1px 4px rgba(31,41,55,0.3); }
+
+    /* ── Legend panel ── */
+    #legend-panel {
+      display: none;
+      padding: 12px; min-width: 185px;
+    }
+    #legend-panel.open { display: block; }
+
+    /* ── Bottom-left info panel ── */
+    #lower-left-panel {
+      position: absolute; bottom: 12px; left: 12px;
+      z-index: 10; padding: 7px 10px; max-width: 220px;
+    }
+
+    /* ── Bottom-center event list button ── */
+    #bottom-bar {
+      position: absolute; bottom: 12px;
+      left: 50%; transform: translateX(-50%);
+      z-index: 10;
+    }
+    #event-list-toggle-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 9px 16px;
+      background: linear-gradient(135deg, #374151, #1f2937);
+      color: #fff; border: none; border-radius: 20px;
+      font-family: inherit; font-size: 12px; font-weight: 700;
+      box-shadow: 0 2px 10px rgba(31,41,55,0.28);
+      cursor: pointer; touch-action: manipulation;
+      user-select: none; -webkit-user-select: none;
+      min-height: 40px; white-space: nowrap; transition: box-shadow 0.2s;
+    }
+    #event-list-toggle-btn:active { box-shadow: 0 1px 4px rgba(31,41,55,0.3); }
+
+    /* ── Event count badge on button ── */
+    #event-count-badge {
+      display: none;
+      background: #e31a1c; color: #fff;
+      border-radius: 10px; padding: 1px 6px;
+      font-size: 9px; font-weight: 700; margin-left: 2px;
+    }
+
+    /* ── Event list bottom sheet ── */
+    #event-list-sheet {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      z-index: 30;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.14);
+      border-top: 1px solid rgba(0,0,0,0.06);
+      max-height: 55vh;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex; flex-direction: column;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    #event-list-sheet.open { transform: translateY(0); }
+
+    #sheet-header {
+      flex-shrink: 0; padding: 10px 16px 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    #sheet-drag-handle {
+      width: 36px; height: 4px;
+      background: #d1d5db; border-radius: 2px;
+      margin: 0 auto 8px;
+    }
+    #event-list-summary {
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.6px; color: #6b7280;
+    }
+    #sheet-body {
+      flex: 1; overflow-y: auto; padding: 6px 12px 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ── Event list items ── */
+    .event-list-item {
+      border-radius: 8px; padding: 8px 10px;
+      margin-bottom: 3px; border-bottom: 1px solid #f1f5f9;
+      cursor: pointer; touch-action: manipulation;
+      transition: background 0.15s;
+    }
+    .event-list-item:active { background: #eff6ff; }
+
+    /* ── Loading spinner ── */
+    #loading-dialog {
+      display: none; position: fixed; inset: 0;
+      background: rgba(255,255,255,0.85); z-index: 9999;
+      flex-direction: column; align-items: center;
+      justify-content: center; gap: 14px;
+    }
+    #loading-dialog.visible { display: flex; }
+    .spinner {
+      width: 38px; height: 38px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #2563eb;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Leaflet popup ── */
+    .leaflet-popup-content-wrapper { border-radius: 10px !important; }
+    .leaflet-popup-content {
+      font-family: 'Montserrat', sans-serif !important;
+      font-size: 12px !important; line-height: 1.6 !important;
+      margin: 10px 14px !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Full-screen map -->
+  <div id="map"></div>
+
+  <!-- Top-right: Legend toggle + panel -->
+  <div id="legend-wrap">
+    <button id="legend-toggle-btn" aria-expanded="false">
+      <i class="fa fa-map" style="font-size:11px;"></i>
+      Legend
+      <i class="fa fa-chevron-down" id="legend-chevron" style="font-size:9px;transition:transform 0.25s;"></i>
+    </button>
+    <div id="legend-panel" class="overlay-panel">
+      <!-- Header -->
+      <div style="margin-bottom:8px;padding-bottom:7px;border-bottom:1px solid #f1f5f9;">
+        <span class="panel-badge badge-purple">Map</span>
+        <span style="font-size:12px;font-weight:700;color:#374151;vertical-align:middle;">Legend</span>
+      </div>
+      <!-- Event Age -->
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6b7280;margin-bottom:5px;">Event Age</div>
+      <div style="margin-bottom:9px;">
+        <div style="display:flex;align-items:center;margin-bottom:4px;">
+          <span style="display:inline-block;width:22px;height:10px;background:#e31a1c;border-radius:2px;margin-right:7px;opacity:0.85;border:1px solid rgba(0,0,0,0.18);flex-shrink:0;"></span>
+          <span style="font-size:11px;color:#374151;">Past 24 Hours</span>
+        </div>
+        <div style="display:flex;align-items:center;margin-bottom:4px;">
+          <span style="display:inline-block;width:22px;height:10px;background:#fc8d00;border-radius:2px;margin-right:7px;opacity:0.85;border:1px solid rgba(0,0,0,0.18);flex-shrink:0;"></span>
+          <span style="font-size:11px;color:#374151;">Past 7 Days</span>
+        </div>
+        <div style="display:flex;align-items:center;">
+          <span style="display:inline-block;width:22px;height:10px;background:#4292c6;border-radius:2px;margin-right:7px;opacity:0.85;border:1px solid rgba(0,0,0,0.18);flex-shrink:0;"></span>
+          <span style="font-size:11px;color:#374151;">Past 30 Days</span>
+        </div>
+      </div>
+      <!-- Magnitude Scale -->
+      <div style="border-top:1px solid #f1f5f9;padding-top:7px;margin-bottom:7px;">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6b7280;margin-bottom:5px;">Magnitude</div>
+        <svg height="38" width="96">
+          <circle cx="11" cy="13" fill="#4292c6" fill-opacity="0.7" r="5.7" stroke="black" stroke-width="1"></circle>
+          <text x="11" y="34" text-anchor="middle" style="font-size:8px;fill:#6b7280;">M1</text>
+          <circle cx="40" cy="13" fill="#4292c6" fill-opacity="0.7" r="10.2" stroke="black" stroke-width="1"></circle>
+          <text x="40" y="34" text-anchor="middle" style="font-size:8px;fill:#6b7280;">M2</text>
+          <circle cx="76" cy="13" fill="#4292c6" fill-opacity="0.7" r="13" stroke="black" stroke-width="1"></circle>
+          <text x="76" y="34" text-anchor="middle" style="font-size:8px;fill:#6b7280;">M3</text>
+        </svg>
+      </div>
+      <!-- Event Type -->
+      <div style="border-top:1px solid #f1f5f9;padding-top:7px;">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6b7280;margin-bottom:5px;">Event Type</div>
+        <div style="display:flex;align-items:center;margin-bottom:4px;">
+          <svg width="16" height="16" style="margin-right:7px;flex-shrink:0;">
+            <rect x="1" y="1" width="13" height="13" style="fill:rgba(66,146,198,0.3);stroke:rgba(0,0,0,0.4);stroke-width:1;"/>
+          </svg>
+          <span style="font-size:11px;color:#374151;">USGS (outside OK)</span>
+        </div>
+        <div style="display:flex;align-items:center;">
+          <svg width="16" height="16" style="margin-right:7px;flex-shrink:0;">
+            <polygon points="8,1 15,8 8,15 1,8" style="fill:rgba(66,146,198,0.7);stroke:black;stroke-width:1;"/>
+          </svg>
+          <span style="font-size:11px;color:#374151;">Quarry Blast</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom-left: Last update + citation -->
+  <div id="lower-left-panel" class="overlay-panel">
+    <div style="display:flex;align-items:center;gap:4px;margin-bottom:3px;">
+      <i class="fa fa-refresh" style="color:#2563eb;font-size:9px;flex-shrink:0;"></i>
+      <span id="last-update-time" style="font-size:10px;font-weight:600;color:#374151;">Loading…</span>
+    </div>
+    <div style="border-top:1px solid #f1f5f9;padding-top:4px;">
+      <a href="#" id="data-citation-link" style="font-size:10px;font-weight:700;color:#2563eb;text-decoration:none;">Data Citation</a>
+      <div id="data-citation-box" style="display:none;margin-top:4px;padding:5px 6px;font-size:10px;line-height:1.45;background:#f8faff;border:1px solid #dbeafe;border-radius:5px;color:#374151;max-width:210px;">
+        Walter et al. (2020), OGS Statewide Seismic Network,
+        <em>Seismol. Res. Lett.</em>, 91(2A):611–621.
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom-center: Event list toggle button -->
+  <div id="bottom-bar">
+    <button id="event-list-toggle-btn">
+      <i class="fa fa-list" style="font-size:11px;"></i>
+      Event List
+      <span id="event-count-badge"></span>
+      <i class="fa fa-chevron-up" id="event-list-chevron" style="font-size:9px;transition:transform 0.25s;"></i>
+    </button>
+  </div>
+
+  <!-- Event list bottom sheet -->
+  <div id="event-list-sheet" role="dialog" aria-modal="true" aria-label="Recent seismic events">
+    <div id="sheet-header">
+      <div id="sheet-drag-handle"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div id="event-list-summary">Loading events…</div>
+        <button id="sheet-close-btn" style="background:none;border:none;color:#9ca3af;font-size:20px;line-height:1;padding:0 0 0 10px;cursor:pointer;touch-action:manipulation;">&times;</button>
+      </div>
+    </div>
+    <div id="sheet-body">
+      <div id="ogs-events-list"></div>
+    </div>
+  </div>
+
+  <!-- Loading spinner overlay -->
+  <div id="loading-dialog">
+    <div class="spinner"></div>
+    <div style="font-size:13px;font-weight:600;color:#374151;letter-spacing:0.2px;">Loading seismic data…</div>
+  </div>
+
+  <script>
+    // --- STATIC STATION FALLBACK DATA ---
+    const STATIC_STATIONS = [
+      { Station:"TG01",  latitude:35.272,    longitude:-97.80844, html:"http://wichita.ogs.ou.edu/eq/heliplot/TG01.png" },
+      { Station:"TG02",  latitude:35.273267, longitude:-97.804271,html:"http://wichita.ogs.ou.edu/eq/heliplot/TG02.png" },
+      { Station:"TG03",  latitude:35.2718,   longitude:-97.8019,  html:"http://wichita.ogs.ou.edu/eq/heliplot/TG03.png" },
+      { Station:"TG04",  latitude:35.269,    longitude:-97.8023,  html:"http://wichita.ogs.ou.edu/eq/heliplot/TG04.png" },
+      { Station:"TG05",  latitude:35.275485, longitude:-97.809629,html:"http://wichita.ogs.ou.edu/eq/heliplot/TG05.png" },
+      { Station:"ALVA",  latitude:36.8696,   longitude:-98.7931,  html:"http://wichita.ogs.ou.edu/eq/heliplot/ALVA.png" },
+      { Station:"CRES",  latitude:36.037118, longitude:-97.534468,html:"http://wichita.ogs.ou.edu/eq/heliplot/CRES.png" },
+      { Station:"DOVR",  latitude:35.954333, longitude:-97.988182,html:"http://wichita.ogs.ou.edu/eq/heliplot/DOVR.png" },
+      { Station:"ERNS",  latitude:35.4243,   longitude:-98.0293,  html:"http://wichita.ogs.ou.edu/eq/heliplot/ERNS.png" },
+      { Station:"FREE",  latitude:36.9301,   longitude:-99.2706,  html:"http://wichita.ogs.ou.edu/eq/heliplot/FREE.png" },
+      { Station:"GORE",  latitude:36.785632, longitude:-97.947062,html:"http://wichita.ogs.ou.edu/eq/heliplot/GORE.png" },
+      { Station:"MRSH",  latitude:36.13231,  longitude:-97.69548, html:"http://wichita.ogs.ou.edu/eq/heliplot/MRSH.png" },
+      { Station:"PERK",  latitude:35.926079, longitude:-97.129544,html:"http://wichita.ogs.ou.edu/eq/heliplot/PERK.png" },
+      { Station:"POCA",  latitude:35.217682, longitude:-98.075301,html:"http://wichita.ogs.ou.edu/eq/heliplot/POCA.png" },
+      { Station:"RNSP",  latitude:35.9334,   longitude:-98.4254,  html:"http://wichita.ogs.ou.edu/eq/heliplot/RNSP.png" },
+      { Station:"SC01",  latitude:35.1846,   longitude:-97.8202,  html:"http://wichita.ogs.ou.edu/eq/heliplot/SC01.png" },
+      { Station:"SC02",  latitude:34.7977,   longitude:-97.389,   html:"http://wichita.ogs.ou.edu/eq/heliplot/SC02.png" },
+      { Station:"SC03",  latitude:34.940182, longitude:-97.848978,html:"http://wichita.ogs.ou.edu/eq/heliplot/SC03.png" },
+      { Station:"SC06",  latitude:35.073193, longitude:-97.521477,html:"http://wichita.ogs.ou.edu/eq/heliplot/SC06.png" },
+      { Station:"SC10",  latitude:35.422563, longitude:-98.271427,html:"http://wichita.ogs.ou.edu/eq/heliplot/SC10.png" },
+      { Station:"SC16",  latitude:35.974933, longitude:-98.815308,html:"http://wichita.ogs.ou.edu/eq/heliplot/SC16.png" },
+      { Station:"SC18",  latitude:36.502615, longitude:-97.554242,html:"http://wichita.ogs.ou.edu/eq/heliplot/SC18.png" },
+      { Station:"SC19",  latitude:36.220151, longitude:-97.843067,html:"http://wichita.ogs.ou.edu/eq/heliplot/SC19.png" },
+      { Station:"SHWN",  latitude:35.342772, longitude:-97.022544,html:"http://wichita.ogs.ou.edu/eq/heliplot/SHWN.png" },
+      { Station:"TUTT",  latitude:35.238272, longitude:-97.755588,html:"http://wichita.ogs.ou.edu/eq/heliplot/TUTT.png" },
+      { Station:"UCTY",  latitude:35.39033,  longitude:-97.91585, html:"http://wichita.ogs.ou.edu/eq/heliplot/UCTY.png" },
+      { Station:"YUKO",  latitude:35.5384,   longitude:-97.8606,  html:"http://wichita.ogs.ou.edu/eq/heliplot/YUKO.png" },
+      { Station:"AMES",  latitude:36.335587, longitude:-98.192787,html:"http://wichita.ogs.ou.edu/eq/heliplot/AMES.png" },
+      { Station:"MOOR",  latitude:35.341792, longitude:-97.65922, html:"http://wichita.ogs.ou.edu/eq/heliplot/MOOR.png" },
+      { Station:"SMO",   latitude:35.523142, longitude:-97.474662,html:"http://wichita.ogs.ou.edu/eq/heliplot/SMO.png"  },
+      { Station:"FNO",   latitude:35.25738,  longitude:-97.40115, html:"http://wichita.ogs.ou.edu/eq/heliplot/FNO.png"  },
+    ];
+
+    // --- CONFIGURATION ---
+    const USGS_API_BASE_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query";
+
+    // --- QUERY STATE (set on init, no user controls in mobile version) ---
+    let queryStartDate = "";
+    let queryEndDate   = "";
+    const QUERY_MIN_MAG = "0";
+    const QUERY_MAX_MAG = "10";
+
+    // --- GLOBAL MAP VARIABLES ---
+    let map;
+    let layerGroups = {};
+    let polygonLayer;
+    window.plottedOgsEventIds = new Set();
+
+    // --- OKLAHOMA POLYGON ---
+    const oklahomaPolygonLatLng = [
+      [37.0001,-103.0027],[36.9989,-94.618],[36.4994,-94.6179],[35.3925,-94.4307],
+      [33.6379,-94.4858],[33.8399,-94.951],[33.9053,-95.183],[33.9231,-95.4328],
+      [33.8756,-95.8433],[33.822,-96.3668],[33.8161,-96.8902],[33.8756,-97.5327],
+      [33.9648,-97.9669],[34.1076,-98.4666],[34.2801,-99.1507],[34.4109,-99.5433],
+      [34.5606,-100.0008],[36.4997,-100.0008],[36.5004,-103.0029],[37.0001,-103.0027],
+    ];
+    const oklahomaPolygonLngLat = oklahomaPolygonLatLng.map(([lat,lng]) => [lng,lat]);
+
+    // --- TIME HELPERS ---
+    const isDst = (utcDate) => {
+      const year = utcDate.getUTCFullYear();
+      const begins = { 2024:new Date("2024-03-10T08:00:00Z"), 2025:new Date("2025-03-09T08:00:00Z"), 2026:new Date("2026-03-08T08:00:00Z") };
+      const ends   = { 2024:new Date("2024-11-03T07:00:00Z"), 2025:new Date("2025-11-02T07:00:00Z"), 2026:new Date("2026-11-01T07:00:00Z") };
+      return begins[year] && ends[year] ? utcDate >= begins[year] && utcDate < ends[year] : false;
+    };
+    const getLocalTime = (utcDate) => new Date(utcDate.getTime() - (isDst(utcDate) ? 5 : 6) * 3600000);
+    const pointInPolygon = (lng, lat, poly) => {
+      let inside = false;
+      for (let i=0, j=poly.length-1; i<poly.length; j=i++) {
+        const [xi,yi]=[poly[i][0],poly[i][1]], [xj,yj]=[poly[j][0],poly[j][1]];
+        if ((yi>lat) !== (yj>lat) && lng < ((xj-xi)*(lat-yi))/(yj-yi+1e-12)+xi) inside=!inside;
+      }
+      return inside;
+    };
+
+    // --- UI HELPERS ---
+    const showLoadingDialog = (show) => {
+      const d = document.getElementById("loading-dialog");
+      if (d) show ? d.classList.add("visible") : d.classList.remove("visible");
+    };
+
+    function updateLastQueryTime() {
+      const el = document.getElementById("last-update-time");
+      if (el) el.textContent = "Updated: " + new Date().toLocaleTimeString();
+    }
+
+    function setInitialDates() {
+      const today = new Date();
+      const ago30 = new Date(); ago30.setDate(today.getDate() - 30);
+      queryEndDate   = today.toISOString().split("T")[0];
+      queryStartDate = ago30.toISOString().split("T")[0];
+    }
+
+    // --- PLOTTING: USGS (outside Oklahoma, de-emphasised) ---
+    function plotEarthquakes(features) {
+      const now = Date.now(), oneDay = 86400000, sevenDays = 7*oneDay;
+      const plotted = new Set();
+      features.forEach(f => {
+        if (!f.id || plotted.has(f.id)) return;
+        const [lng, lat] = f.geometry.coordinates;
+        if (pointInPolygon(lng, lat, oklahomaPolygonLngLat)) return;
+        const mag = f.properties.mag;
+        const timeDiff = now - f.properties.time;
+        const color = timeDiff < oneDay ? "#e31a1c" : timeDiff < sevenDays ? "#fc8d00" : "#4292c6";
+        const lg    = timeDiff < oneDay ? layerGroups.past24Hours : timeDiff < sevenDays ? layerGroups.past7Days : layerGroups.past30Days;
+        const radius = 1.75 * (mag + 1.01) ** 1.6;
+        const marker = L.marker([lat, lng], {
+          icon: L.divIcon({
+            className: "",
+            html: `<div style="width:${radius*2}px;height:${radius*2}px;background:${color};border:1px solid rgba(0,0,0,0.4);opacity:0.3;"></div>`,
+            iconSize: [radius*2, radius*2], iconAnchor: [radius, radius],
+          }),
+        });
+        marker.featureId = f.id;
+        const eventTime = new Date(f.properties.time);
+        const utcStr = eventTime.toISOString().replace("T"," ").substring(0,19);
+        marker.bindPopup(`<strong>Magnitude:</strong> ${mag?.toFixed(1) ?? "?"}<br>
+          <strong>Time (UTC):</strong> ${utcStr}<br>
+          <strong>Location:</strong> ${f.properties.place}<br>
+          <strong>Source:</strong> USGS`);
+        marker.addTo(lg);
+        plotted.add(f.id);
+      });
+    }
+
+    // --- EVENT LIST RENDER ---
+    function renderEventList(events) {
+      const listDiv = document.getElementById("ogs-events-list");
+      if (!listDiv) return;
+      const sorted = [...events].sort((a,b) => new Date(b.origintime) - new Date(a.origintime));
+      if (sorted.length === 0) {
+        listDiv.innerHTML = "<em style='color:#9ca3af;font-size:12px;'>No events found.</em>";
+        return;
+      }
+      listDiv.innerHTML = sorted.map(ev => {
+        const mag = Number(ev.prefmag);
+        const timeStr = new Date(ev.origintime).toISOString().replace("T"," ").substring(0,19);
+        const rawId = ev.event_id || ev.objectid;
+        const dispId = rawId && typeof rawId==="string" && rawId.startsWith("ogs") ? "ok"+rawId.substring(3) : rawId;
+        const isQuarry = typeof ev.isQuarry!=="undefined" ? ev.isQuarry : Number(ev.depth)<0.05;
+        const typeLabel = isQuarry ? "Quarry" : "Earthquake";
+        const dotColor = (Date.now()-new Date(ev.origintime).getTime()) < 86400000
+          ? "#e31a1c" : (Date.now()-new Date(ev.origintime).getTime()) < 604800000
+          ? "#fc8d00" : "#4292c6";
+        return `<div class="event-list-item" data-event-id="${dispId}">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${dotColor};flex-shrink:0;"></span>
+            <strong style="font-size:13px;">M ${!isNaN(mag)?mag.toFixed(1):"?"}</strong>
+            <span style="font-size:10px;color:#9ca3af;">[${typeLabel}]</span>
+          </div>
+          <div style="font-size:11px;color:#6b7280;margin-top:2px;padding-left:14px;">
+            ${timeStr} UTC — ${ev.county||ev.state||""}
+          </div>
+        </div>`;
+      }).join("");
+
+      // Update summary + badge
+      const now = Date.now(), thirtyDaysMs = 30*86400000;
+      const count = events.filter(e => now - new Date(e.origintime).getTime() <= thirtyDaysMs).length;
+      const summaryEl = document.getElementById("event-list-summary");
+      if (summaryEl) summaryEl.textContent = `${count} events in last 30 days`;
+      const badge = document.getElementById("event-count-badge");
+      if (badge) {
+        const recent24h = events.filter(e => now - new Date(e.origintime).getTime() <= 86400000).length;
+        if (recent24h > 0) { badge.textContent = recent24h; badge.style.display = "inline-block"; }
+        else { badge.style.display = "none"; }
+      }
+    }
+
+    // --- FIND & OPEN MARKER ---
+    function findAndOpenMarker(eventId) {
+      if (!eventId) return;
+      let found = null;
+      [layerGroups.past24Hours, layerGroups.past7Days, layerGroups.past30Days].forEach(g => {
+        g.eachLayer(m => { if (m.featureId === eventId) found = m; });
+      });
+      if (found) {
+        const zoom = Math.max(map.getZoom()||0, 10);
+        map.setView(found.getLatLng(), zoom, { animate:true });
+        setTimeout(() => found.openPopup(), 400);
+      } else if (window.ogsEventData) {
+        const ev = window.ogsEventData.find(e => {
+          const raw = e.event_id || e.objectid;
+          const mid = raw && typeof raw==="string" && raw.startsWith("ogs") ? "ok"+raw.substring(3) : raw;
+          return mid == eventId;
+        });
+        if (ev && !isNaN(ev.latitude) && !isNaN(ev.longitude)) {
+          map.setView([Number(ev.latitude), Number(ev.longitude)], Math.max(map.getZoom()||0, 10), { animate:true });
+        }
+      }
+    }
+
+    // --- MAIN MAP UPDATE ---
+    async function updateMap(showLoading=true) {
+      if (showLoading) showLoadingDialog(true);
+      layerGroups.past24Hours.clearLayers();
+      layerGroups.past7Days.clearLayers();
+      layerGroups.past30Days.clearLayers();
+      window.plottedOgsEventIds.clear();
+
+      const pad = n => n.toString().padStart(2,"0");
+      const toApiStr = date => `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+      const startDate = new Date(queryStartDate); startDate.setUTCHours(0,0,0,0);
+      const endDate   = new Date(queryEndDate);   endDate.setUTCHours(23,59,59,999);
+      const startStr  = toApiStr(startDate);
+      const endStr    = toApiStr(endDate);
+
+      // USGS fetch
+      try {
+        const url = `${USGS_API_BASE_URL}?format=geojson&starttime=${startStr}&endtime=${endStr}&minlatitude=25&maxlatitude=45&minlongitude=-108&maxlongitude=-90&minmagnitude=${QUERY_MIN_MAG}&maxmagnitude=${QUERY_MAX_MAG}`;
+        const resp = await fetch(url);
+        if (resp.ok) { const data = await resp.json(); plotEarthquakes(data.features); }
+        else if (resp.status !== 400) console.warn("USGS API error:", resp.status);
+      } catch(e) { console.warn("USGS fetch error:", e); }
+
+      // OGS fetch
+      let ogsEventData = null;
+      try {
+        const toOgsStr = (date, isEnd) => {
+          const d = new Date(date);
+          isEnd ? d.setHours(23,59,0,0) : d.setHours(0,0,0,0);
+          return d.getFullYear().toString() + (d.getMonth()+1).toString().padStart(2,"0")
+            + d.getDate().toString().padStart(2,"0") + d.getHours().toString().padStart(2,"0")
+            + d.getMinutes().toString().padStart(2,"0");
+        };
+        const ogsUrl = `https://ogsweb.ou.edu/eq_catalog/earthquake?start=${toOgsStr(startStr,false)}&end=${toOgsStr(endStr,true)}&mag=${QUERY_MIN_MAG}&format=geojson`;
+        const ogsResp = await fetch(ogsUrl);
+        if (!ogsResp.ok) throw new Error(`OGS API ${ogsResp.status}`);
+        const geojson = await ogsResp.json();
+
+        ogsEventData = geojson.features
+          .filter(f => f.geometry && f.geometry.coordinates)
+          .map(f => {
+            const p = f.properties, g = f.geometry;
+            const eventTime = p.origintime || p.time || null;
+            if (eventTime) {
+              const t = new Date(eventTime);
+              if (t < startDate || t > endDate) return null;
+            }
+            let depth = null;
+            if (p.depth != null && !isNaN(parseFloat(p.depth))) depth = parseFloat(p.depth);
+            else if (g.coordinates.length > 2) { depth = parseFloat(g.coordinates[2]); if (isNaN(depth)) depth=null; }
+            return {
+              objectid: p.objectid||null, origintime: p.origintime||p.time||null,
+              prefmag: p.prefmag||p.mag||null,
+              latitude: g.coordinates[1], longitude: g.coordinates[0],
+              depth, isQuarry: typeof depth==="number" && depth<0.05,
+              state: p.state||null, county: p.county||null,
+              status: p.status||null, event_id: p.event_id||p.id||null,
+            };
+          })
+          .filter(e => e !== null && Number(e.prefmag||0) <= Number(QUERY_MAX_MAG));
+      } catch(e) {
+        console.warn("OGS fetch error:", e);
+        renderEventList([]);
+        if (showLoading) showLoadingDialog(false);
+        return;
+      }
+
+      // Plot OGS markers
+      const now = Date.now(), oneDay=86400000, sevenDays=7*oneDay;
+      [...ogsEventData].sort((a,b) => new Date(a.origintime)-new Date(b.origintime)).forEach(ev => {
+        const rawId = ev.event_id || ev.objectid;
+        const markerId = rawId && typeof rawId==="string" && rawId.startsWith("ogs") ? "ok"+rawId.substring(3) : rawId;
+        const lat=Number(ev.latitude), lng=Number(ev.longitude), mag=Number(ev.prefmag), depth=Number(ev.depth);
+        if (isNaN(lat)||isNaN(lng)) return;
+        window.plottedOgsEventIds.add(rawId);
+        const timeDiff = now - new Date(ev.origintime).getTime();
+        const color = timeDiff<oneDay ? "#e31a1c" : timeDiff<sevenDays ? "#fc8d00" : "#4292c6";
+        const lg    = timeDiff<oneDay ? layerGroups.past24Hours : timeDiff<sevenDays ? layerGroups.past7Days : layerGroups.past30Days;
+        const radius = 1.75*(mag+1.01)**1.6;
+        let marker;
+        if (!isNaN(depth) && depth < 0.05) {
+          marker = L.marker([lat,lng], { icon: L.divIcon({ className:"",
+            html:`<svg width="${radius*2}" height="${radius*2}" viewBox="0 0 ${radius*2} ${radius*2}">
+              <polygon points="${radius},0 ${radius*2},${radius} ${radius},${radius*2} 0,${radius}"
+                style="fill:${color};stroke:black;stroke-width:1;opacity:0.7;"/></svg>`,
+            iconSize:[radius*2,radius*2], iconAnchor:[radius,radius] }) });
+        } else {
+          marker = L.circleMarker([lat,lng], { radius:Math.max(radius,6), color:"black", fillColor:color, fillOpacity:0.7, weight:1 });
+        }
+        marker.featureId = markerId;
+        const utcStr = new Date(ev.origintime).toISOString().replace("T"," ").substring(0,19);
+        const localStr = getLocalTime(new Date(ev.origintime)).toISOString().replace("T"," ").substring(0,19);
+        marker.bindPopup(`<strong>Source:</strong> OGS<br>
+          <strong>Magnitude:</strong> ${!isNaN(mag)?mag.toFixed(1):"?"}<br>
+          <strong>Time (UTC):</strong> ${utcStr}<br>
+          <strong>Local Time:</strong> ${localStr}<br>
+          <strong>Location:</strong> ${ev.county||ev.state||""}<br>
+          ${!isNaN(depth)?`<strong>Depth:</strong> ${depth.toFixed(2)} km<br>`:""}
+          ${(!isNaN(depth)&&depth<0.05)?`<strong>Type:</strong> Quarry Blast<br>`:""}
+          <a href="https://earthquake.usgs.gov/earthquakes/eventpage/${markerId}/tellus" target="_blank" rel="noopener noreferrer">Did you feel this?</a>`);
+        marker.addTo(lg);
+      });
+
+      window.ogsEventData = ogsEventData;
+      renderEventList(ogsEventData);
+      if (layerGroups.stations) layerGroups.stations.bringToBack();
+      if (showLoading) showLoadingDialog(false);
+      updateLastQueryTime();
+    }
+
+    // --- POLLING ---
+    async function pollOgsForUpdates() {
+      try {
+        const pad = n => n.toString().padStart(2,"0");
+        const toOgsStr = date => {
+          const d=new Date(date); d.setHours(0,0,0,0);
+          return d.getFullYear().toString()+(d.getMonth()+1).toString().padStart(2,"0")
+            +d.getDate().toString().padStart(2,"0")+d.getHours().toString().padStart(2,"0")
+            +d.getMinutes().toString().padStart(2,"0");
+        };
+        const toOgsEndStr = date => {
+          const d=new Date(date); d.setHours(23,59,0,0);
+          return d.getFullYear().toString()+(d.getMonth()+1).toString().padStart(2,"0")
+            +d.getDate().toString().padStart(2,"0")+d.getHours().toString().padStart(2,"0")
+            +d.getMinutes().toString().padStart(2,"0");
+        };
+        const ogsUrl = `https://ogsweb.ou.edu/eq_catalog/earthquake?start=${toOgsStr(queryStartDate)}&end=${toOgsEndStr(queryEndDate)}&mag=${QUERY_MIN_MAG}&format=geojson`;
+        const resp = await fetch(ogsUrl);
+        if (!resp.ok) return;
+        const geojson = await resp.json();
+        const startDate = new Date(queryStartDate); startDate.setUTCHours(0,0,0,0);
+        const endDate   = new Date(queryEndDate);   endDate.setUTCHours(23,59,59,999);
+        const incoming = geojson.features.filter(f => f.geometry && f.geometry.coordinates).map(f => {
+          const p=f.properties, g=f.geometry;
+          const t = p.origintime||p.time||null;
+          if (t && (new Date(t)<startDate || new Date(t)>endDate)) return null;
+          let depth=null;
+          if (p.depth!=null && !isNaN(parseFloat(p.depth))) depth=parseFloat(p.depth);
+          else if (g.coordinates.length>2) { depth=parseFloat(g.coordinates[2]); if(isNaN(depth)) depth=null; }
+          return { objectid:p.objectid||null, origintime:t, prefmag:p.prefmag||p.mag||null,
+            latitude:g.coordinates[1], longitude:g.coordinates[0], depth,
+            isQuarry:typeof depth==="number"&&depth<0.05,
+            state:p.state||null, county:p.county||null, status:p.status||null, event_id:p.event_id||p.id||null };
+        }).filter(e => e!==null && Number(e.prefmag||0) <= Number(QUERY_MAX_MAG));
+
+        const newEvents = incoming.filter(ev => !window.plottedOgsEventIds.has(ev.event_id||ev.objectid));
+        if (newEvents.length > 0) {
+          const now=Date.now(), oneDay=86400000, sevenDays=7*oneDay;
+          newEvents.forEach(ev => {
+            const rawId=ev.event_id||ev.objectid;
+            const markerId=rawId&&typeof rawId==="string"&&rawId.startsWith("ogs")?"ok"+rawId.substring(3):rawId;
+            const lat=Number(ev.latitude), lng=Number(ev.longitude), mag=Number(ev.prefmag), depth=Number(ev.depth);
+            if (isNaN(lat)||isNaN(lng)) return;
+            const timeDiff=now-new Date(ev.origintime).getTime();
+            const color=timeDiff<oneDay?"#e31a1c":timeDiff<sevenDays?"#fc8d00":"#4292c6";
+            const lg=timeDiff<oneDay?layerGroups.past24Hours:timeDiff<sevenDays?layerGroups.past7Days:layerGroups.past30Days;
+            const radius=1.75*(mag+1.01)**1.6;
+            let marker;
+            if (!isNaN(depth)&&depth<0.05) {
+              marker=L.marker([lat,lng],{icon:L.divIcon({className:"",
+                html:`<svg width="${radius*2}" height="${radius*2}" viewBox="0 0 ${radius*2} ${radius*2}">
+                  <polygon points="${radius},0 ${radius*2},${radius} ${radius},${radius*2} 0,${radius}"
+                    style="fill:${color};stroke:black;stroke-width:1;opacity:0.7;"/></svg>`,
+                iconSize:[radius*2,radius*2],iconAnchor:[radius,radius]})});
+            } else {
+              marker=L.circleMarker([lat,lng],{radius:Math.max(radius,6),color:"black",fillColor:color,fillOpacity:0.7,weight:1});
+            }
+            marker.featureId=markerId;
+            const utcStr=new Date(ev.origintime).toISOString().replace("T"," ").substring(0,19);
+            marker.bindPopup(`<strong>Source:</strong> OGS (new)<br><strong>Magnitude:</strong> ${!isNaN(mag)?mag.toFixed(1):"?"}<br><strong>Time (UTC):</strong> ${utcStr}`);
+            marker.addTo(lg);
+            window.plottedOgsEventIds.add(rawId);
+          });
+          window.ogsEventData=(window.ogsEventData||[]).concat(newEvents);
+          renderEventList(window.ogsEventData);
+        }
+      } catch(e) { /* ignore poll errors */ }
+      updateLastQueryTime();
+    }
+
+    // --- DOM INITIALIZATION ---
+    document.addEventListener("DOMContentLoaded", () => {
+
+      // Citation toggle
+      document.getElementById("data-citation-link").addEventListener("click", e => {
+        e.preventDefault();
+        const box = document.getElementById("data-citation-box");
+        box.style.display = box.style.display==="none" ? "block" : "none";
+      });
+
+      // Legend toggle
+      let legendOpen = false;
+      const legendPanel   = document.getElementById("legend-panel");
+      const legendChevron = document.getElementById("legend-chevron");
+      document.getElementById("legend-toggle-btn").addEventListener("click", () => {
+        legendOpen = !legendOpen;
+        legendPanel.classList.toggle("open", legendOpen);
+        legendChevron.style.transform = legendOpen ? "rotate(180deg)" : "rotate(0deg)";
+      });
+
+      // Event list sheet toggle
+      let sheetOpen = false;
+      const sheet       = document.getElementById("event-list-sheet");
+      const sheetChevron= document.getElementById("event-list-chevron");
+      const toggleSheet = (open) => {
+        sheetOpen = open;
+        sheet.classList.toggle("open", sheetOpen);
+        sheetChevron.style.transform = sheetOpen ? "rotate(180deg)" : "rotate(0deg)";
+      };
+      document.getElementById("event-list-toggle-btn").addEventListener("click", () => toggleSheet(!sheetOpen));
+      document.getElementById("sheet-close-btn").addEventListener("click", () => toggleSheet(false));
+
+      // Event list item tap → find marker
+      document.getElementById("ogs-events-list").addEventListener("click", e => {
+        const item = e.target.closest(".event-list-item");
+        if (item) {
+          findAndOpenMarker(item.getAttribute("data-event-id"));
+          toggleSheet(false);
+        }
+      });
+
+      // Map setup
+      map = L.map("map", {
+        center: [35.5, -97.5],
+        zoom: 6,
+        zoomControl: false,
+        tap: true,
+      });
+      window.map = map;
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+      }).addTo(map);
+
+      L.control.zoom({ position: "bottomright" }).addTo(map);
+
+      layerGroups = {
+        stations:    L.featureGroup().addTo(map),
+        past24Hours: L.featureGroup().addTo(map),
+        past7Days:   L.featureGroup().addTo(map),
+        past30Days:  L.featureGroup().addTo(map),
+      };
+
+      polygonLayer = L.polygon(oklahomaPolygonLatLng, {
+        color: "black", weight: 1, fillOpacity: 0, interactive: false,
+      }).addTo(map);
+
+      L.control.layers(null, {
+        "24h": layerGroups.past24Hours,
+        "7d":  layerGroups.past7Days,
+        "30d": layerGroups.past30Days,
+        "Stations": layerGroups.stations,
+        "OK Polygon": polygonLayer,
+      }, { position: "bottomright", collapsed: true }).addTo(map);
+
+      // Close sheet when tapping the map
+      map.on("click", () => { if (sheetOpen) toggleSheet(false); });
+
+      // Station loading
+      function plotStationsFromStatic() {
+        STATIC_STATIONS.forEach(sta => {
+          L.marker([sta.latitude, sta.longitude], {
+            icon: L.divIcon({
+              className: "station-icon",
+              html: '<svg height="13" width="13"><polygon points="6.5,0 13,13 0,13" style="fill:black;stroke:white;stroke-width:1"/></svg>',
+              iconSize: [13,13], iconAnchor: [6.5,6.5],
+            }),
+          }).addTo(layerGroups.stations)
+            .bindPopup(`<b>${sta.Station}</b><br><a href="${sta.html}" target="_blank">Heliplot</a>`);
+        });
+        layerGroups.stations.bringToBack();
+      }
+
+      function loadStations() {
+        fetch("https://service.earthscope.org/fdsnws/station/1/query?net=OK&level=station&format=xml&minlat=33.4&maxlat=37.05&minlon=-102.97&maxlon=-94.2")
+          .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+          .then(xmlStr => {
+            const xml = new DOMParser().parseFromString(xmlStr, "text/xml");
+            const stations = xml.querySelectorAll("Station");
+            if (!stations.length) throw new Error();
+            layerGroups.stations.clearLayers();
+            stations.forEach(sta => {
+              const latEl = sta.querySelector("Latitude"), lonEl = sta.querySelector("Longitude");
+              if (!latEl || !lonEl) return;
+              const lat = parseFloat(latEl.textContent), lng = parseFloat(lonEl.textContent);
+              const code = sta.getAttribute("code") || "STA";
+              const nameEl = sta.querySelector("Name") || sta.querySelector("Site");
+              L.marker([lat, lng], {
+                icon: L.divIcon({
+                  className: "station-icon",
+                  html: '<svg height="13" width="13"><polygon points="6.5,0 13,13 0,13" style="fill:black;stroke:white;stroke-width:1"/></svg>',
+                  iconSize: [13,13], iconAnchor: [6.5,6.5],
+                }),
+              }).addTo(layerGroups.stations)
+                .bindPopup(`<b>${code}</b><br>${nameEl?nameEl.textContent:""}<br>
+                  <a href="https://wichita.ogs.ou.edu/eq/heliplot/${code}.png" target="_blank">Heliplot</a>`);
+            });
+            layerGroups.stations.bringToBack();
+          })
+          .catch(() => plotStationsFromStatic());
+      }
+
+      loadStations();
+      setInitialDates();
+      updateMap(true);
+      setInterval(pollOgsForUpdates, 60000);
+    });
+  </script>
+</body>
+</html>
