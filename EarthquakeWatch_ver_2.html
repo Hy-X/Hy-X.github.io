@@ -9,7 +9,7 @@
     </title>
     <meta
       name="description"
-      content="Real-time earthquake monitoring and visualization for the past 30 days. Interactive map with earthquake data, magnitude, depth, and location information. Seismic data analysis tool by Hongyu Xiao." />
+      content="Real-time earthquake monitoring and visualization for the past 7 days. Interactive map with earthquake data, magnitude, depth, and location information. Seismic data analysis tool by Hongyu Xiao." />
     <meta
       name="keywords"
       content="earthquake monitoring, seismic data, real-time earthquakes, earthquake visualization, earthquake tracking, seismic monitoring" />
@@ -26,7 +26,7 @@
       content="Earthquake Watch - Real-time Seismic Data Visualization" />
     <meta
       property="og:description"
-      content="Interactive earthquake monitoring map displaying real-time seismic data from the past 30 days with advanced visualization features." />
+      content="Interactive earthquake monitoring map displaying real-time seismic data from the past 7 days with advanced visualization features." />
     <meta
       property="og:url"
       content="https://hy-x.github.io/EarthquakeWatch_ver_2.html" />
@@ -41,7 +41,7 @@
       content="Earthquake Watch - Real-time Seismic Data Visualization" />
     <meta
       name="twitter:description"
-      content="Interactive earthquake monitoring map displaying real-time seismic data from the past 30 days." />
+      content="Interactive earthquake monitoring map displaying real-time seismic data from the past 7 days." />
     <meta
       name="twitter:image"
       content="https://hy-x.github.io/images/cc-bg-hyx.jpg" />
@@ -190,7 +190,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Earthquake Watch",
-        "description": "Real-time earthquake monitoring and visualization tool for seismic data from the past 30 days",
+        "description": "Real-time earthquake monitoring and visualization tool for seismic data from the past 7 days",
         "url": "https://hy-x.github.io/EarthquakeWatch_ver_2.html",
         "creator": {
           "@type": "Person",
@@ -384,13 +384,13 @@
                       <h3 class="h4" style="text-align: left">
                         <span class="badge badge-primary badge-seismic"
                           >Phase 1</span
-                        >Global Seismicity Analysis
+                        >Global Seismicity
                       </h3>
                     </div>
                     <div
                       class="h5 mt-0 title text-primary"
                       style="text-align: left; font-weight: 600">
-                      Past 30 Days Mapping Interface
+                      Past 7 Days Global Earthquakes
                     </div>
                     <p class="section-subtitle">
                       Comprehensive visualization of planetary seismic activity.
@@ -473,13 +473,11 @@
                     </div>
                     <p class="section-subtitle">
                       Optimized for regional monitoring, this container utilizes
-                      <abbr
-                        title="Incorporated Research Institutions for Seismology"
-                        >IRIS</abbr
-                      >
-                      FDSNWS protocols to capture local tremors near the
-                      University of Oklahoma. Enhanced with specialized mapping
-                      layers for geophysical context.
+                      the <abbr title="Oklahoma Geological Survey">OGS</abbr>
+                      public earthquake catalog API to capture local tremors
+                      across the state of Oklahoma over the past 30 days.
+                      Enhanced with specialized mapping layers for geophysical
+                      context.
                     </p>
 
                     <div
@@ -511,6 +509,22 @@
                         <span style="color: #c0392b">●</span> Major Event (M >
                         5)<br />
                         <hr style="margin: 8px 0" />
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          style="vertical-align: middle">
+                          <polygon
+                            points="6,0 12,6 6,12 0,6"
+                            style="
+                              fill: royalblue;
+                              stroke: #fff;
+                              stroke-width: 1;
+                              opacity: 0.7;
+                            " />
+                        </svg>
+                        Quarry Blast Event<br />
+                        <hr style="margin: 8px 0" />
                         <i class="fa fa-university text-danger"></i> University
                         of Oklahoma
                       </div>
@@ -521,7 +535,7 @@
                     </div>
 
                     <p class="data-source">
-                      Data Integrity: IRIS Management Center · Normalized
+                      Data Integrity: OGS Earthquake Catalog · Normalized
                       Seismic Profile
                     </p>
                   </div>
@@ -553,8 +567,8 @@
                       class="h5 mt-0 title text-warning"
                       style="text-align: left; font-weight: 600">
                       <abbr title="Oklahoma Geological Survey">OGS</abbr>/<abbr
-                        title="Incorporated Research Institutions for Seismology"
-                        >IRIS</abbr
+                        title="EarthScope (formerly IRIS)"
+                        >EarthScope</abbr
                       >
                       (OK Network) Station Inventory
                     </div>
@@ -1207,7 +1221,7 @@
             },
             onEachFeature: (feat, layer) => {
               layer.bindPopup(
-                `<div class="local-event-popup"><h6>Global Seismic Event</h6><div class="data-row"><span class="label">Location:</span><span class="value">${feat.properties.place}</span></div><div class="data-row"><span class="label">Magnitude:</span><span class="value">${feat.properties.mag}</span></div><div class="data-row"><span class="label">Depth:</span><span class="value">${feat.geometry.coordinates[2]} km</span></div><div class="data-row"><span class="label">Time (UTC):</span><span class="value">${new Date(feat.properties.time).toISOString().split("T")[1].substr(0, 8)}</span></div></div>`,
+                `<div class="local-event-popup"><h6>Global Seismic Event</h6><div class="data-row"><span class="label">Location:</span><span class="value">${feat.properties.place}</span></div><div class="data-row"><span class="label">Magnitude:</span><span class="value">${feat.properties.mag}</span></div><div class="data-row"><span class="label">Depth:</span><span class="value">${feat.geometry.coordinates[2]} km</span></div><div class="data-row"><span class="label">Time (UTC):</span><span class="value">${new Date(feat.properties.time).toISOString().replace("T", " ").substr(0, 19)}</span></div><div class="data-row"><span class="label">Your Local Time:</span><span class="value">${new Date(feat.properties.time).toLocaleString()}</span></div></div>`,
               );
             },
           }).addTo(mapGlobal);
@@ -1221,7 +1235,7 @@
       const universityLocation = [35.2088, -97.4457];
       const mapLocal = L.map("map_local", {
         scrollWheelZoom: false, // Better UX on long pages
-      }).setView([35.2088, -97.4457], 8);
+      }).setView([35.2088, -97.4457], 7);
 
       const lightLocal = L.tileLayer(
         "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
@@ -1279,48 +1293,120 @@
         return mag > 5 ? 2 : 1;
       }
 
-      const startTime = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-        .toISOString()
-        .substr(0, 19);
-      const endTime = new Date().toISOString().substr(0, 19);
-      // Use format=geojson and Circle search (maxradiuskm) near OU as per best practices in the API doc
-      const irisUrl = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${startTime}&endtime=${endTime}&minmagnitude=0.1&latitude=35.2088&longitude=-97.4457&maxradiuskm=300`;
+      // OGS API date format helper: YYYYMMDDHHmm
+      function toOgsDateStr(date, isEnd) {
+        const d = new Date(date);
+        if (isEnd) {
+          d.setHours(23, 59, 0, 0);
+        } else {
+          d.setHours(0, 0, 0, 0);
+        }
+        return (
+          d.getFullYear().toString() +
+          (d.getMonth() + 1).toString().padStart(2, "0") +
+          d.getDate().toString().padStart(2, "0") +
+          d.getHours().toString().padStart(2, "0") +
+          d.getMinutes().toString().padStart(2, "0")
+        );
+      }
 
-      fetch(irisUrl)
+      const ogsStartDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      const ogsEndDate = new Date();
+      const ogsStart = toOgsDateStr(ogsStartDate, false);
+      const ogsEnd = toOgsDateStr(ogsEndDate, true);
+      const ogsUrl = `https://ogsweb.ou.edu/eq_catalog/earthquake?start=${ogsStart}&end=${ogsEnd}&mag=-1&format=geojson`;
+
+      fetch(ogsUrl)
         .then((res) => res.json())
         .then((data) => {
           document.getElementById("loading_local").style.display = "none";
-          const events = data.features || [];
+          const features = (data.features || []).filter(
+            (f) => f.geometry && f.geometry.coordinates,
+          );
 
-          if (events.length > 0) {
+          if (features.length > 0) {
             document.getElementById("stats_local").style.display = "block";
-            document.getElementById("event_count").innerText = events.length;
+            document.getElementById("event_count").innerText = features.length;
           }
 
-          events.forEach((ev) => {
+          features.forEach((ev) => {
             const lng = ev.geometry.coordinates[0];
             const lat = ev.geometry.coordinates[1];
-            const mag = ev.properties.mag;
-            const time = new Date(ev.properties.time).toISOString();
-            const place = ev.properties.place || "Local Region";
+            const mag = ev.properties.prefmag || ev.properties.mag || 0;
+            const depth =
+              ev.properties.depth != null
+                ? parseFloat(ev.properties.depth)
+                : null;
+            const origintime =
+              ev.properties.origintime || ev.properties.time || null;
+            const county = ev.properties.county || "";
+            const state = ev.properties.state || "";
+            const eventId =
+              ev.properties.event_id || ev.properties.objectid || "";
+            const isQuarry = depth !== null && depth < 0.05;
+            const location =
+              [county, state].filter(Boolean).join(", ") || "Oklahoma";
 
-            // Best Practice: Use circleMarker for fixed-pixel radius point data
-            L.circleMarker([lat, lng], {
-              radius: Math.max(5, mag * 4),
-              fillColor: getLocalColor(mag),
-              color: "#fff",
-              weight: getLocalWeight(mag),
-              fillOpacity: 0.7,
-            })
+            // Convert OGS event_id (ogs...) to USGS format (ok...) for the DYFI link
+            const usgsEventId =
+              typeof eventId === "string" && eventId.startsWith("ogs")
+                ? "ok" + eventId.substring(3)
+                : eventId;
+
+            // UTC time string
+            const utcTimeStr = origintime ? origintime : "N/A";
+            // Local time string
+            const localTimeStr = origintime
+              ? new Date(origintime + "Z").toLocaleString()
+              : "N/A";
+
+            // Quarry events rendered differently
+            let marker;
+            if (isQuarry) {
+              const r = Math.max(6, 1.75 * (mag + 1.01) ** 1.6);
+              marker = L.marker([lat, lng], {
+                icon: L.divIcon({
+                  className: "",
+                  html: `<svg width="${r * 2}" height="${r * 2}" viewBox="0 0 ${r * 2} ${r * 2}">
+                    <polygon points="${r},0 ${r * 2},${r} ${r},${r * 2} 0,${r}"
+                      style="fill:${getLocalColor(mag)};stroke:#fff;stroke-width:1;opacity:0.7;" />
+                  </svg>`,
+                  iconSize: [r * 2, r * 2],
+                  iconAnchor: [r, r],
+                }),
+              });
+            } else {
+              marker = L.circleMarker([lat, lng], {
+                radius: Math.max(5, mag * 4),
+                fillColor: getLocalColor(mag),
+                color: "#fff",
+                weight: getLocalWeight(mag),
+                fillOpacity: 0.7,
+              });
+            }
+
+            const quarryLabel = isQuarry
+              ? `<div class="data-row"><span class="label">Type:</span><span class="value" style="color:#e67e22">Quarry Blast</span></div>`
+              : "";
+            const depthRow =
+              depth !== null
+                ? `<div class="data-row"><span class="label">Depth:</span><span class="value">${depth.toFixed(2)} km</span></div>`
+                : "";
+
+            marker
               .bindPopup(
                 `
                 <div class="local-event-popup">
-                  <h6>Local Seismic Activity</h6>
-                  <div class="data-row"><span class="label">Location:</span><span class="value" style="text-align:right;">${place}</span></div>
+                  <h6>OGS Seismic Event</h6>
+                  <div class="data-row"><span class="label">Source:</span><span class="value">OGS</span></div>
+                  <div class="data-row"><span class="label">Location:</span><span class="value" style="text-align:right;">${location}</span></div>
                   <div class="data-row"><span class="label">Magnitude:</span><span class="value" style="color:${getLocalColor(mag)}">${mag.toFixed(1)}</span></div>
-                  <div class="data-row"><span class="label">Latitude:</span><span class="value">${lat.toFixed(3)}°</span></div>
-                  <div class="data-row"><span class="label">Longitude:</span><span class="value">${lng.toFixed(3)}°</span></div>
-                  <div class="data-row"><span class="label">Time:</span><span class="value">${time.replace("T", " ").substr(0, 19)}</span></div>
+                  ${depthRow}
+                  ${quarryLabel}
+                  <div class="data-row"><span class="label">Lat/Lon:</span><span class="value">${lat.toFixed(4)}°, ${lng.toFixed(4)}°</span></div>
+                  <div class="data-row"><span class="label">Time (UTC):</span><span class="value">${utcTimeStr}</span></div>
+                  <div class="data-row"><span class="label">Local Time:</span><span class="value">${localTimeStr}</span></div>
+
                 </div>
               `,
               )
@@ -1328,7 +1414,7 @@
           });
         })
         .catch((err) => {
-          console.error("Local USGS Fetch Error:", err);
+          console.error("OGS Fetch Error:", err);
           document.getElementById("loading_local").innerText =
             "Data Temporarily Unavailable";
         });
@@ -1338,7 +1424,7 @@
          ============================================================= */
       const mapStations = L.map("map_stations", {
         scrollWheelZoom: false,
-      }).setView([35.2088, -97.4457], 8);
+      }).setView([35.2088, -97.4457], 7);
 
       const terrainStations = L.tileLayer(
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
