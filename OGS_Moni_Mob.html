@@ -803,6 +803,31 @@
       }
 
       loadStations();
+
+      // Fly to user's location if geolocation is available
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const { latitude, longitude } = pos.coords;
+            map.flyTo([latitude, longitude], 7, { animate: true, duration: 1.5 });
+            // "You are here" blue dot
+            L.circleMarker([latitude, longitude], {
+              radius: 8,
+              color: "#fff",
+              fillColor: "#2563eb",
+              fillOpacity: 1,
+              weight: 2.5,
+              pane: "markerPane",
+            }).addTo(map).bindPopup("<strong>Your Location</strong>");
+          },
+          (err) => {
+            // Permission denied or unavailable — stay on default Oklahoma center
+            console.info("Geolocation unavailable:", err.message);
+          },
+          { timeout: 10000, maximumAge: 300000, enableHighAccuracy: false }
+        );
+      }
+
       setInitialDates();
       updateMap(true);
       setInterval(pollOgsForUpdates, 60000);
