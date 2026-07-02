@@ -469,8 +469,7 @@
       if (summaryEl) summaryEl.textContent = `${count} events in last 30 days`;
       const badge = document.getElementById("event-count-badge");
       if (badge) {
-        const recent24h = events.filter(e => now - new Date(e.origintime).getTime() <= 86400000).length;
-        if (recent24h > 0) { badge.textContent = recent24h; badge.style.display = "inline-block"; }
+        if (count > 0) { badge.textContent = count; badge.style.display = "inline-block"; }
         else { badge.style.display = "none"; }
       }
     }
