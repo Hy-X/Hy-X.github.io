@@ -7324,6 +7324,12 @@ a.credit {
   color: #2c2c2c;
 }
 
+#visitor-track .visitor-counter-badge {
+  max-width: 100%;
+  height: auto;
+  min-height: 26px;
+}
+
 #visitor-track .visitor-counter-meta {
   margin-top: 8px;
   font-size: 0.85rem;

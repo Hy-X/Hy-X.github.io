@@ -1585,39 +1585,15 @@
                 <p class="mb-4 visitor-subtitle">A simple running total of page visits, updated in real time.</p>
                 <div class="visitor-counter-shell d-flex justify-content-center flex-column align-items-center">
                   <div class="visitor-counter-label">Total Visits</div>
-                  <div id="visitor-count-value" class="visitor-counter-value" aria-live="polite">Loading...</div>
-                  <div id="visitor-count-meta" class="visitor-counter-meta">Updating counter...</div>
+                  <img
+                    class="visitor-counter-badge"
+                    src="https://visitor-badge.laobi.icu/badge?page_id=hy-x.github.io.index"
+                    alt="Visitor counter"
+                    loading="lazy"
+                  >
+                  <div class="visitor-counter-meta">Live count powered by visitor-badge.laobi.icu</div>
                 </div>
                 <p class="visitor-note mb-0">Counter data is displayed via external tracking services.</p>
-                <script>
-                  (function () {
-                    const valueEl = document.getElementById("visitor-count-value");
-                    const metaEl = document.getElementById("visitor-count-meta");
-                    const namespace = "hy-x.github.io";
-                    const key = "index-visitor-counter";
-
-                    fetch("https://api.countapi.xyz/hit/" + encodeURIComponent(namespace) + "/" + encodeURIComponent(key), {
-                      cache: "no-store"
-                    })
-                      .then((response) => {
-                        if (!response.ok) {
-                          throw new Error("Counter request failed");
-                        }
-                        return response.json();
-                      })
-                      .then((data) => {
-                        if (typeof data.value !== "number") {
-                          throw new Error("Invalid counter response");
-                        }
-                        valueEl.textContent = data.value.toLocaleString("en-US");
-                        metaEl.textContent = "Updated just now";
-                      })
-                      .catch(() => {
-                        valueEl.textContent = "Unavailable";
-                        metaEl.textContent = "Counter service is temporarily unavailable.";
-                      });
-                  })();
-                </script>
               </div>
             </div>
           </div>
