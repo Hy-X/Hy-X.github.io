@@ -9,7 +9,7 @@
     </title>
     <meta
       name="description"
-      content="Real-time earthquake monitoring and visualization for the past 7 days. Interactive map with earthquake data, magnitude, depth, and location information. Seismic data analysis tool by Hongyu Xiao." />
+      content="Real-time earthquake monitoring and visualization for the past 30 days. Interactive map with earthquake data, magnitude, depth, and location information. Seismic data analysis tool by Hongyu Xiao." />
     <meta
       name="keywords"
       content="earthquake monitoring, seismic data, real-time earthquakes, earthquake visualization, earthquake tracking, seismic monitoring" />
@@ -26,7 +26,7 @@
       content="Earthquake Watch - Real-time Seismic Data Visualization" />
     <meta
       property="og:description"
-      content="Interactive earthquake monitoring map displaying real-time seismic data from the past 7 days with advanced visualization features." />
+      content="Interactive earthquake monitoring map displaying real-time seismic data from the past 30 days with advanced visualization features." />
     <meta
       property="og:url"
       content="https://hy-x.github.io/EarthquakeWatch_ver_2.html" />
@@ -41,7 +41,7 @@
       content="Earthquake Watch - Real-time Seismic Data Visualization" />
     <meta
       name="twitter:description"
-      content="Interactive earthquake monitoring map displaying real-time seismic data from the past 7 days." />
+      content="Interactive earthquake monitoring map displaying real-time seismic data from the past 30 days." />
     <meta
       name="twitter:image"
       content="https://hy-x.github.io/images/cc-bg-hyx.jpg" />
@@ -190,7 +190,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Earthquake Watch",
-        "description": "Real-time earthquake monitoring and visualization tool for seismic data from the past 7 days",
+        "description": "Real-time earthquake monitoring and visualization tool for seismic data from the past 30 days",
         "url": "https://hy-x.github.io/EarthquakeWatch_ver_2.html",
         "creator": {
           "@type": "Person",
@@ -390,7 +390,7 @@
                     <div
                       class="h5 mt-0 title text-primary"
                       style="text-align: left; font-weight: 600">
-                      Past 7 Days Mapping Interface
+                      Past 30 Days Mapping Interface
                     </div>
                     <p class="section-subtitle">
                       Comprehensive visualization of planetary seismic activity.
@@ -590,8 +590,8 @@
                         <h6 style="font-size: 14px; margin-bottom: 10px">
                           <b>Network Inventory</b>
                         </h6>
-                        <span style="color: #27ae60">▲</span> OGS (OK)
-                        Monitoring Station<br />
+                        <span style="color: #27ae60">▲</span> OGS Monitoring
+                        Station<br />
                         <hr style="margin: 8px 0" />
                         <i class="fa fa-university text-danger"></i> University
                         of Oklahoma
@@ -1279,18 +1279,18 @@
         return mag > 5 ? 2 : 1;
       }
 
-      const startTime = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+      const startTime = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
         .toISOString()
         .substr(0, 19);
       const endTime = new Date().toISOString().substr(0, 19);
-      const irisUrl = `https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=${startTime}&endtime=${endTime}&minmagnitude=0.1`;
+      // Use format=geojson and Circle search (maxradiuskm) near OU as per best practices in the API doc
+      const irisUrl = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${startTime}&endtime=${endTime}&minmagnitude=0.1&latitude=35.2088&longitude=-97.4457&maxradiuskm=300`;
 
       fetch(irisUrl)
-        .then((res) => res.text())
-        .then((xmlStr) => {
+        .then((res) => res.json())
+        .then((data) => {
           document.getElementById("loading_local").style.display = "none";
-          const xml = new DOMParser().parseFromString(xmlStr, "text/xml");
-          const events = xml.querySelectorAll("event");
+          const events = data.features || [];
 
           if (events.length > 0) {
             document.getElementById("stats_local").style.display = "block";
@@ -1298,13 +1298,11 @@
           }
 
           events.forEach((ev) => {
-            const lat = parseFloat(ev.querySelector("latitude").textContent);
-            const lng = parseFloat(ev.querySelector("longitude").textContent);
-            const mag = parseFloat(ev.querySelector("magnitude").textContent);
-            const time = ev.querySelector("time").textContent;
-            const place = ev.querySelector("description text")
-              ? ev.querySelector("description text").textContent
-              : "Local Region";
+            const lng = ev.geometry.coordinates[0];
+            const lat = ev.geometry.coordinates[1];
+            const mag = ev.properties.mag;
+            const time = new Date(ev.properties.time).toISOString();
+            const place = ev.properties.place || "Local Region";
 
             // Best Practice: Use circleMarker for fixed-pixel radius point data
             L.circleMarker([lat, lng], {
@@ -1318,7 +1316,8 @@
                 `
                 <div class="local-event-popup">
                   <h6>Local Seismic Activity</h6>
-                  <div class="data-row"><span class="label">Magnitude:</span><span class="value" style="color:${getLocalColor(mag)}">${mag}</span></div>
+                  <div class="data-row"><span class="label">Location:</span><span class="value" style="text-align:right;">${place}</span></div>
+                  <div class="data-row"><span class="label">Magnitude:</span><span class="value" style="color:${getLocalColor(mag)}">${mag.toFixed(1)}</span></div>
                   <div class="data-row"><span class="label">Latitude:</span><span class="value">${lat.toFixed(3)}°</span></div>
                   <div class="data-row"><span class="label">Longitude:</span><span class="value">${lng.toFixed(3)}°</span></div>
                   <div class="data-row"><span class="label">Time:</span><span class="value">${time.replace("T", " ").substr(0, 19)}</span></div>
@@ -1329,7 +1328,7 @@
           });
         })
         .catch((err) => {
-          console.error("IRIS Fetch Error:", err);
+          console.error("Local USGS Fetch Error:", err);
           document.getElementById("loading_local").innerText =
             "Data Temporarily Unavailable";
         });
@@ -1378,7 +1377,7 @@
         .addTo(mapStations)
         .bindPopup(`<strong>University of Oklahoma</strong>`);
 
-      const stationUrl = `https://earthquake.usgs.gov/fdsnws/station/1/query?net=OK&level=station&format=xml&minlat=33.4&maxlat=37.05&minlon=-102.97&maxlon=-94.2`;
+      const stationUrl = `https://service.earthscope.org/fdsnws/station/1/query?net=OK&level=station&format=xml&minlat=33.4&maxlat=37.05&minlon=-102.97&maxlon=-94.2`;
 
       fetch(stationUrl)
         .then((res) => res.text())
@@ -1434,10 +1433,15 @@
               .bindPopup(
                 `
                   <div class="local-event-popup">
-                    <h6>Seismic Network Node</h6>
+                    <h6>Station Information</h6>
                     <div class="data-row"><span class="label">Station:</span><span class="value">${code}</span></div>
                     <div class="data-row"><span class="label">Site:</span><span class="value">${siteName}</span></div>
                     <div class="data-row"><span class="label">Lat/Lon:</span><span class="value">${lat.toFixed(3)}, ${lng.toFixed(3)}</span></div>
+                    <div style="margin-top: 12px; text-align: center;">
+                      <a href="https://wichita.ogs.ou.edu/eq/heliplot/${code}.png" target="_blank" class="btn btn-sm" style="background-color: #27ae60; border-color: #27ae60; color: white; padding: 5px 10px; font-size: 11px;">
+                        View Waveform
+                      </a>
+                    </div>
                   </div>
                 `,
               )
@@ -1476,8 +1480,8 @@
         const minlon = -103.1;
         const maxlon = -94.4;
 
-        // Fetch last year of data
-        const dashboardUrl = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${startTimeStr}&endtime=${endTimeStr}&minlatitude=${minlat}&maxlatitude=${maxlat}&minlongitude=${minlon}&maxlongitude=${maxlon}`;
+        // Fetch last year of data, limit up to 20000 events as per USGS API limits
+        const dashboardUrl = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${startTimeStr}&endtime=${endTimeStr}&minlatitude=${minlat}&maxlatitude=${maxlat}&minlongitude=${minlon}&maxlongitude=${maxlon}&limit=20000`;
 
         fetch(dashboardUrl)
           .then((res) => res.json())
