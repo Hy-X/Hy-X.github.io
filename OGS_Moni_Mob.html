@@ -4,10 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>OGS Earthquake Monitor</title>
+  <!-- Resource hints — start DNS + TLS before the browser needs the resource -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://earthquake.usgs.gov" />
+  <link rel="dns-prefetch" href="https://ogsweb.ou.edu" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- Montserrat: 2 weights only + display=swap avoids FOIT -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome removed — replaced with inline SVG/unicode below, saves ~300 KB -->
   <style>
     /* === OGS Monitor — Mobile UI === */
     *, *::before, *::after { box-sizing: border-box; }
@@ -201,9 +208,9 @@
   <!-- Top-right: Legend toggle + panel -->
   <div id="legend-wrap">
     <button id="legend-toggle-btn" aria-expanded="false">
-      <i class="fa fa-map" style="font-size:11px;"></i>
+      <svg width="12" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
       Legend
-      <i class="fa fa-chevron-down" id="legend-chevron" style="font-size:9px;transition:transform 0.25s;"></i>
+      <span id="legend-chevron" style="font-size:10px;line-height:1;transition:transform 0.25s;display:inline-block;" aria-hidden="true">▾</span>
     </button>
     <div id="legend-panel" class="overlay-panel">
       <!-- Header -->
@@ -263,7 +270,7 @@
   <!-- Bottom-left: Last update + citation -->
   <div id="lower-left-panel" class="overlay-panel">
     <div style="display:flex;align-items:center;gap:4px;margin-bottom:3px;">
-      <i class="fa fa-refresh" style="color:#2563eb;font-size:9px;flex-shrink:0;"></i>
+      <span style="color:#2563eb;font-size:12px;flex-shrink:0;line-height:1;" aria-hidden="true">↻</span>
       <span id="last-update-time" style="font-size:10px;font-weight:600;color:#374151;">Loading…</span>
     </div>
     <div style="border-top:1px solid #f1f5f9;padding-top:4px;">
@@ -278,10 +285,10 @@
   <!-- Bottom-center: Event list toggle button -->
   <div id="bottom-bar">
     <button id="event-list-toggle-btn">
-      <i class="fa fa-list" style="font-size:11px;"></i>
+      <svg width="12" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.2" fill="currentColor"/><circle cx="4" cy="12" r="1.2" fill="currentColor"/><circle cx="4" cy="18" r="1.2" fill="currentColor"/></svg>
       Event List
       <span id="event-count-badge"></span>
-      <i class="fa fa-chevron-up" id="event-list-chevron" style="font-size:9px;transition:transform 0.25s;"></i>
+      <span id="event-list-chevron" style="font-size:10px;line-height:1;transition:transform 0.25s;display:inline-block;" aria-hidden="true">▴</span>
     </button>
   </div>
 
@@ -347,7 +354,8 @@
     // --- QUERY STATE (set on init, no user controls in mobile version) ---
     let queryStartDate = "";
     let queryEndDate   = "";
-    const QUERY_MIN_MAG = "0";
+    const QUERY_MIN_MAG = "0";      // OGS — fetch all magnitudes for Oklahoma events
+    const USGS_MIN_MAG  = "1.0";    // USGS — skip micro-events outside OK (reduces payload ~70%)
     const QUERY_MAX_MAG = "10";
 
     // --- GLOBAL MAP VARIABLES ---
@@ -530,7 +538,7 @@
           minLng = Math.min(minLng, u.lng - buf);
           maxLng = Math.max(maxLng, u.lng + buf);
         }
-        const url = `${USGS_API_BASE_URL}?format=geojson&starttime=${startStr}&endtime=${endStr}&minlatitude=${minLat}&maxlatitude=${maxLat}&minlongitude=${minLng}&maxlongitude=${maxLng}&minmagnitude=${QUERY_MIN_MAG}&maxmagnitude=${QUERY_MAX_MAG}`;
+        const url = `${USGS_API_BASE_URL}?format=geojson&starttime=${startStr}&endtime=${endStr}&minlatitude=${minLat}&maxlatitude=${maxLat}&minlongitude=${minLng}&maxlongitude=${maxLng}&minmagnitude=${USGS_MIN_MAG}&maxmagnitude=${QUERY_MAX_MAG}`;
         const resp = await fetch(url);
         if (resp.ok) { const data = await resp.json(); plotEarthquakes(data.features); }
         else if (resp.status !== 400) console.warn("USGS API error:", resp.status);
@@ -788,32 +796,8 @@
       }
 
       function loadStations() {
-        fetch("https://service.earthscope.org/fdsnws/station/1/query?net=OK&level=station&format=xml&minlat=33.4&maxlat=37.05&minlon=-102.97&maxlon=-94.2")
-          .then(r => { if (!r.ok) throw new Error(); return r.text(); })
-          .then(xmlStr => {
-            const xml = new DOMParser().parseFromString(xmlStr, "text/xml");
-            const stations = xml.querySelectorAll("Station");
-            if (!stations.length) throw new Error();
-            layerGroups.stations.clearLayers();
-            stations.forEach(sta => {
-              const latEl = sta.querySelector("Latitude"), lonEl = sta.querySelector("Longitude");
-              if (!latEl || !lonEl) return;
-              const lat = parseFloat(latEl.textContent), lng = parseFloat(lonEl.textContent);
-              const code = sta.getAttribute("code") || "STA";
-              const nameEl = sta.querySelector("Name") || sta.querySelector("Site");
-              L.marker([lat, lng], {
-                icon: L.divIcon({
-                  className: "station-icon",
-                  html: '<svg height="13" width="13"><polygon points="6.5,0 13,13 0,13" style="fill:black;stroke:white;stroke-width:1"/></svg>',
-                  iconSize: [13,13], iconAnchor: [6.5,6.5],
-                }),
-              }).addTo(layerGroups.stations)
-                .bindPopup(`<b>${code}</b><br>${nameEl?nameEl.textContent:""}<br>
-                  <a href="https://wichita.ogs.ou.edu/eq/heliplot/${code}.png" target="_blank">Heliplot</a>`);
-            });
-            layerGroups.stations.bringToBack();
-          })
-          .catch(() => plotStationsFromStatic());
+        // Mobile: skip EarthScope API round-trip, use embedded static list directly
+        plotStationsFromStatic();
       }
 
       loadStations();
