@@ -209,7 +209,7 @@
           {
             "@type": "Dataset",
             "name": "OGS Regional Network Data",
-            "description": "High-resolution localized seismic events from the IRIS FDSNWS XML feed specifically targeting Oklahoma."
+            "description": "High-resolution localized seismic events from the OGS public earthquake catalog API specifically targeting Oklahoma."
           }
         ]
       }
@@ -1557,22 +1557,17 @@
           return `${date.getFullYear()}-${m}-${d}`;
         };
 
-        const endTimeStr = formatYMD(now);
-        const startTimeStr = formatYMD(oneYearAgo);
-
-        // Oklahoma rough bounding box
-        const minlat = 33.5;
-        const maxlat = 37.1;
-        const minlon = -103.1;
-        const maxlon = -94.4;
-
-        // Fetch last year of data, limit up to 20000 events as per USGS API limits
-        const dashboardUrl = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${startTimeStr}&endtime=${endTimeStr}&minlatitude=${minlat}&maxlatitude=${maxlat}&minlongitude=${minlon}&maxlongitude=${maxlon}&limit=20000`;
+        // Use OGS API date format (reuse helper from Phase 2)
+        const dashOgsStart = toOgsDateStr(oneYearAgo, false);
+        const dashOgsEnd = toOgsDateStr(now, true);
+        const dashboardUrl = `https://ogsweb.ou.edu/eq_catalog/earthquake?start=${dashOgsStart}&end=${dashOgsEnd}&mag=-1&format=geojson`;
 
         fetch(dashboardUrl)
           .then((res) => res.json())
           .then((data) => {
-            const features = data.features || [];
+            const features = (data.features || []).filter(
+              (f) => f.geometry && f.geometry.coordinates,
+            );
 
             let totalYear = features.length;
             let totalMonth = 0;
@@ -1613,19 +1608,28 @@
             }
 
             features.forEach((f) => {
-              let mag = f.properties.mag;
-              if (mag === null) return;
+              const mag = f.properties.prefmag || f.properties.mag;
+              if (mag === null || mag === undefined) return;
 
-              const time = new Date(f.properties.time);
+              const origintime =
+                f.properties.origintime || f.properties.time || null;
+              const time = origintime ? new Date(origintime + "Z") : null;
+              if (!time || isNaN(time)) return;
+
               const lon = f.geometry.coordinates[0];
-              const depth = f.geometry.coordinates[2];
+              const depth =
+                f.properties.depth != null
+                  ? parseFloat(f.properties.depth)
+                  : f.geometry.coordinates.length > 2
+                    ? f.geometry.coordinates[2]
+                    : null;
 
               if (depth !== null && depth !== undefined) {
                 lons.push(lon);
                 depths.push(depth);
                 mags.push(mag);
                 hoverTexts.push(
-                  `Mag: ${mag.toFixed(1)}<br>Depth: ${depth.toFixed(1)} km<br>Date: ${formatYMD(time)}`,
+                  `Mag: ${mag.toFixed(1)}<br>Depth: ${parseFloat(depth).toFixed(1)} km<br>Date: ${formatYMD(time)}`,
                 );
               }
               const ymd = formatYMD(time);
@@ -1640,7 +1644,7 @@
                 countMag++;
               }
 
-              if (mag > 3.0 && !recentSigEvent) {
+              if (mag > 3.0) {
                 recentSigEvent = f;
               }
 
@@ -1671,10 +1675,25 @@
 
             // Populate Recent Significant Event
             if (recentSigEvent) {
-              const sigMag = recentSigEvent.properties.mag;
-              const sigTime = new Date(recentSigEvent.properties.time);
-              const sigPlace = recentSigEvent.properties.place;
-              const sigUrl = recentSigEvent.properties.url;
+              const sigMag =
+                recentSigEvent.properties.prefmag ||
+                recentSigEvent.properties.mag;
+              const sigOrigintime =
+                recentSigEvent.properties.origintime ||
+                recentSigEvent.properties.time;
+              const sigTime = new Date(sigOrigintime + "Z");
+              const sigCounty = recentSigEvent.properties.county || "";
+              const sigState = recentSigEvent.properties.state || "";
+              const sigPlace =
+                [sigCounty, sigState].filter(Boolean).join(", ") || "Oklahoma";
+              const sigEventId =
+                recentSigEvent.properties.event_id ||
+                recentSigEvent.properties.objectid ||
+                "";
+              const sigUsgsId =
+                typeof sigEventId === "string" && sigEventId.startsWith("ogs")
+                  ? "ok" + sigEventId.substring(3)
+                  : sigEventId;
 
               document.getElementById("recent_sig_event").style.display =
                 "flex";
@@ -1683,7 +1702,8 @@
               document.getElementById("sig_loc").innerText = sigPlace;
               document.getElementById("sig_date").innerText =
                 sigTime.toLocaleString();
-              document.getElementById("sig_link").href = sigUrl;
+              document.getElementById("sig_link").href =
+                `https://earthquake.usgs.gov/earthquakes/eventpage/${sigUsgsId}`;
             }
 
             // Render Daily Chart
