@@ -222,10 +222,12 @@
           <span style="display:inline-block;width:22px;height:10px;background:#fc8d00;border-radius:2px;margin-right:7px;opacity:0.85;border:1px solid rgba(0,0,0,0.18);flex-shrink:0;"></span>
           <span style="font-size:11px;color:#374151;">Past 7 Days</span>
         </div>
+        <!-- Past 30 Days hidden in lite/mobile version
         <div style="display:flex;align-items:center;">
           <span style="display:inline-block;width:22px;height:10px;background:#4292c6;border-radius:2px;margin-right:7px;opacity:0.85;border:1px solid rgba(0,0,0,0.18);flex-shrink:0;"></span>
           <span style="font-size:11px;color:#374151;">Past 30 Days</span>
         </div>
+        -->
       </div>
       <!-- Magnitude Scale -->
       <div style="border-top:1px solid #f1f5f9;padding-top:7px;margin-bottom:7px;">
@@ -394,9 +396,9 @@
 
     function setInitialDates() {
       const today = new Date();
-      const ago30 = new Date(); ago30.setDate(today.getDate() - 30);
+      const ago7 = new Date(); ago7.setDate(today.getDate() - 7);
       queryEndDate   = today.toISOString().split("T")[0];
-      queryStartDate = ago30.toISOString().split("T")[0];
+      queryStartDate = ago7.toISOString().split("T")[0];
     }
 
     // --- PLOTTING: USGS (outside Oklahoma, de-emphasised) ---
@@ -463,10 +465,10 @@
       }).join("");
 
       // Update summary + badge
-      const now = Date.now(), thirtyDaysMs = 30*86400000;
-      const count = events.filter(e => now - new Date(e.origintime).getTime() <= thirtyDaysMs).length;
+      const now = Date.now(), sevenDaysMs = 7*86400000;
+      const count = events.filter(e => now - new Date(e.origintime).getTime() <= sevenDaysMs).length;
       const summaryEl = document.getElementById("event-list-summary");
-      if (summaryEl) summaryEl.textContent = `${count} events in last 30 days`;
+      if (summaryEl) summaryEl.textContent = `${count} events in last 7 days`;
       const badge = document.getElementById("event-count-badge");
       if (badge) {
         if (count > 0) { badge.textContent = count; badge.style.display = "inline-block"; }
@@ -748,7 +750,7 @@
       L.control.layers(null, {
         "24h": layerGroups.past24Hours,
         "7d":  layerGroups.past7Days,
-        "30d": layerGroups.past30Days,
+        /* "30d": layerGroups.past30Days, — hidden in lite/mobile version */
         "Stations": layerGroups.stations,
         "OK Polygon": polygonLayer,
       }, { position: "bottomright", collapsed: true }).addTo(map);
