@@ -1283,7 +1283,7 @@
         .toISOString()
         .substr(0, 19);
       const endTime = new Date().toISOString().substr(0, 19);
-      const irisUrl = `https://service.iris.edu/fdsnws/event/1/query?starttime=${startTime}&endtime=${endTime}&minmagnitude=0.1`;
+      const irisUrl = `https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=${startTime}&endtime=${endTime}&minmagnitude=0.1`;
 
       fetch(irisUrl)
         .then((res) => res.text())
@@ -1378,7 +1378,7 @@
         .addTo(mapStations)
         .bindPopup(`<strong>University of Oklahoma</strong>`);
 
-      const stationUrl = `https://service.iris.edu/fdsnws/station/1/query?net=OK&level=station&format=xml&minlat=33.4&maxlat=37.05&minlon=-102.97&maxlon=-94.2`;
+      const stationUrl = `https://earthquake.usgs.gov/fdsnws/station/1/query?net=OK&level=station&format=xml&minlat=33.4&maxlat=37.05&minlon=-102.97&maxlon=-94.2`;
 
       fetch(stationUrl)
         .then((res) => res.text())
