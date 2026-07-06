@@ -198,6 +198,29 @@
         
         <ul class="list-unstyled">
 
+          <li class="news-item mb-4" itemscope itemtype="https://schema.org/ScholarlyArticle">
+            <article class="news-article" itemprop="article">
+              <header class="news-header d-flex align-items-center mb-2">
+                <i class="fa fa-file-text text-primary mr-2" aria-hidden="true"></i>
+                <h3 class="news-title mb-0" itemprop="name">
+                  新论文发表于 JGR: Machine Learning and Computation
+                </h3>
+              </header>
+              <p class="news-content" itemprop="description">
+                <time datetime="2026-07-06" itemprop="datePublished">2026年7月6日</time>，我的同行评审论文<strong>《针对诱发地震检测的迁移学习与基准测试：来自俄克拉荷马州的启示》</strong> (Transfer Learning and Benchmarking for Induced Seismic Event Detection: Insights From Oklahoma) 在 <em>Journal of Geophysical Research: Machine Learning and Computation</em> 期刊上发表。本研究旨在解决小震级诱发地震往往被环境噪声掩盖而难以检测的难题。通过使用俄克拉荷马州本地数据集 (OKLAD) 对机器学习模型进行微调，我们显著提升了检测能力——在2022年的数据中识别出超过4400次未被现有地震目录记录的事件。这展示了<strong>迁移学习</strong>在跨区域部署机器学习模型方面的强大潜力。
+                
+              </p>
+              
+              <p class="news-content mt-2">
+                <a href="https://doi.org/10.1029/2025JH001194" target="_blank" class="btn btn-outline-primary btn-sm">
+                  <i class="fa fa-external-link mr-1"></i> DOI: 10.1029/2025JH001194
+                </a>
+              </p>
+
+              <meta itemprop="keywords" content="出版物, Journal of Geophysical Research, Machine Learning and Computation, JGR, 迁移学习, 基准测试, 诱发地震, 地震检测, 机器学习, AI 地震学, 俄克拉荷马地质调查局, 俄克拉荷马州, 地球物理学, 地震学">
+            </article>
+          </li>
+
           <li class="news-item mb-4" itemscope itemtype="https://schema.org/PresentationEvent">
             <article class="news-article" itemprop="event">
               <header class="news-header d-flex align-items-center mb-2">
@@ -754,6 +777,65 @@
       <div class="card-body">
 
         <ul class="list-unstyled">
+
+          <!-- ============================
+               论文 3 — JGR (2026)
+               ============================ -->
+          <li class="news-item mb-5" itemscope itemtype="https://schema.org/ScholarlyArticle">
+            <article class="news-article" itemprop="article">
+
+              <!-- 标题与期刊标识 -->
+              <header class="news-header d-flex align-items-center mb-2">
+                <span class="badge badge-success mr-2" style="font-size: 0.8rem;">JGR 2026</span>
+                <h3 class="news-title mb-0" itemprop="headline">
+                  针对诱发地震检测的迁移学习与基准测试：来自俄克拉荷马州的启示
+                </h3>
+              </header>
+
+              <!-- 作者与期刊信息 -->
+              <div class="text-muted small mb-2">
+                <span itemprop="author">Hongyu Xiao</span> | 
+                <em>Journal of Geophysical Research: Machine Learning and Computation</em>
+              </div>
+
+              <!-- 元数据 -->
+              <meta itemprop="datePublished" content="2026-07-06">
+              <meta itemprop="isPartOf" content="Journal of Geophysical Research: Machine Learning and Computation">
+              <meta itemprop="identifier" content="https://doi.org/10.1029/2025JH001194">
+              <meta itemprop="keywords" content="迁移学习, 基准测试, 诱发地震, 地震检测, 机器学习, AI地震学, 俄克拉荷马">
+
+              <!-- 研究亮点 -->
+              <div class="news-content mb-3" itemprop="description">
+                <p>
+                  本研究旨在解决小震级诱发地震往往被环境噪声掩盖而难以检测的难题。通过使用俄克拉荷马州本地数据集 (OKLAD) 对机器学习模型进行微调，显著提升了检测能力——在2022年的数据中识别出超过4400次未被现有地震目录记录的事件。
+                </p>
+                <p class="mb-0">
+                  <strong>技术贡献</strong>：展示了<strong>迁移学习</strong>在跨区域部署机器学习模型方面的强大潜力，并为诱发地震检测提供了基准测试平台。
+                </p>
+              </div>
+
+              <!-- 按钮区 -->
+              <div class="mb-2">
+                <a class="btn btn-outline-primary btn-sm mr-2" href="./papers/Xiao_JGR_2026.pdf" target="_blank">
+                  <i class="fa fa-file-pdf-o mr-1"></i> 全文 PDF
+                </a>
+                <a class="btn btn-outline-dark btn-sm mr-2" href="https://doi.org/10.1029/2025JH001194" target="_blank">
+                  <i class="fa fa-external-link mr-1"></i> DOI
+                </a>
+                <button class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#abs-jgr-2026-zh">
+                  <i class="fa fa-align-left mr-1"></i> 摘要
+                </button>
+              </div>
+
+              <!-- 可折叠摘要 -->
+              <div id="abs-jgr-2026-zh" class="collapse mt-2">
+                <p class="p-2 bg-light border rounded text-justify" itemprop="abstract">
+                  废水注入和水力压裂等人类活动可能引发地震。在美国大陆南部，此类诱发地震在过去十年中变得更加频繁。然而，小震级诱发地震的地面振动信号往往被环境噪声所掩盖，使得传统方法或地震分析人员的人工目视检查难以检测到它们。近年来，机器学习模型在提高小震级地震检测能力方面展现出巨大潜力。在本研究中，我们使用以俄克拉荷马州为重点的数据集 (OKLAD) 对机器学习模型进行了微调，并将其性能与现有模型进行了比较。结果表明，即使只有少量局部数据，模型检测小地震的能力也能得到大幅提升。将最佳模型应用于2022年的数据，我们恢复了几乎所有以前记录在案的事件，同时识别出了4400多次额外的地震事件。这些结果表明，OKLAD 可以作为地震检测的基准，并且迁移学习是跨区域应用机器学习的有效策略。为了支持未来对诱发地震的研究，我们将向公众公开我们的训练模型和数据集。
+                </p>
+              </div>
+
+            </article>
+          </li>
 
           <!-- ============================
                论文 1 — GRL (2022)

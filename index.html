@@ -270,6 +270,29 @@
         
         <ul class="list-unstyled">
 
+          <li class="news-item mb-4" itemscope itemtype="https://schema.org/ScholarlyArticle">
+            <article class="news-article" itemprop="article">
+              <header class="news-header d-flex align-items-center mb-2">
+                <i class="fa fa-file-text text-primary mr-2" aria-hidden="true"></i>
+                <h3 class="news-title mb-0" itemprop="name">
+                  New Paper Published in JGR: Machine Learning and Computation
+                </h3>
+              </header>
+              <p class="news-content" itemprop="description">
+                On <time datetime="2026-07-06" itemprop="datePublished">July 6, 2026</time>, my peer-reviewed paper titled <strong>"Transfer Learning and Benchmarking for Induced Seismic Event Detection: Insights From Oklahoma"</strong> was published in the <em>Journal of Geophysical Research: Machine Learning and Computation</em>. This study addresses the challenge of detecting small, induced earthquakes that are often obscured by environmental noise. By fine-tuning machine learning models with a localized Oklahoma dataset (OKLAD), we significantly improved detection capabilities—identifying over 4,400 previously uncataloged events in 2022. This demonstrates the power of <strong>transfer learning</strong> for deploying machine learning models across new regions. 
+                
+              </p>
+              
+              <p class="news-content mt-2">
+                <a href="https://doi.org/10.1029/2025JH001194" target="_blank" class="btn btn-outline-primary btn-sm">
+                  <i class="fa fa-external-link mr-1"></i> DOI: 10.1029/2025JH001194
+                </a>
+              </p>
+
+              <meta itemprop="keywords" content="publication, Journal of Geophysical Research, Machine Learning and Computation, JGR, transfer learning, benchmarking, induced seismicity, seismic detection, machine learning, AI seismology, Oklahoma Geological Survey, Oklahoma, geophysics, seismology">
+            </article>
+          </li>
+
           <li class="news-item mb-4" itemscope itemtype="https://schema.org/NewsArticle">
             <article class="news-article" itemprop="article">
               <header class="news-header d-flex align-items-center mb-2">
@@ -1035,6 +1058,71 @@
 
         <ul class="list-unstyled">
 
+          <!-- ============================
+               Publication 3 — JGR (2026)
+               ============================ -->
+          <li class="news-item mb-4" itemscope itemtype="https://schema.org/ScholarlyArticle">
+            <article class="news-article" itemprop="article">
+
+              <!-- Header -->
+              <header class="news-header d-flex align-items-center mb-2">
+                <span class="badge badge-success mr-2" style="font-size: 0.8rem;">JGR</span>
+                <h3 class="news-title mb-0" itemprop="headline">
+                  Transfer Learning and Benchmarking for Induced Seismic Event Detection: Insights From Oklahoma
+                </h3>
+              </header>
+
+              <!-- Meta info -->
+              <meta itemprop="datePublished" content="2026-07-06">
+              <meta itemprop="author" content="Hongyu Xiao">
+              <meta itemprop="author" content="Jacob I. Walter">
+              <meta itemprop="author" content="Paul Ogwari">
+              <meta itemprop="author" content="Long M. Ho">
+              <meta itemprop="author" content="Andrew D. Thiel">
+              <meta itemprop="author" content="Nicholas Gregg">
+              <meta itemprop="author" content="Brandon Mace">
+              <meta itemprop="author" content="Isaac Woelfel">
+              <meta itemprop="isPartOf" content="Journal of Geophysical Research: Machine Learning and Computation">
+              <meta itemprop="identifier" content="https://doi.org/10.1029/2025JH001194">
+
+              <meta itemprop="keywords" content="transfer learning, benchmarking, induced seismicity, seismic detection, machine learning, AI seismology, Oklahoma">
+
+              <!-- Description -->
+              <p class="news-content" itemprop="description">
+                Published in <em>Journal of Geophysical Research: Machine Learning and Computation</em> (2026). This study addresses the challenge of detecting small, induced earthquakes by fine-tuning machine learning models with a localized <strong>Oklahoma Labeled AI Dataset (OKLAD)</strong>. It demonstrates the power of <strong>transfer learning</strong> for deploying models across new regions, identifying over 4,400 previously uncataloged events.
+                <br>
+                DOI: <a href="https://doi.org/10.1029/2025JH001194" target="_blank">10.1029/2025JH001194</a>
+              </p>
+
+              <!-- Buttons -->
+              <div class="mb-2">
+
+                <!-- PDF button -->
+                <a class="btn btn-outline-primary btn-sm mr-2" href="./papers/Xiao_JGR_2026.pdf" target="_blank">
+                  <i class="fa fa-file-pdf-o mr-1"></i> PDF
+                </a>
+
+                <!-- DOI badge -->
+                <a class="btn btn-outline-dark btn-sm mr-2"
+                   href="https://doi.org/10.1029/2025JH001194" target="_blank">
+                  DOI
+                </a>
+
+                <!-- Abstract -->
+                <button class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#abs-jgr-2026">
+                  Abstract
+                </button>
+              </div>
+
+              <!-- Collapsible Abstract -->
+              <div id="abs-jgr-2026" class="collapse mt-2">
+                <p class="p-2 bg-light border rounded" itemprop="abstract">
+                  Human activities such as wastewater injection and hydraulic fracking can trigger earthquakes. In the southern midcontinent of the U.S., such induced earthquakes have become more prominent in the last decade. However, the ground vibration signals of these from small and induced earthquakes are often buried in environmental noise, making them difficult to detect using traditional methods or by through visual inspection from seismic analysts. Recently, machine learning models have shown great promise in improving the ability to detect small earthquakes. In this study, we fine-tuned machine learning models using an Oklahoma-focused data set (OKLAD) and compared their performance to existing models. Our results show that even with a relatively small amount of localized data, the models' ability to detect small earthquakes can be substantially improved. Applying the best model to 2022 data, we recovered nearly all previously cataloged events while identifying more than 4,400 additional events. These results show that OKLAD can serve as a benchmark for earthquake detection and that transfer learning is an effective strategy for applying machine learning across regions. We are releasing both our trained models and the data set to the public to support future research on induced earthquakes.
+                </p>
+              </div>
+
+            </article>
+          </li>
           <!-- ============================
                Publication 1 — GRL (2022)
                ============================ -->
