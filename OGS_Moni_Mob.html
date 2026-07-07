@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>OGS Earthquake Monitor — Real-Time Oklahoma Seismic Map (Mobile)</title>
-  <meta name="description" content="Real-time mobile earthquake map for Oklahoma and surrounding regions. Powered by the Oklahoma Geological Survey (OGS) and USGS, showing seismic events from the past 7 days with magnitude, depth, and location details." />
+  <meta name="description" content="Real-time mobile earthquake map for Oklahoma and surrounding regions. Powered by the Oklahoma Geological Survey (OGS) and USGS, showing seismic events from the past 30 days with magnitude, depth, and location details." />
   <meta name="keywords" content="Oklahoma earthquake, OGS seismic monitor, real-time earthquake map, Oklahoma seismicity, earthquake tracker mobile, USGS earthquakes, OGS network, seismic activity Oklahoma" />
   <meta name="author" content="Hongyu Xiao" />
   <link rel="canonical" href="https://hy-x.github.io/OGS_Moni_Mob.html" />
@@ -21,7 +21,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="OGS Earthquake Monitor — Real-Time Oklahoma Seismic Map" />
-  <meta name="twitter:description" content="Live earthquake map for Oklahoma. OGS + USGS data, past 7 days, location-aware." />
+  <meta name="twitter:description" content="Live earthquake map for Oklahoma. OGS + USGS data, past 30 days, location-aware." />
   <meta name="twitter:image"       content="https://hy-x.github.io/images/cc-bg-hyx.jpg" />
 
   <!-- Structured data -->
@@ -45,7 +45,7 @@
       {
         "@type": "Dataset",
         "name": "OGS Earthquake Catalog",
-        "description": "High-resolution seismic events within Oklahoma from the Oklahoma Geological Survey public catalog API, past 7 days."
+        "description": "High-resolution seismic events within Oklahoma from the Oklahoma Geological Survey public catalog API, past 30 days."
       },
       {
         "@type": "Dataset",
@@ -273,12 +273,10 @@
           <span style="display:inline-block;width:22px;height:10px;background:#fc8d00;border-radius:2px;margin-right:7px;opacity:0.85;border:1px solid rgba(0,0,0,0.18);flex-shrink:0;"></span>
           <span style="font-size:11px;color:#374151;">Past 7 Days</span>
         </div>
-        <!-- Past 30 Days hidden in lite/mobile version
         <div style="display:flex;align-items:center;">
-          <span style="display:inline-block;width:22px;height:10px;background:#4292c6;border-radius:2px;margin-right:7px;opacity:0.85;border:1px solid rgba(0,0,0,0.18);flex-shrink:0;"></span>
+          <span style="display:inline-block;width:22px;height:10px;background:yellow;border-radius:2px;margin-right:7px;opacity:0.85;border:1px solid rgba(0,0,0,0.18);flex-shrink:0;"></span>
           <span style="font-size:11px;color:#374151;">Past 30 Days</span>
         </div>
-        -->
       </div>
       <!-- Magnitude Scale -->
       <div style="border-top:1px solid #f1f5f9;padding-top:7px;margin-bottom:7px;">
@@ -447,9 +445,9 @@
 
     function setInitialDates() {
       const today = new Date();
-      const ago7 = new Date(); ago7.setDate(today.getDate() - 7);
+      const ago30 = new Date(); ago30.setDate(today.getDate() - 30);
       queryEndDate   = today.toISOString().split("T")[0];
-      queryStartDate = ago7.toISOString().split("T")[0];
+      queryStartDate = ago30.toISOString().split("T")[0];
     }
 
     // --- PLOTTING: USGS (outside Oklahoma, de-emphasised) ---
@@ -462,7 +460,7 @@
         if (pointInPolygon(lng, lat, oklahomaPolygonLngLat)) return;
         const mag = f.properties.mag;
         const timeDiff = now - f.properties.time;
-        const color = timeDiff < oneDay ? "#e31a1c" : timeDiff < sevenDays ? "#fc8d00" : "#4292c6";
+        const color = timeDiff < oneDay ? "#e31a1c" : timeDiff < sevenDays ? "#fc8d00" : "yellow";
         const lg    = timeDiff < oneDay ? layerGroups.past24Hours : timeDiff < sevenDays ? layerGroups.past7Days : layerGroups.past30Days;
         const radius = 1.75 * (mag + 1.01) ** 1.6;
         const userLoc = window.userLocation;
@@ -508,7 +506,7 @@
         const typeLabel = isQuarry ? "Quarry" : "Earthquake";
         const dotColor = (Date.now()-new Date(ev.origintime).getTime()) < 86400000
           ? "#e31a1c" : (Date.now()-new Date(ev.origintime).getTime()) < 604800000
-          ? "#fc8d00" : "#4292c6";
+          ? "#fc8d00" : "yellow";
         return `<div class="event-list-item" data-event-id="${dispId}">
           <div style="display:flex;align-items:center;gap:6px;">
             <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${dotColor};flex-shrink:0;"></span>
@@ -522,10 +520,10 @@
       }).join("");
 
       // Update summary + badge
-      const now = Date.now(), sevenDaysMs = 7*86400000;
-      const count = events.filter(e => now - new Date(e.origintime).getTime() <= sevenDaysMs).length;
+      const now = Date.now(), thirtyDaysMs = 30*86400000;
+      const count = events.filter(e => now - new Date(e.origintime).getTime() <= thirtyDaysMs).length;
       const summaryEl = document.getElementById("event-list-summary");
-      if (summaryEl) summaryEl.textContent = `${count} events in last 7 days`;
+      if (summaryEl) summaryEl.textContent = `${count} events in last 30 days`;
       const badge = document.getElementById("event-count-badge");
       if (badge) {
         if (count > 0) { badge.textContent = count; badge.style.display = "inline-block"; }
@@ -640,7 +638,7 @@
         if (isNaN(lat)||isNaN(lng)) return;
         window.plottedOgsEventIds.add(rawId);
         const timeDiff = now - new Date(ev.origintime).getTime();
-        const color = timeDiff<oneDay ? "#e31a1c" : timeDiff<sevenDays ? "#fc8d00" : "#4292c6";
+        const color = timeDiff<oneDay ? "#e31a1c" : timeDiff<sevenDays ? "#fc8d00" : "yellow";
         const lg    = timeDiff<oneDay ? layerGroups.past24Hours : timeDiff<sevenDays ? layerGroups.past7Days : layerGroups.past30Days;
         const radius = 1.75*(mag+1.01)**1.6;
         let marker;
@@ -718,7 +716,7 @@
             const lat=Number(ev.latitude), lng=Number(ev.longitude), mag=Number(ev.prefmag), depth=Number(ev.depth);
             if (isNaN(lat)||isNaN(lng)) return;
             const timeDiff=now-new Date(ev.origintime).getTime();
-            const color=timeDiff<oneDay?"#e31a1c":timeDiff<sevenDays?"#fc8d00":"#4292c6";
+            const color=timeDiff<oneDay?"#e31a1c":timeDiff<sevenDays?"#fc8d00":"yellow";
             const lg=timeDiff<oneDay?layerGroups.past24Hours:timeDiff<sevenDays?layerGroups.past7Days:layerGroups.past30Days;
             const radius=1.75*(mag+1.01)**1.6;
             let marker;
@@ -815,7 +813,7 @@
       L.control.layers(null, {
         "24h": layerGroups.past24Hours,
         "7d":  layerGroups.past7Days,
-        /* "30d": layerGroups.past30Days, — hidden in lite/mobile version */
+        "30d": layerGroups.past30Days,
         "Stations": layerGroups.stations,
         "OK Polygon": polygonLayer,
       }, { position: "bottomright", collapsed: true }).addTo(map);
