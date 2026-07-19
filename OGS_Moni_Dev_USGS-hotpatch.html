@@ -1565,7 +1565,7 @@
             return `
                  <div class="event-list-item" data-event-id="${displayEventId}" style="cursor:pointer;padding:4px 0;border-bottom:1px solid #eee;">
                      <strong>M ${!isNaN(mag) ? mag.toFixed(1) : "?"}</strong> <span style="font-size:11px;color:#888;margin-left:6px;">[${eventTypeLabel}]</span><br>
-                     <span style="font-size:12px;color:#555;">${timeStr} (UTC) &mdash; ${event.county || event.state || ""}</span>
+                     <span style="font-size:12px;color:#555;">${timeStr} (UTC) &mdash; ${event.place || event.county || event.state || ""}</span>
                  </div>
              `;
           })
@@ -1739,8 +1739,8 @@
               return g && g.coordinates;
             })
             .map((f) => {
-              const p = f.properties;
-              const g = f.geometry;
+              const p = f.properties || {};
+              const g = f.geometry || {};
               let eventTime = p.origintime || p.time || null;
               if (eventTime) {
                 const eventDate = new Date(eventTime);
@@ -1750,6 +1750,15 @@
                   return null;
                 }
               }
+              const latVal = g && g.coordinates ? g.coordinates[1] : null;
+              const lngVal = g && g.coordinates ? g.coordinates[0] : null;
+              if (latVal === null || lngVal === null) return null;
+
+              // Filter out events outside the Oklahoma polygon to avoid duplicate markers with broad USGS query
+              if (!pointInPolygon(lngVal, latVal, oklahomaPolygonLngLat)) {
+                return null;
+              }
+
               let depthVal = null;
               if (
                 typeof p.depth !== "undefined" &&
@@ -1765,18 +1774,24 @@
                 depthVal = parseFloat(g.coordinates[2]);
                 if (isNaN(depthVal)) depthVal = null;
               }
-              let isQuarry = false;
-              if (typeof depthVal === "number" && !isNaN(depthVal)) {
+              const typeStr = (p.type || p.eventtype || p.event_type || "").toLowerCase();
+              let isQuarry = typeStr.includes("quarry") || typeStr.includes("blast") || typeStr.includes("explosion");
+              if (!isQuarry && typeof p.isQuarry !== "undefined") {
+                isQuarry = Boolean(p.isQuarry);
+              }
+              if (!isQuarry && typeof depthVal === "number" && !isNaN(depthVal)) {
                 isQuarry = depthVal < 0.05;
               }
+              const eventId = f.id || p.event_id || p.id || p.objectid || null;
+              const placeStr = p.place || p.county || p.state || "";
               return {
-                objectid: p.objectid || null,
+                objectid: eventId,
                 origintime: p.origintime || p.time || null,
-                prefmag: p.prefmag || p.mag || null,
+                prefmag: p.prefmag !== undefined && p.prefmag !== null ? p.prefmag : (p.mag !== undefined ? p.mag : null),
                 pmag_src: p.pmag_src || null,
-                max_mmi: p.max_mmi || null,
-                latitude: g && g.coordinates ? g.coordinates[1] : null,
-                longitude: g && g.coordinates ? g.coordinates[0] : null,
+                max_mmi: p.max_mmi || p.mmi || null,
+                latitude: latVal,
+                longitude: lngVal,
                 depth: depthVal,
                 isQuarry: isQuarry,
                 err_lon: p.err_lon || null,
@@ -1784,9 +1799,10 @@
                 err_depth: p.err_depth || null,
                 err_origintime: p.err_origintime || null,
                 state: p.state || null,
-                county: p.county || null,
+                county: p.county || placeStr,
+                place: placeStr,
                 status: p.status || null,
-                event_id: p.event_id || p.id || null,
+                event_id: eventId,
               };
             })
             .filter((e) => {
@@ -1850,7 +1866,7 @@
           const radius = 1.75 * (mag + 1.01) ** 1.6;
 
           let marker;
-          let isQuarry = !isNaN(depth) && depth < 0.05;
+          let isQuarry = typeof event.isQuarry !== "undefined" ? event.isQuarry : (!isNaN(depth) && depth < 0.05);
           if (isQuarry) {
             marker = L.marker([lat, lng], {
               icon: L.divIcon({
@@ -1893,7 +1909,7 @@
                 <strong>Time (UTC):</strong> ${utcTimeStr}<br>
                 <strong>Time (Local):</strong> ${localTimeStr}<br>
                 <strong>Coordinates:</strong> ${lat.toFixed(4)}, ${lng.toFixed(4)}<br>
-                <strong>Location:</strong> ${event.county || event.state || ""}<br>
+                <strong>Location:</strong> ${event.place || event.county || event.state || ""}<br>
                 ${!isNaN(depth) ? `<strong>Depth:</strong> ${depth.toFixed(2)} km<br>` : ""}
                 ${quarryLabel}
                 <a href="https://earthquake.usgs.gov/earthquakes/eventpage/${markerFeatureId}/tellus" target="_blank" rel="noopener noreferrer">Did you feel this earthquake?</a>
@@ -1956,7 +1972,7 @@
               mag: Number(e.prefmag),
               status: e.status,
               time: e.origintime,
-              place: e.county || e.state || "",
+              place: e.place || e.county || e.state || "",
               event_id: e.event_id || e.objectid || "?",
               objectid: e.objectid,
               source: "OGS",
@@ -2030,8 +2046,8 @@
               return g && g.coordinates;
             })
             .map((f) => {
-              const p = f.properties;
-              const g = f.geometry;
+              const p = f.properties || {};
+              const g = f.geometry || {};
               let eventTime = p.origintime || p.time || null;
               if (eventTime) {
                 const eventDate = new Date(eventTime);
@@ -2041,6 +2057,15 @@
                   return null;
                 }
               }
+              const latVal = g && g.coordinates ? g.coordinates[1] : null;
+              const lngVal = g && g.coordinates ? g.coordinates[0] : null;
+              if (latVal === null || lngVal === null) return null;
+
+              // Filter out events outside the Oklahoma polygon to avoid duplicate markers with broad USGS query
+              if (!pointInPolygon(lngVal, latVal, oklahomaPolygonLngLat)) {
+                return null;
+              }
+
               let depthVal = null;
               if (
                 typeof p.depth !== "undefined" &&
@@ -2056,18 +2081,24 @@
                 depthVal = parseFloat(g.coordinates[2]);
                 if (isNaN(depthVal)) depthVal = null;
               }
-              let isQuarry = false;
-              if (typeof depthVal === "number" && !isNaN(depthVal)) {
+              const typeStr = (p.type || p.eventtype || p.event_type || "").toLowerCase();
+              let isQuarry = typeStr.includes("quarry") || typeStr.includes("blast") || typeStr.includes("explosion");
+              if (!isQuarry && typeof p.isQuarry !== "undefined") {
+                isQuarry = Boolean(p.isQuarry);
+              }
+              if (!isQuarry && typeof depthVal === "number" && !isNaN(depthVal)) {
                 isQuarry = depthVal < 0.05;
               }
+              const eventId = f.id || p.event_id || p.id || p.objectid || null;
+              const placeStr = p.place || p.county || p.state || "";
               return {
-                objectid: p.objectid || null,
+                objectid: eventId,
                 origintime: p.origintime || p.time || null,
-                prefmag: p.prefmag || p.mag || null,
+                prefmag: p.prefmag !== undefined && p.prefmag !== null ? p.prefmag : (p.mag !== undefined ? p.mag : null),
                 pmag_src: p.pmag_src || null,
-                max_mmi: p.max_mmi || null,
-                latitude: g && g.coordinates ? g.coordinates[1] : null,
-                longitude: g && g.coordinates ? g.coordinates[0] : null,
+                max_mmi: p.max_mmi || p.mmi || null,
+                latitude: latVal,
+                longitude: lngVal,
                 depth: depthVal,
                 isQuarry: isQuarry,
                 err_lon: p.err_lon || null,
@@ -2075,9 +2106,10 @@
                 err_depth: p.err_depth || null,
                 err_origintime: p.err_origintime || null,
                 state: p.state || null,
-                county: p.county || null,
+                county: p.county || placeStr,
+                place: placeStr,
                 status: p.status || null,
-                event_id: p.event_id || p.id || null,
+                event_id: eventId,
               };
             })
             .filter((e) => {
@@ -2129,7 +2161,7 @@
               const radius = 1.75 * (mag + 1.01) ** 1.6;
 
               let marker;
-              let isQuarry = !isNaN(depth) && depth < 0.05;
+              let isQuarry = typeof event.isQuarry !== "undefined" ? event.isQuarry : (!isNaN(depth) && depth < 0.05);
               if (isQuarry) {
                 marker = L.marker([lat, lng], {
                   icon: L.divIcon({
@@ -2172,7 +2204,7 @@
                         <strong>Time (UTC):</strong> ${utcTimeStr}<br>
                         <strong>Time (Local):</strong> ${localTimeStr}<br>
                         <strong>Coordinates:</strong> ${lat.toFixed(4)}, ${lng.toFixed(4)}<br>
-                        <strong>Location:</strong> ${event.county || event.state || ""}<br>
+                        <strong>Location:</strong> ${event.place || event.county || event.state || ""}<br>
                         ${!isNaN(depth) ? `<strong>Depth:</strong> ${depth.toFixed(2)} km<br>` : ""}
                         ${quarryLabel}
                         <a href="https://earthquake.usgs.gov/earthquakes/eventpage/${markerFeatureId}/tellus" target="_blank" rel="noopener noreferrer">Did you feel this earthquake?</a>
@@ -2184,6 +2216,24 @@
             });
 
             window.ogsEventData = (window.ogsEventData || []).concat(newEvents);
+            newEvents.forEach((e) => {
+              const lat = Number(e.latitude);
+              const lng = Number(e.longitude);
+              if (!isNaN(lat) && !isNaN(lng)) {
+                (window.allPlottedEarthquakes = window.allPlottedEarthquakes || []).push({
+                  lat,
+                  lng,
+                  depth: Number(e.depth),
+                  mag: Number(e.prefmag),
+                  status: e.status,
+                  time: e.origintime,
+                  place: e.place || e.county || e.state || "",
+                  event_id: e.event_id || e.objectid || "?",
+                  objectid: e.objectid,
+                  source: "OGS",
+                });
+              }
+            });
             renderEventList(window.ogsEventData);
 
             // Update summary count
