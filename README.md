@@ -9,7 +9,7 @@
 
 ## About Me
 
-I am a **Research Associate** at the **University of Oklahoma | Oklahoma Geological Survey**, with a **Ph.D. in Seismology and Tectonics** from the **University of Illinois at Urbana-Champaign**. My work centers on the intersection of seismology, tectonics, and data science to address critical questions in Earth science.
+I am a **Research Scientist** at the **University of Oklahoma | Oklahoma Geological Survey**, with a **Ph.D. in Seismology and Tectonics** from the **University of Illinois at Urbana-Champaign**. My work centers on the intersection of seismology, tectonics, and data science to address critical questions in Earth science.
 
 My primary research interests include:
 -   **Crustal Structure & Tectonics:** Investigating the crustal morphology of the North American Midcontinent using receiver functions (H-κ-c) and ambient noise surface wave tomography.
