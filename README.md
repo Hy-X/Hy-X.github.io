@@ -21,6 +21,8 @@ My primary research interests include:
 
 ## Publications
 
+*   **Xiao, H.**, Jacob I. Walter, Paul Ogwari, Long M. Ho, Andrew D. Thiel, Nicholas Gregg, Brandon Mace, Isaac Woelfel (2026). Transfer learning and benchmarking for induced seismic event detection: Insights from Oklahoma *Journal of Geophysical Research*. [ https://doi.org/10.1029/2025JH001194]( https://doi.org/10.1029/2025JH001194)
+
 *   **Xiao, H.**, Marshak, S., DeLucia, M., & Song, X. (2025). Moho depth (crustal thickness) variations under the northeastern midcontinent of North America, based on H-κ− c receiver-function analysis. *Earth and Planetary Science Letters*. [https://doi.org/10.1016/j.epsl.2025.119289](https://doi.org/10.1016/j.epsl.2025.119289)
 
 *   **Xiao, H.**, DeLucia, M., Song, X., Li, J., & Marshak, S. (2022). Crustal Thickness Variations in the Central Midcontinent, USA, and Their Tectonic Implications. *Geophysical Research Letters*. [https://doi.org/10.1029/2022GL099257](https://doi.org/10.1029/2022GL099257)
