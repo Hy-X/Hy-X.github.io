@@ -2836,20 +2836,37 @@
             return;
           }
 
+          function formatUtcDateTime(val) {
+            if (!val) return "";
+            const d = new Date(val);
+            if (isNaN(d.getTime())) return String(val);
+            const year = d.getUTCFullYear();
+            const month = String(d.getUTCMonth() + 1).padStart(2, "0");
+            const day = String(d.getUTCDate()).padStart(2, "0");
+            const hours = String(d.getUTCHours()).padStart(2, "0");
+            const minutes = String(d.getUTCMinutes()).padStart(2, "0");
+            const seconds = String(d.getUTCSeconds()).padStart(2, "0");
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+          }
+
           const fields = Object.keys(filteredEvents[0]);
           const csvRows = [
             fields.join(","),
             ...filteredEvents.map((row) =>
               fields
-                .map(
-                  (f) => `"${(row[f] ?? "").toString().replace(/"/g, '""')}"`,
-                )
+                .map((f) => {
+                  let val = row[f] ?? "";
+                  if ((f === "origintime" || f === "time") && val) {
+                    val = formatUtcDateTime(val);
+                  }
+                  return `"${val.toString().replace(/"/g, '""')}"`;
+                })
                 .join(","),
             ),
           ];
           const csvContent = csvRows.join("\r\n");
 
-          const blob = new Blob([csvContent], { type: "text/csv" });
+          const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
           const url = URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
