@@ -1101,6 +1101,67 @@
         <ul class="list-unstyled">
 
           <!-- ============================
+               Publication 4 — PNAS Nexus (2026)
+               ============================ -->
+          <li class="news-item mb-4" itemscope itemtype="https://schema.org/ScholarlyArticle">
+            <article class="news-article" itemprop="article">
+
+              <!-- Header -->
+              <header class="news-header d-flex align-items-center mb-2">
+                <span class="badge badge-info mr-2" style="font-size: 0.8rem;">PNAS</span>
+                <h3 class="news-title mb-0" itemprop="headline">
+                  Edge seismic phase picking: Model distillation for multimodal early-warning systems
+                </h3>
+              </header>
+
+              <!-- Meta info -->
+              <meta itemprop="datePublished" content="2026-09-18">
+              <meta itemprop="author" content="Hongyu Xiao">
+              <meta itemprop="author" content="Jacob I. Walter">
+              <meta itemprop="author" content="Paul Ogwari">
+              <meta itemprop="isPartOf" content="PNAS Nexus">
+              <meta itemprop="identifier" content="https://doi.org/10.1093/pnasnexus/pgag322">
+
+              <meta itemprop="keywords" content="edge seismic phase picking, XiaoNet, model distillation, knowledge distillation, multimodal early-warning systems, earthquake early warning, P-wave picking, S-wave picking, edge AI, TinyML">
+
+              <!-- Description -->
+              <p class="news-content" itemprop="description">
+                Published in <em>PNAS Nexus</em> (2026). This study introduces <strong>XiaoNet</strong>, an ultra-compact edge machine learning architecture. Using <strong>knowledge distillation</strong>, we compress a state-of-the-art PhaseNet model by over 93% into a 240 KB model capable of <strong>sub-millisecond inference</strong> on resource-constrained <strong>edge computing</strong> hardware (e.g., Raspberry Pi 5) while preserving reasonably high <strong>P-wave and S-wave arrival picking accuracy</strong>. By performing first-pass inference near the sensor and transmitting concise event metadata rather than continuous raw streams, this work demonstrates the potential of decentralized, edge-native AI workflows for next-generation multimodal earth sensing systems.
+                <br>
+                DOI: <a href="https://doi.org/10.1093/pnasnexus/pgag322" target="_blank">10.1093/pnasnexus/pgag322</a>
+              </p>
+
+              <!-- Buttons -->
+              <div class="mb-2">
+
+                <!-- PDF button -->
+                <a class="btn btn-outline-primary btn-sm mr-2" href="./papers/Xiao_PNAS_2026.pdf" target="_blank">
+                  <i class="fa fa-file-pdf-o mr-1"></i> PDF
+                </a>
+
+                <!-- DOI badge -->
+                <a class="btn btn-outline-dark btn-sm mr-2"
+                   href="https://doi.org/10.1093/pnasnexus/pgag322" target="_blank">
+                  DOI
+                </a>
+
+                <!-- Abstract -->
+                <button class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#abs-pnas-2026">
+                  Abstract
+                </button>
+              </div>
+
+              <!-- Collapsible Abstract -->
+              <div id="abs-pnas-2026" class="collapse mt-2">
+                <p class="p-2 bg-light border rounded" itemprop="abstract">
+                  Seismic monitoring is entering a high data volume, multimodal sensing regime driven by dense sensor deployments, including Micro-Electro-Mechanical Systems (MEMS) arrays, large-N (100s-1000s) Nodal arrays, Distributed Acoustic Sensing (DAS), and other geophysical instruments. Machine learning models, with appropriate tuning and calibration, are capable of achieving close to expert-level performance in seismic detection and phase picking. The emerging operational challenge is how to scale that machine intelligence across future multimodal sensing networks. Effective incorporation of these capabilities remains constrained by telemetry bandwidth, centralized computation architectures, and communication latency. Here, we present XiaoNet, a proof-of-concept edge machine learning architecture for seismicity monitoring based on a simple system principle: perform first-pass inference near the sensor and transmit concise metadata rather than continuous streams. Using knowledge distillation, we compress a state-of-the-art PhaseNet model by over 93% into XiaoNet, a 240 KB model designed for edge deployment, while preserving strong phase-picking performance across datasets. Deployment on a Raspberry Pi 5 shows sub-millisecond inference latency for 30-second 3-channel waveform windows. By shifting inference to the edge and transmitting concise event metadata payloads, the framework demonstrated the potential for edge inference to reduce communication latency. Substituting an event metadata message payload for continuous raw waveform stream largely mitigates the dominant source of variable telemetry delay under moderate to heavy load. This result supports a feasible architecture in which edge inference devices complements centralized observatories, potentially improving resilience and response speed for seismic monitoring and may extend to future multimodal subsurface and infrastructure sensing systems.
+                </p>
+              </div>
+
+            </article>
+          </li>
+
+          <!-- ============================
                Publication 3 — JGR (2026)
                ============================ -->
           <li class="news-item mb-4" itemscope itemtype="https://schema.org/ScholarlyArticle">
