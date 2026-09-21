@@ -198,6 +198,28 @@
         
         <ul class="list-unstyled">
 
+          <li class="news-item mb-4" itemscope itemtype="https://schema.org/ScholarlyArticle">
+            <article class="news-article" itemprop="article">
+              <header class="news-header d-flex align-items-center mb-2">
+                <i class="fa fa-file-text text-primary mr-2" aria-hidden="true"></i>
+                <h3 class="news-title mb-0" itemprop="name">
+                  新论文正式发表于 PNAS Nexus
+                </h3>
+              </header>
+              <p class="news-content" itemprop="description">
+                <time datetime="2026-09-18" itemprop="datePublished">2026年9月18日</time>，萧鸿宇博士的同行评审论文<strong>《边缘地震震相拾取：面向多模态预警系统的模型蒸馏》</strong>（<em>"Edge seismic phase picking: Model distillation for multimodal early-warning systems"</em>）正式发表于牛津大学出版社旗下综合性期刊 <em>PNAS Nexus</em>。该研究提出了超紧凑边缘机器学习架构 <strong>XiaoNet</strong>。通过<strong>知识蒸馏（Knowledge Distillation）</strong>技术，将最前沿的 PhaseNet 模型压缩超过 93%，构建成仅 240 KB 的轻量模型，在树莓派 5（Raspberry Pi 5）等资源受限的<strong>边缘计算</strong>硬件上实现了<strong>亚毫秒级推断（sub-millisecond inference）</strong>，同时保持了高精度的 <strong>P波和 S波到时拾取准确率</strong>。通过在传感器端执行初级推断并仅传输精简的事件元数据而非持续原始波形流，该工作展示了去中心化、边缘原生 AI 工作流在下一代多模态地球感知系统中的巨大应用潜力。
+              </p>
+              
+              <p class="news-content mt-2">
+                <a href="https://doi.org/10.1093/pnasnexus/pgag322" target="_blank" class="btn btn-outline-primary btn-sm">
+                  <i class="fa fa-external-link mr-1"></i> DOI: 10.1093/pnasnexus/pgag322
+                </a>
+              </p>
+
+              <meta itemprop="keywords" content="PNAS Nexus, 论文发表, 边缘地震震相拾取, XiaoNet, 模型蒸馏, 知识蒸馏, 多模态预警系统, 地震预警, EEW, P波拾取, S波拾取, 边缘AI, TinyML, 端侧推断, 实时地震监测, 机器学习, 深度学习, 应用地球物理学, 地震学, 俄克拉荷马地质调查局">
+            </article>
+          </li>
+
           <li class="news-item mb-4" itemscope itemtype="https://schema.org/Grant">
             <article class="news-article" itemprop="fundedItem">
               <header class="news-header d-flex align-items-center mb-2">
@@ -812,6 +834,66 @@
       <div class="card-body">
 
         <ul class="list-unstyled">
+
+          <!-- ============================
+               论文 4 — PNAS Nexus (2026)
+               ============================ -->
+          <li class="news-item mb-5" itemscope itemtype="https://schema.org/ScholarlyArticle">
+            <article class="news-article" itemprop="article">
+
+              <!-- 标题与期刊标识 -->
+              <header class="news-header d-flex align-items-center mb-2">
+                <span class="badge badge-info mr-2" style="font-size: 0.8rem;">PNAS 2026</span>
+                <h3 class="news-title mb-0" itemprop="headline">
+                  边缘地震震相拾取：面向多模态预警系统的模型蒸馏
+                </h3>
+              </header>
+
+              <!-- 作者与期刊信息 -->
+              <div class="text-muted small mb-2">
+                <span itemprop="author">Hongyu Xiao</span>, 
+                Jacob I. Walter, 
+                Paul Ogwari | 
+                <em>PNAS Nexus</em>
+              </div>
+
+              <!-- 元数据 -->
+              <meta itemprop="datePublished" content="2026-09-18">
+              <meta itemprop="isPartOf" content="PNAS Nexus">
+              <meta itemprop="identifier" content="https://doi.org/10.1093/pnasnexus/pgag322">
+              <meta itemprop="keywords" content="边缘地震震相拾取, XiaoNet, 模型蒸馏, 知识蒸馏, 多模态预警系统, 地震预警, P波拾取, S波拾取, 边缘AI, TinyML">
+
+              <!-- 研究亮点 -->
+              <div class="news-content mb-3" itemprop="description">
+                <p>
+                  发表于 <em>PNAS Nexus</em>（2026）。本研究提出了超紧凑边缘机器学习架构 <strong>XiaoNet</strong>。通过<strong>知识蒸馏</strong>，将先进的 PhaseNet 模型压缩超过 93%，构建成仅 240 KB 的边缘模型，在树莓派 5（Raspberry Pi 5）等边缘硬件上实现了<strong>亚毫秒级推断</strong>，同时保持了高水平的 <strong>P波和 S波到时拾取准确率</strong>。通过在传感器端执行初级推断并仅传输精简事件元数据，展示了去中心化、边缘原生 AI 工作流在下一代多模态地球感知系统中的巨大潜力。
+                  <br>
+                  DOI: <a href="https://doi.org/10.1093/pnasnexus/pgag322" target="_blank">10.1093/pnasnexus/pgag322</a>
+                </p>
+              </div>
+
+              <!-- 按钮区 -->
+              <div class="mb-2">
+                <a class="btn btn-outline-primary btn-sm mr-2" href="./papers/Xiao_PNAS_2026.pdf" target="_blank">
+                  <i class="fa fa-file-pdf-o mr-1"></i> 全文 PDF
+                </a>
+                <a class="btn btn-outline-dark btn-sm mr-2" href="https://doi.org/10.1093/pnasnexus/pgag322" target="_blank">
+                  <i class="fa fa-external-link mr-1"></i> DOI
+                </a>
+                <button class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#abs-pnas-2026-zh">
+                  <i class="fa fa-align-left mr-1"></i> 摘要
+                </button>
+              </div>
+
+              <!-- 可折叠摘要 -->
+              <div id="abs-pnas-2026-zh" class="collapse mt-2">
+                <p class="p-2 bg-light border rounded text-justify" itemprop="abstract">
+                  地震监测正在进入由高密度传感器布设（包括微机电系统 MEMS 台阵、大规模 Nodal 台阵、分布式光纤声学传感 DAS 等地球物理仪器）驱动的海量数据与多模态感知新阶段。经过适当调优与标定的机器学习模型在地震检测和震相拾取中已达到接近专家级的性能。然而，如何将这些机器智能扩展到未来的多模态传感网络面临着通信带宽受限、集中式计算瓶颈以及传输延迟等挑战。在本研究中，我们提出了用于地震监测的验证性边缘机器学习架构 XiaoNet，遵循一个简明系统原则：在传感器近端执行第一阶段推断，仅传输精炼事件元数据而非持续的原始波形流。通过知识蒸馏，我们将顶尖的 PhaseNet 模型压缩了 93% 以上，形成仅 240 KB 的 XiaoNet 模型，专为边缘部署而设计，同时在不同数据集上保持了优秀的震相拾取性能。在树莓派 5 上的实际部署表明，针对 30 秒 3 分量波形窗口的推断延迟低于 1 毫秒。将推断前移至边缘并传输精简元数据，极大降低了通信延迟并消除了高负荷下的遥测延迟不确定性。该成果验证了一种由边缘推断设备补充集中式地震台网的可行架构，显著提升了地震监测的韧性与响应速度，并可拓展至未来的多模态地下结构感知系统。
+                </p>
+              </div>
+
+            </article>
+          </li>
 
           <!-- ============================
                论文 3 — JGR (2026)
