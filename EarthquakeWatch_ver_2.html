@@ -1181,12 +1181,21 @@
         worldCopyJump: true,
       });
 
-      const streetGlobal = L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+      const terrainGlobal = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
         {
-          attribution: "&copy; OpenStreetMap &copy; CARTO",
+          attribution:
+            "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community",
         },
       ).addTo(mapGlobal);
+
+      const streetGlobal = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        },
+      );
 
       const satelliteGlobal = L.tileLayer(
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -1197,7 +1206,11 @@
 
       L.control
         .layers(
-          { "Light Style": streetGlobal, "Satellite View": satelliteGlobal },
+          {
+            "Terrain Profile": terrainGlobal,
+            "Street Map": streetGlobal,
+            "Satellite View": satelliteGlobal,
+          },
           null,
           { collapsed: true },
         )
@@ -1225,8 +1238,11 @@
               );
             },
           }).addTo(mapGlobal);
-          document.getElementById("updateTime_global").innerHTML =
-            "Last Refresh: " + new Date().toLocaleTimeString();
+          const updateEl = document.getElementById("updateTime_global");
+          if (updateEl) {
+            updateEl.innerHTML =
+              "Last Refresh: " + new Date().toLocaleTimeString();
+          }
         });
 
       /* =============================================================
@@ -1237,13 +1253,6 @@
         scrollWheelZoom: false, // Better UX on long pages
       }).setView([35.2088, -97.4457], 7);
 
-      const lightLocal = L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-        {
-          attribution: "&copy; OpenStreetMap &copy; CARTO",
-        },
-      );
-
       const terrainLocal = L.tileLayer(
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
         {
@@ -1251,6 +1260,14 @@
             "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community",
         },
       ).addTo(mapLocal);
+
+      const streetLocal = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        },
+      );
 
       const satelliteLocal = L.tileLayer(
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -1262,8 +1279,8 @@
       L.control
         .layers(
           {
-            "Light Style": lightLocal,
             "Terrain Profile": terrainLocal,
+            "Street Map": streetLocal,
             "Satellite Image": satelliteLocal,
           },
           null,
@@ -1434,9 +1451,10 @@
       ).addTo(mapStations);
 
       const streetStations = L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
-          attribution: "&copy; OpenStreetMap &copy; CARTO",
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         },
       );
 
@@ -1451,7 +1469,7 @@
         .layers(
           {
             "Terrain Profile": terrainStations,
-            "Light Style": streetStations,
+            "Street Map": streetStations,
             "Satellite Image": satelliteStations,
           },
           null,
