@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automating Tasks on Linux with Cron: The Practical Beginner's Guide</title>
+  <meta name="description" content="A practical beginner's guide to automating tasks with Cron on Linux.">
+
+  <!-- Google Fonts: Montserrat (matching https://hy-x.github.io) + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js for Syntax Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-theme">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Mermaid.js for Diagrams -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: currentTheme === 'dark' ? 'dark' : 'default',
+      themeVariables: {
+        primaryColor: '#BA2030',
+        primaryTextColor: '#ffffff',
+        primaryBorderColor: '#9c1b28',
+        lineColor: '#BA2030',
+        secondaryColor: currentTheme === 'dark' ? '#27292d' : '#f8f9fa',
+        tertiaryColor: currentTheme === 'dark' ? '#18191c' : '#ffffff',
+        fontFamily: "'Montserrat', sans-serif"
+      }
+    });
+  </script>
+
+  <style>
+    /* ==========================================================================
+       Design System matched to https://hy-x.github.io
+       Primary: Oklahoma Crimson (#BA2030)
+       Font: Montserrat (Headings + Body)
+       Default: Light Mode
+       ========================================================================== */
+    :root {
+      --font-body: 'Montserrat', "Helvetica Neue", Arial, sans-serif;
+      --font-heading: 'Montserrat', "Helvetica Neue", Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', Menlo, Consolas, Monaco, monospace;
+
+      /* Light Theme (Default, matching hy-x.github.io) */
+      --bg-body: #ffffff;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f8f9fa;
+      --bg-glass: rgba(255, 255, 255, 0.92);
+      --border-color: #e9ecef;
+      --border-hover: #BA2030;
+      --text-main: #2c2c2c;
+      --text-muted: #555555;
+      --text-dim: #888888;
+      
+      /* Brand Accent Colors */
+      --accent: #BA2030;
+      --accent-hover: #9c1b28;
+      --accent-subtle: rgba(186, 32, 48, 0.08);
+      --accent-glow: rgba(186, 32, 48, 0.2);
+      
+      --code-bg: #272822;
+      --code-text: #f8f8f2;
+      --table-header: #f8f9fa;
+      --table-zebra: #fcfcfc;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg-body: #141416;
+      --bg-surface: #1e1e22;
+      --bg-surface-elevated: #28282d;
+      --bg-glass: rgba(20, 20, 22, 0.92);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-hover: #e63946;
+      --text-main: #f0f0f2;
+      --text-muted: #b0b0b8;
+      --text-dim: #70707a;
+      
+      --accent: #e63946;
+      --accent-hover: #ff4d5a;
+      --accent-subtle: rgba(230, 57, 70, 0.12);
+      --accent-glow: rgba(230, 57, 70, 0.25);
+      
+      --code-bg: #1c1d21;
+      --code-text: #f8f8f2;
+      --table-header: #28282d;
+      --table-zebra: rgba(255, 255, 255, 0.02);
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 14px rgba(0,0,0,0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.75;
+      font-size: 15.5px;
+      letter-spacing: 0.15px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Reading Progress Bar */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      width: 0%;
+      z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* Top Navigation Header */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: var(--bg-glass);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+
+    .nav-brand .brand-tag {
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 0.75rem;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .theme-toggle, .print-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover, .print-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* Main Container & Layout */
+    .page-layout {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 3.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .page-layout {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.25rem 4rem;
+        gap: 2rem;
+      }
+      .toc-sidebar {
+        display: none;
+      }
+    }
+
+    /* Main Article Typography */
+    .content-area {
+      min-width: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      color: var(--text-main);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: 2.35rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-size: 1.55rem;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: var(--text-main);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.15s ease;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: var(--border-color);
+      margin: 2.5rem 0;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    li::marker {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Metadata Card (First table) */
+    table:first-of-type {
+      margin-bottom: 2rem;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-elevated);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Generic Tables */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.75rem 0;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+    }
+
+    th {
+      background: var(--table-header);
+      color: var(--text-main);
+      font-weight: 700;
+      text-align: left;
+      padding: 0.85rem 1.15rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    td {
+      padding: 0.8rem 1.15rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+      background: var(--table-zebra);
+    }
+
+    tr:hover {
+      background: var(--accent-subtle);
+    }
+
+    /* Inline Code */
+    :not(pre) > code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--bg-surface-elevated);
+      color: var(--accent);
+      padding: 0.18em 0.45em;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      font-weight: 500;
+    }
+
+    /* Code Block Containers */
+    .code-container {
+      margin: 1.5rem 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: var(--code-bg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background: #1e1e1e;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.75rem;
+    }
+
+    .code-lang {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: #999;
+      letter-spacing: 0.5px;
+    }
+
+    .copy-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e0e0e0;
+      border-radius: var(--radius-sm);
+      padding: 3px 9px;
+      font-size: 0.75rem;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-button:hover {
+      color: #ffffff;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .copy-button.copied {
+      background: #18ce0f;
+      border-color: #18ce0f;
+      color: #ffffff;
+    }
+
+    pre {
+      margin: 0;
+      padding: 1.25rem 1.4rem;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: #f3f4f6 !important;
+      background: #18191e !important;
+    }
+
+    pre code {
+      background: transparent !important;
+      padding: 0 !important;
+      border: none !important;
+      color: #f3f4f6 !important;
+    }
+
+    /* High-Contrast Token Overrides for Crystal-Clear Readability */
+    pre code .hljs-keyword,
+    pre code .hljs-selector-tag {
+      color: #ff7b72 !important; /* Vibrant coral red */
+      font-weight: 600;
+    }
+
+    pre code .hljs-built_in,
+    pre code .hljs-name {
+      color: #79c0ff !important; /* Bright sky blue (echo, chmod, systemctl, ls, crontab) */
+      font-weight: 600;
+    }
+
+    pre code .hljs-string,
+    pre code .hljs-title {
+      color: #7ee787 !important; /* Crisp emerald green */
+    }
+
+    pre code .hljs-variable,
+    pre code .hljs-template-variable,
+    pre code .hljs-attr {
+      color: #ffa657 !important; /* Amber / gold */
+    }
+
+    pre code .hljs-number,
+    pre code .hljs-literal {
+      color: #f0883e !important; /* Bright orange */
+    }
+
+    pre code .hljs-comment,
+    pre code .hljs-quote {
+      color: #9ca3af !important; /* Clear silver gray */
+      font-style: italic;
+    }
+
+    pre code .hljs-meta,
+    pre code .hljs-subst {
+      color: #d2a8ff !important; /* Vivid violet */
+    }
+
+    /* Mermaid Flowcharts */
+    .mermaid-wrapper {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      overflow-x: auto;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Callout Alert Boxes */
+    .callout {
+      margin: 1.75rem 0;
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius-md);
+      border-left: 4px solid;
+      background: var(--bg-surface-elevated);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .callout-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      margin-bottom: 0.6rem;
+      font-size: 1rem;
+    }
+
+    .callout-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .callout-body p {
+      color: var(--text-main);
+    }
+
+    .callout-body strong {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .callout-note {
+      border-color: #007bff;
+      background: rgba(0, 123, 255, 0.05);
+    }
+    .callout-note .callout-header { color: #0062cc; }
+
+    .callout-tip {
+      border-color: #18ce0f;
+      background: rgba(24, 206, 15, 0.05);
+    }
+    .callout-tip .callout-header { color: #15a30c; }
+
+    .callout-important {
+      border-color: var(--accent);
+      background: rgba(186, 32, 48, 0.05);
+    }
+    .callout-important .callout-header { color: var(--accent); }
+
+    .callout-warning {
+      border-color: #ffb236;
+      background: rgba(255, 178, 54, 0.07);
+    }
+    .callout-warning .callout-header { color: #d98200; }
+
+    .callout-caution {
+      border-color: #ff3636;
+      background: rgba(255, 54, 54, 0.07);
+    }
+    .callout-caution .callout-header { color: #d61c1c; }
+
+    /* Sidebar Table of Contents */
+    .toc-sidebar {
+      position: sticky;
+      top: 5rem;
+      height: fit-content;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--border-color);
+    }
+
+    .toc-title {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc-list li {
+      margin-bottom: 0.65rem;
+    }
+
+    .toc-list a {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      display: block;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .toc-list a:hover, .toc-list a.active {
+      color: var(--accent);
+      font-weight: 700;
+      transform: translateX(4px);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    /* Clean Print / PDF Styles (@media print) */
+    @media print {
+      #progress-bar, .site-nav, .toc-sidebar, .copy-button, .theme-toggle, .print-btn {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 12pt;
+      }
+      .page-layout {
+        display: block !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      .code-container, .table-container, .mermaid-wrapper, .callout {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+      }
+      h1, h2, h3 {
+        page-break-after: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-bar"></div>
+
+  <header class="site-nav">
+    <a href="https://hy-x.github.io" class="nav-brand">
+      <span>Automating Tasks on Linux with Cron</span>
+      <span class="brand-tag">Tutorial</span>
+    </a>
+    <div class="nav-controls">
+      <button class="print-btn" onclick="window.print()" title="Print or Save as PDF">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      </button>
+      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <svg id="theme-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="page-layout">
+    <main class="content-area">
+      <h1 id="automating-tasks-on-linux-with-cron-the-practical-beginners-guide">Automating Tasks on Linux with Cron: The Practical Beginner's Guide</h1>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Document Metadata</th>
+<th style="text-align: left;">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Doc ID</strong></td>
+<td style="text-align: left;"><code>Cron_Tutorial-WK1015</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Last Updated</strong></td>
+<td style="text-align: left;">2026-10-15 16:27:00 -0500</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Prerequisites</strong></td>
+<td style="text-align: left;">Basic shell familiarity (<code>ls</code>, <code>cd</code>, and running a script)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Estimated Time</strong></td>
+<td style="text-align: left;">⏱️ 10 minutes (5-min read + 5-min hands-on lab)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p>Picture this: You just spent the entire weekend writing a Python web scraper for a research project, or a bash script that backs up your lab assignments to cloud storage. It works like a charm. </p>
+<p>Now you face a dilemma: <strong>Do you really want to wake up at 3:00 AM every night just to type <code>python3 backup.py</code> manually?</strong></p>
+<p>Of course not. You want your computer to handle it while you sleep. On Linux and Unix systems, that task belongs to <strong><code>cron</code></strong>.</p>
+<hr />
+<h2 id="1-the-mental-model-an-alarm-clock-with-amnesia">1. The Mental Model: An Alarm Clock with Amnesia ⏱️</h2>
+<p>In Linux, <code>cron</code> is a background daemon (a service that quietly stays awake in the background) whose only job is to execute tasks at exact times, dates, or recurring intervals.</p>
+<p>Tasks scheduled in cron are called <strong>cron jobs</strong>, and your schedule list is kept in a configuration file called a <strong><code>crontab</code></strong> (<em>cron table</em>).</p>
+<div class="mermaid-wrapper"><div class="mermaid">
+flowchart TD
+    subgraph Interactive_Shell["Your Normal Terminal Session"]
+        A[You open a terminal or SSH] --> B[Loads ~/.bashrc, ~/.bash_profile, Conda]
+        B --> C[Custom $PATH, aliases, colors, and working directory active]
+    end
+
+    subgraph Cron_Shell["Cron's Background Runner"]
+        D[Scheduled time arrives] --> E[Cron spawns a bare-bones /bin/sh]
+        E --> F["Amnesia! No ~/.bashrc! No aliases! Minimal $PATH (/usr/bin:/bin)"]
+    end
+</div></div>
+<div class="callout callout-important">
+  <div class="callout-header"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Important</span></div>
+  <div class="callout-body"><p><strong>The Amnesia Trap:</strong> Think of <code>cron</code> like an alarm clock with amnesia. When 05:00 AM arrives, it wakes up, runs your command in a minimal, non-interactive <code>/bin/sh</code> shell, and goes right back to sleep. <strong>It does not load your <code>.bashrc</code>, your Conda environments, or your custom aliases.</strong> Understanding this single concept will save you 95% of your debugging headaches.</p></div>
+</div>
+
+<hr />
+<h2 id="2-hands-on-lab-your-first-cron-job-in-5-minutes">2. Hands-On Lab: Your First Cron Job in 5 Minutes! 🛠️</h2>
+<p>Let's skip the dry theory for a moment and build a working automated job on your machine right now.</p>
+<h3 id="step-0-quick-platform-sanity-check">Step 0: Quick Platform Sanity Check</h3>
+<p>Before scheduling, ensure the cron service is active on your machine:</p>
+<ul>
+<li><strong>Ubuntu / Debian / Raspberry Pi OS:</strong>
+  <code>bash
+  sudo systemctl status cron || sudo systemctl enable --now cron</code></li>
+<li><strong>Fedora / RHEL:</strong>
+  <code>bash
+  sudo systemctl status crond || sudo systemctl enable --now crond</code></li>
+<li><strong>Windows WSL (Ubuntu on Windows):</strong><blockquote>
+<p>[!WARNING]
+In Windows Subsystem for Linux (WSL), background services do <strong>not</strong> auto-start when you launch the terminal! Start it manually with:
+<code>bash
+sudo service cron status || sudo service cron start</code></p>
+</blockquote>
+</li>
+<li><strong>macOS:</strong><blockquote>
+<p>[!NOTE]
+macOS uses <code>launchd</code> under the hood. While <code>crontab -e</code> exists on Mac, Apple security blocks it unless <code>/usr/sbin/cron</code> is granted <strong>Full Disk Access</strong> under <em>System Settings $\rightarrow$ Privacy &amp; Security</em>.</p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<h3 id="step-1-create-a-simple-test-script">Step 1: Create a Simple Test Script</h3>
+<p>Let's create a lightweight script in your home directory that records the system uptime and disk space:</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">BASH</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-bash">mkdir -p ~/scripts
+cat &lt;&lt; 'EOF' &gt; ~/scripts/system_logger.sh
+#!/usr/bin/env bash
+export PATH=&quot;/usr/local/bin:/usr/bin:/bin&quot;
+set -euo pipefail
+
+echo &quot;=== Logged at: $(date '+%Y-%m-%d %H:%M:%S') ===&quot;
+echo &quot;Host: $(hostname) | User: $(whoami)&quot;
+echo &quot;Uptime: $(uptime -p 2&gt;/dev/null || uptime)&quot;
+echo &quot;Disk Free on Root: $(df -h / | awk 'NR==2 {print $4&quot; free out of &quot;$2}')&quot;
+echo &quot;===============================================&quot;
+EOF
+</code></pre>
+</div>
+<p>Make the script executable:</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">BASH</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-bash">chmod +x ~/scripts/system_logger.sh
+</code></pre>
+</div>
+<p>Test it in your terminal right now:</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">BASH</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-bash">~/scripts/system_logger.sh
+</code></pre>
+</div>
+<p>You should see clean system metrics printed to your screen!</p>
+<hr />
+<h3 id="step-2-open-your-crontab-without-panicking-in-vim">Step 2: Open Your Crontab (Without Panicking in Vim)</h3>
+<p>To edit your personal cron jobs, Linux provides the <code>crontab -e</code> command.</p>
+<div class="callout callout-tip">
+  <div class="callout-header"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg><span>Tip</span></div>
+  <div class="callout-body"><p><strong>Beginner Pro-Tip:</strong> If your system defaults to <code>vi</code>/<code>vim</code> and you don't know the keybindings, don't panic! Open your crontab using <code>nano</code> instead:</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">BASH</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-bash">EDITOR=nano crontab -e
+</code></pre>
+</div></div>
+</div>
+
+<hr />
+<h3 id="step-3-add-the-schedule">Step 3: Add the Schedule</h3>
+<p>Scroll to the bottom of the file and paste this line. </p>
+<p><em>(Replace <code>/home/youruser</code> with your actual home directory path, which you can see by typing <code>echo $HOME</code> in a terminal).</em></p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">CRON</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-cron"># Run system logger every 5 minutes and append output to log file
+*/5 * * * * /home/youruser/scripts/system_logger.sh &gt;&gt; /home/youruser/system_logger.log 2&gt;&amp;1
+
+</code></pre>
+</div>
+<div class="callout callout-caution">
+  <div class="callout-header"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Caution</span></div>
+  <div class="callout-body"><p><strong>The 1980s POSIX Quirk:</strong> Make sure you press <code>Enter</code> after your command to leave a <strong>blank line</strong> at the very bottom! An ancient POSIX parsing rule causes cron to completely ignore the final line if it lacks a terminating newline.</p></div>
+</div>
+
+<p><strong>Save and exit:</strong>
+* <strong>In Nano:</strong> Press <code>Ctrl + O</code>, hit <code>Enter</code> to confirm, then press <code>Ctrl + X</code> to exit.
+* <strong>In Vim:</strong> Press <code>Esc</code>, type <code>:wq</code>, and hit <code>Enter</code>.</p>
+<p>The terminal will confirm:</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">TEXT</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-text">crontab: installing new crontab
+</code></pre>
+</div>
+<hr />
+<h3 id="step-4-high-five-verify-it-running">Step 4: High Five! Verify It Running 🎉</h3>
+<p>List your active jobs to ensure it was saved:</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">BASH</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-bash">crontab -l
+</code></pre>
+</div>
+<p>Now wait for the 5-minute interval (or run the command manually once to verify log creation):</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">BASH</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-bash">tail -f ~/system_logger.log
+</code></pre>
+</div>
+<p>You'll see timestamps appending automatically in real time!</p>
+<hr />
+<h2 id="3-anatomy-of-a-crontab-schedule">3. Anatomy of a Crontab Schedule</h2>
+<p>Now that you have a working job, let's understand how the timing syntax works. Every crontab rule consists of <strong>five time fields</strong> followed by the command string:</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">TEXT</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-text">┌───────────── minute (0 - 59)
+│ ┌───────────── hour (0 - 23, 24-hour clock)
+│ │ ┌───────────── day of the month (1 - 31)
+│ │ │ ┌───────────── month (1 - 12)
+│ │ │ │ ┌───────────── day of the week (0 - 7, where both 0 and 7 = Sunday)
+│ │ │ │ │
+│ │ │ │ │
+* * * * *  /path/to/command.sh &gt;&gt; /path/to/logfile.log 2&gt;&amp;1
+</code></pre>
+</div>
+<h3 id="the-4-wildcard-operators">The 4 Wildcard Operators</h3>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: center;">Operator</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">What It Means</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Human Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><code>*</code></td>
+<td style="text-align: left;"><strong>Asterisk</strong></td>
+<td style="text-align: left;">"Every"</td>
+<td style="text-align: left;"><code>* * * * *</code></td>
+<td style="text-align: left;">Run every single minute</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>,</code></td>
+<td style="text-align: left;"><strong>Comma</strong></td>
+<td style="text-align: left;">"And" (discrete list)</td>
+<td style="text-align: left;"><code>0 9,17 * * *</code></td>
+<td style="text-align: left;">Run at 09:00 AM and 05:00 PM</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>-</code></td>
+<td style="text-align: left;"><strong>Hyphen</strong></td>
+<td style="text-align: left;">"Through" (range)</td>
+<td style="text-align: left;"><code>0 9 * * 1-5</code></td>
+<td style="text-align: left;">Run at 09:00 AM, Monday through Friday</td>
+</tr>
+<tr>
+<td style="text-align: center;"><code>/</code></td>
+<td style="text-align: left;"><strong>Slash</strong></td>
+<td style="text-align: left;">"Every X intervals"</td>
+<td style="text-align: left;"><code>*/15 * * * *</code></td>
+<td style="text-align: left;">Run every 15 minutes</td>
+</tr>
+</tbody>
+</table></div>
+<div class="callout callout-tip">
+  <div class="callout-header"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg><span>Tip</span></div>
+  <div class="callout-body"><p><strong>Interactive Sandbox:</strong> Unsure if your schedule expression is right? Test it in real time on <strong><a href="https://crontab.guru">crontab.guru</a></strong>. It translates any 5-character cron string into plain English!</p></div>
+</div>
+
+<hr />
+<h2 id="4-under-the-hood-output-redirection-21">4. Under the Hood: Output Redirection &amp; <code>2&gt;&amp;1</code> ⏱️</h2>
+<p>Look at the end of the command we scheduled:</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">BASH</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-bash">/home/youruser/scripts/system_logger.sh &gt;&gt; /home/youruser/system_logger.log 2&gt;&amp;1
+</code></pre>
+</div>
+<p>Why not just write <code>&gt; logfile.log</code>? Understanding this separates junior developers from senior engineers.</p>
+<p>In Unix, programs communicate via <strong>three standard data streams</strong> (called file descriptors):
+* <code>0</code>: Standard Input (<code>stdin</code>)
+* <code>1</code>: Standard Output (<code>stdout</code> — normal informational text)
+* <code>2</code>: Standard Error (<code>stderr</code> — errors and crash tracebacks)</p>
+<div class="mermaid-wrapper"><div class="mermaid">
+flowchart LR
+    Script["Your Script"] -->|"stdout (Stream 1)"| LogFile["system_logger.log"]
+    Script -->|"stderr (Stream 2)"| Merge["2>&1 (Merge Streams)"]
+    Merge --> LogFile
+</div></div>
+<ol>
+<li><strong><code>&gt;&gt; /home/youruser/system_logger.log</code></strong>: The <code>&gt;&gt;</code> operator <strong>appends</strong> Standard Output (<code>stdout</code>, stream <code>1</code>) to your log file without overwriting old logs.</li>
+<li><strong><code>2&gt;&amp;1</code></strong>: Redirects Standard Error (<code>stderr</code>, stream <code>2</code>) into Standard Output (<code>1</code>).</li>
+<li><strong>Why Order Matters:</strong> <code>2&gt;&amp;1</code> must come <strong>after</strong> the filename. It tells the shell: <em>"Wherever stream 1 is going, send stream 2 there as well."</em> If your script crashes, the error message gets saved inside <code>system_logger.log</code> instead of disappearing into the void!</li>
+</ol>
+<hr />
+<h2 id="5-the-four-golden-rules-to-never-break">5. The Four Golden Rules to Never Break</h2>
+<p>Whenever a cron job fails, it is almost always because one of these four rules was violated:</p>
+<ol>
+<li><strong>Always Use Full Absolute Paths:</strong><br />
+   Never write <code>python3 script.py</code> or <code>./backup.sh</code>. Always use full paths starting from the root:<br />
+<code>/usr/bin/python3 /home/youruser/scripts/backup.py</code>.</li>
+<li><strong>Explicitly Export <code>PATH</code> in Your Scripts:</strong><br />
+   Because cron does not load <code>.bashrc</code>, it only searches <code>/usr/bin:/bin</code>. Always put this near the top of your scripts:
+   <code>bash
+   export PATH="/usr/local/bin:/usr/bin:/bin"</code></li>
+<li><strong>Escape <code>%</code> Signs in Crontab Commands:</strong><br />
+   Cron interprets <code>%</code> as a newline character. If you run <code>date +%Y-%m-%d</code> inside a crontab, escape it with backslashes (<code>date +\%Y-\%m-\%d</code>), or keep date formatting inside your <code>.sh</code> script.</li>
+<li><strong>Always Leave a Blank Line at the Bottom:</strong><br />
+   Always hit <code>Enter</code> after the last scheduled line in <code>crontab -e</code>.</li>
+</ol>
+<hr />
+<h2 id="6-how-to-debug-like-a-pro-the-clean-room-test">6. How to Debug Like a Pro: The "Clean-Room" Test 💡</h2>
+<p>Waiting for the clock to strike 05:00 AM just to find out if your script works is painful.</p>
+<p>Instead, professional sysadmins use a command called <code>env -i</code> to <strong>simulate cron's stripped-down environment right inside their terminal</strong>:</p>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">BASH</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-bash">env -i HOME=&quot;$HOME&quot; LOGNAME=&quot;$USER&quot; USER=&quot;$USER&quot; SHELL=/bin/sh PATH=/usr/bin:/bin /bin/sh -c 'cd &quot;$HOME&quot; &amp;&amp; ~/scripts/system_logger.sh &gt;&gt; ~/system_logger.log 2&gt;&amp;1'
+</code></pre>
+</div>
+<ul>
+<li><strong>If it runs cleanly here:</strong> It is <strong>100% guaranteed</strong> to work when cron fires.</li>
+<li><strong>If it fails here:</strong> You are relying on an uninitialized environment variable, an alias, or a relative path. Fix it here before scheduling it!</li>
+</ul>
+<hr />
+<h2 id="7-quick-reference-cheat-sheet">7. Quick Reference Cheat Sheet</h2>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Common Schedule</th>
+<th style="text-align: left;">Syntax</th>
+<th style="text-align: left;">What It Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Every hour</strong></td>
+<td style="text-align: left;"><code>0 * * * *</code></td>
+<td style="text-align: left;">Runs at minute 00 of every hour</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Daily at midnight</strong></td>
+<td style="text-align: left;"><code>0 0 * * *</code></td>
+<td style="text-align: left;">Runs every day at 00:00 (12:00 AM)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Daily at 5:00 AM</strong></td>
+<td style="text-align: left;"><code>0 5 * * *</code></td>
+<td style="text-align: left;">Runs every day at 05:00 AM</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Every Sunday night</strong></td>
+<td style="text-align: left;"><code>0 23 * * 0</code></td>
+<td style="text-align: left;">Runs every Sunday at 11:00 PM</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>On system reboot</strong></td>
+<td style="text-align: left;"><code>@reboot /path/to/script.sh</code></td>
+<td style="text-align: left;">Runs once automatically whenever the computer boots</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="useful-cli-commands">Useful CLI Commands</h3>
+<div class="code-container">
+  <div class="code-header">
+    <span class="code-lang">BASH</span>
+    <button class="copy-button" onclick="copyCode(this)" title="Copy to clipboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-bash"># View active cron jobs
+crontab -l
+
+# Edit cron jobs safely
+crontab -e
+
+# Delete all cron jobs (with confirmation prompt)
+crontab -ri
+
+# Check system logs for cron execution (Ubuntu/Debian)
+sudo journalctl -u cron -n 50
+
+# Check system logs for cron execution (Fedora/RHEL)
+sudo journalctl -u crond -n 50
+</code></pre>
+</div>
+      <footer>
+        <p>Hongyu Xiao &bull; <a href="https://hy-x.github.io">hy-x.github.io</a></p>
+      </footer>
+    </main>
+
+    <aside class="toc-sidebar">
+      <div class="toc-title">On This Page</div>
+      <ul class="toc-list" id="toc-list">
+        <!-- Generated dynamically via JS -->
+      </ul>
+    </aside>
+  </div>
+
+  <script>
+    // Reading progress calculation
+    window.addEventListener('scroll', () => {
+      const doc = document.documentElement;
+      const winScroll = doc.scrollTop || document.body.scrollTop;
+      const height = doc.scrollHeight - doc.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // Copy code button handler
+    function copyCode(btn) {
+      const container = btn.closest('.code-container');
+      const code = container.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const span = btn.querySelector('span');
+        const originalText = span.textContent;
+        span.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          span.textContent = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // Dynamic ToC Generator & Scrollspy
+    document.addEventListener('DOMContentLoaded', () => {
+      const headings = document.querySelectorAll('.content-area h2, .content-area h3');
+      const tocList = document.getElementById('toc-list');
+      
+      headings.forEach((h, index) => {
+        if (!h.id) {
+          h.id = 'heading-' + index;
+        }
+        const li = document.createElement('li');
+        if (h.tagName === 'H3') {
+          li.style.paddingLeft = '0.9rem';
+        }
+        const a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.textContent = h.textContent.replace(/^[0-9.]+\s*/, '').trim();
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+
+      // Highlight active heading on scroll
+      window.addEventListener('scroll', () => {
+        let current = '';
+        headings.forEach(h => {
+          const sectionTop = h.offsetTop;
+          if (pageYOffset >= sectionTop - 120) {
+            current = h.getAttribute('id');
+          }
+        });
+        document.querySelectorAll('.toc-list a').forEach(a => {
+          a.classList.remove('active');
+          if (a.getAttribute('href') === '#' + current) {
+            a.classList.add('active');
+          }
+        });
+      });
+    });
+
+    // Dark / Light Theme Toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', target);
+      localStorage.setItem('theme', target);
+      
+      const hljsTheme = document.getElementById('hljs-theme');
+      if (target === 'light') {
+        hljsTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css';
+      } else {
+        hljsTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css';
+      }
+    }
+
+    // Restore saved theme preference (default is light)
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      if (savedTheme === 'dark') {
+        document.getElementById('hljs-theme').href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css';
+      }
+    }
+
+    // Trigger highlight.js for code snippets
+    document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('pre code').forEach((el) => {
+        if (!el.classList.contains('language-mermaid')) {
+          hljs.highlightElement(el);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
