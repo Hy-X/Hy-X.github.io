@@ -1,0 +1,120 @@
+diff --git a/sceasyquake/lib/sceasyquake/stream/seiscomp_stream.py b/sceasyquake/lib/sceasyquake/stream/seiscomp_stream.py
+index 0b49a83..83b39d8 100644
+--- a/sceasyquake/lib/sceasyquake/stream/seiscomp_stream.py
++++ b/sceasyquake/lib/sceasyquake/stream/seiscomp_stream.py
+@@ -61,18 +61,57 @@ class _SeedLinkBuffer:
+     pass
+ 
+ 
++def _get_seedlink_stations(host: str, port: int, timeout: float = 10.0) -> List[tuple]:
++    """Query SeedLink server for list of (network, station) tuples via INFO:STATIONS."""
++    try:
++        from obspy.clients.seedlink.easyseedlink import EasySeedLinkClient
++        import xml.etree.ElementTree as ET
++
++        class _InfoClient(EasySeedLinkClient):
++            def __init__(self, *args, **kwargs):
++                super().__init__(*args, **kwargs)
++                self.conn.timeout = timeout
++            def on_data(self, tr): pass
++
++        info_client = _InfoClient(f'{host}:{port}', autoconnect=False)
++        info_client.connect()
++        xml_data = info_client.get_info('STATIONS')
++        info_client.close()
++
++        root = ET.fromstring(xml_data)
++        stations = []
++        for elem in root.iter('station'):
++            net = elem.attrib.get('network', '').strip()
++            sta = elem.attrib.get('name', '').strip()
++            if net and sta:
++                stations.append((net, sta))
++        return stations
++    except Exception as exc:
++        log.warning('Could not query SeedLink station inventory: %s', exc)
++        return []
++
++
+ def _make_obspy_seedlink_client(server: str, queue: Queue, stream_specs: List[str]):
+     """Build and return an ObsPy EasySeedLinkClient that populates *queue*.
+ 
+     *stream_specs* is a list of ``"NET.STA.LOC.CHA"`` or ``"NET.STA..CHA"``
+     strings.  We select each stream on the SeedLink server and start receiving.
+     """
++    import fnmatch
+     try:
+         from obspy.clients.seedlink.easyseedlink import EasySeedLinkClient  # type: ignore
+     except ImportError as exc:
+         raise RuntimeError('ObsPy SeedLink client not available; install obspy') from exc
+ 
+     class _Client(EasySeedLinkClient):
++        def __init__(self, *args, **kwargs):
++            super().__init__(*args, **kwargs)
++            # ObsPy's EasySeedLinkClient leaves conn.timeout as None by default.
++            # In Python 3, is_connected_impl evaluates (now - start) < timeout,
++            # which raises TypeError: '<' not supported between float and NoneType.
++            if hasattr(self, 'conn') and self.conn is not None:
++                self.conn.timeout = 10.0
++
+         def on_data(self, trace):
+             try:
+                 queue.put_nowait(trace)
+@@ -82,7 +121,19 @@ def _make_obspy_seedlink_client(server: str, queue: Queue, stream_specs: List[st
+     host, _, port_str = server.partition(':')
+     port = int(port_str) if port_str else 18000
+     client = _Client(f'{host}:{port}', autoconnect=False)
+-
++    if hasattr(client, 'conn') and client.conn is not None:
++        client.conn.timeout = 10.0
++
++    # If any stream spec uses wildcards (* or ?), fetch available stations from SeedLink
++    # to expand them into explicit station subscriptions (SeisComP's SeedLink daemon
++    # does not accept wildcards in the STATION protocol command).
++    needs_expansion = any(
++        '*' in spec or '?' in spec.split('.')[1] if len(spec.split('.')) > 1 else False
++        for spec in stream_specs
++    )
++    available_stations = _get_seedlink_stations(host, port) if needs_expansion else []
++
++    subscribed_count = 0
+     for spec in stream_specs:
+         parts = spec.split('.')
+         if len(parts) == 4:
+@@ -99,18 +150,27 @@ def _make_obspy_seedlink_client(server: str, queue: Queue, stream_specs: List[st
+         # An empty string means "any location", which is correct behaviour.
+         if loc in ('*', '?', '??', '**'):
+             loc = ''
+-        # SeedLink wildcard support for NET and STA:
+-        #   - '?' works portably (matches exactly one character per '?').
+-        #     Use e.g. STA='????' to match all 4-character station codes.
+-        #   - '*' is supported by SeisComP's own SeedLink server but is not
+-        #     guaranteed by the protocol and may be rejected by other servers.
+-        #     Prefer an explicit NET code with '?' patterns for STA instead of
+-        #     bare '*.*' to avoid silent subscription failures.
+         # SeedLink selector is loc+cha (e.g. '' + 'HHZ' or '' + 'HH?')
+         selector = f'{loc}{cha}'
+-        client.select_stream(net, sta, selector)
+-        log.debug('SeedLink: subscribed %s.%s selector=%r', net, sta, selector)
+ 
++        if available_stations and ('*' in sta or '?' in sta or '*' in net or '?' in net):
++            matched = [
++                (s_net, s_sta) for (s_net, s_sta) in available_stations
++                if fnmatch.fnmatch(s_net, net) and fnmatch.fnmatch(s_sta, sta)
++            ]
++            for s_net, s_sta in matched:
++                client.select_stream(s_net, s_sta, selector)
++                subscribed_count += 1
++            log.info(
++                'SeedLink: expanded pattern %s.%s (selector=%r) -> %d stations',
++                net, sta, selector, len(matched)
++            )
++        else:
++            client.select_stream(net, sta, selector)
++            subscribed_count += 1
++            log.debug('SeedLink: subscribed %s.%s selector=%r', net, sta, selector)
++
++    log.info('SeedLink: total streams subscribed: %d', subscribed_count)
+     return client
+ 
+ 
