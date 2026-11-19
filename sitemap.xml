@@ -52,15 +52,35 @@
   <!-- Code Page -->
   <url>
     <loc>https://hy-x.github.io/Codes.html</loc>
-    <lastmod>2026-02-23</lastmod>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://hy-x.github.io/Codes_zh.html</loc>
-    <lastmod>2026-02-23</lastmod>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- OGS Seismic War Room Suite (Swiss Style) -->
+  <url>
+    <loc>https://hy-x.github.io/OGS_Moni_Dev_Seiscomp_Autoload_Swiss.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hy-x.github.io/OGS_Moni_Dev_WarRoom_Swiss.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hy-x.github.io/OGS_Moni_Dev_Analytics_Swiss.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Earthquake Watch Page -->

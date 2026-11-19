@@ -1,1 +1,5 @@
 .DS_Store
+fetch_seiscom_stations_only_json.py
+fetch_seiscomp_stations.py
+seiscomp3_inventory/
+

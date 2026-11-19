@@ -319,6 +319,90 @@
       </p>
     </header>
 
+    <!-- Project Card: OGS Seismic War Room Suite (Swiss Style) -->
+    <article class="card"
+             id="ogs-war-room-suite"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+
+        <h3>OGS 地震监控指挥室套件（三屏实时台网与震情看板）</h3>
+        <p class="text-muted">实时 Web 应用 · 瑞士平面风格 · OGS Event distributed by USGS · 作者：Hongyu Xiao</p>
+
+        <!-- Schema.org WebApplication Markup -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "OGS Seismic War Room Suite",
+          "description": "面向地震台网监控室的零后端三屏实时俄克拉荷马地震监测看板套件（OGS Event distributed by USGS），包含 SeisComP 台站与 77 县区交互地图、M >= 3.0 与 DYFI 有感地震态势预警板、以及地震发生率与 24 小时震群分析看板。",
+          "url": "https://hy-x.github.io/OGS_Moni_Dev_WarRoom_Swiss.html",
+          "applicationCategory": "Scientific Research Software",
+          "operatingSystem": "Any (Web Browser)",
+          "programmingLanguage": ["HTML", "JavaScript"],
+          "creator": {
+            "@type": "Person",
+            "name": "Hongyu Xiao",
+            "affiliation": {
+              "@type": "Organization",
+              "name": "Oklahoma Geological Survey"
+            }
+          },
+          "hasPart": [
+            {
+              "@type": "WebApplication",
+              "name": "OGS Interactive Earthquake Map (SeisComP Autoload · Swiss)",
+              "url": "https://hy-x.github.io/OGS_Moni_Dev_Seiscomp_Autoload_Swiss.html"
+            },
+            {
+              "@type": "WebApplication",
+              "name": "OGS Seismic War Room (Situation & M3+ Alert Board · Swiss)",
+              "url": "https://hy-x.github.io/OGS_Moni_Dev_WarRoom_Swiss.html"
+            },
+            {
+              "@type": "WebApplication",
+              "name": "OGS Seismic Analytics & Swarm Board (Swiss)",
+              "url": "https://hy-x.github.io/OGS_Moni_Dev_Analytics_Swiss.html"
+            }
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+        </script>
+
+        <h4 style="margin-top: 20px; margin-bottom: 10px;">项目概述</h4>
+        <p>
+          一套采用瑞士国际主义排版风格设计的三屏实时俄克拉荷马地震监测看板，专为大屏值守显示打造。前端直接调用 <strong>USGS FDSN Event API</strong>（标注为 <strong>OGS Event distributed by USGS</strong>），结合俄克拉荷马州 <strong>77 个县级边界 GeoJSON</strong> 与 <strong>176 个 SeisComP 台站清单</strong>（OK 与 O2 台网共 146 个活跃台站）。三个页面均每 <strong>60 秒</strong>无缓存自动轮询最新事件，并每 <strong>6 小时</strong>整页重载以保持长时间稳定运行。
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">三屏架构</h4>
+        <ul style="margin-left: 20px; line-height: 1.8;">
+          <li>
+            <strong>屏幕 1 — 交互式地震与 SeisComP 台站地图：</strong> 基于 Leaflet 整合地震事件、在运/退役 SeisComP 台站图层、俄克拉荷马 77 县区边界以及深度剖面与震级-时间分析工具。
+            (<a href="OGS_Moni_Dev_Seiscomp_Autoload_Swiss.html" target="_blank" rel="noopener noreferrer" style="font-weight: 500; text-decoration: none; color: #0066cc;">打开地图 →</a>)
+          </li>
+          <li>
+            <strong>屏幕 2 — 实时震情与 M &ge; 3.0 预警看板：</strong> 展示 <code>24h / 7d / 30d</code> 天然地震与采石爆破统计、<code>M &ge; 3.0</code> 与 DYFI 有感状态红绿灯横幅、一键简报复制、24h/7d 热点县区排序及中部时间/UTC 事件流。
+            (<a href="OGS_Moni_Dev_WarRoom_Swiss.html" target="_blank" rel="noopener noreferrer" style="font-weight: 500; text-decoration: none; color: #0066cc;">打开指挥室看板 →</a>)
+          </li>
+          <li>
+            <strong>屏幕 3 — 地震发生率与 24 小时震群分析板：</strong> 使用 Plotly.js 绘制 <code>30d/90d</code> 日发生率与 <code>24h</code> 小时发生率堆叠柱状图、震级-时间与深度-时间分布、震级/深度统计柱状图、<strong>Swarm Watch · 24h</strong> 县区震群筛选与 <strong>Notable @ Felt</strong> 列表。
+            (<a href="OGS_Moni_Dev_Analytics_Swiss.html" target="_blank" rel="noopener noreferrer" style="font-weight: 500; text-decoration: none; color: #0066cc;">打开分析看板 →</a>)
+          </li>
+        </ul>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">技术栈与数据源</h4>
+        <p>
+          <strong>HTML5 / JavaScript</strong> · <strong>Tailwind CSS</strong> · <strong>Leaflet.js</strong> · <strong>Plotly.js</strong> · <strong>USGS FDSN Event API</strong> · <strong>GeoJSON</strong>
+        </p>
+
+      </div>
+    </article>
+
     <!-- Project Card: SeisBench with Synthetic Seismogram -->
     <article class="card"
              data-aos="fade-up"

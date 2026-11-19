@@ -1,0 +1,16 @@
+# Hongyu Xiao — Personal Website & Seismic Research Tools
+
+> Research Scientist and Seismologist at the Oklahoma Geological Survey (OGS), University of Oklahoma. Research spans Midcontinent crustal morphology, induced seismicity, AI-driven seismic detection, and carbon storage monitoring.
+
+## Core Pages
+- [Homepage (EN)](https://hy-x.github.io/index.html): Biography, research focus, publications, and news.
+- [Homepage (ZH)](https://hy-x.github.io/index_zh.html): Chinese homepage and research summary.
+- [Research Code & Tutorials (EN)](https://hy-x.github.io/Codes.html): Open-source seismic software releases, live monitoring tools, and OU HPC tutorials.
+- [Research Code & Tutorials (ZH)](https://hy-x.github.io/Codes_zh.html): Chinese research software releases and tutorials.
+- [Science Insights](https://hy-x.github.io/Knowledge.html): Research summaries and geoscience articles.
+
+## OGS Seismic War Room Suite (Real-Time Client-Side Dashboards)
+All three displays pull live public seismicity via the USGS FDSN Event API (`OGS Event distributed by USGS`) on a 60-second poll with a 6-hour full-page reload:
+- [OGS Interactive Earthquake & SeisComP Map](https://hy-x.github.io/OGS_Moni_Dev_Seiscomp_Autoload_Swiss.html): Interactive Oklahoma seismicity map with 176 SeisComP stations (`seiscomp_stations.json`), 77 Oklahoma counties (`ok_counties.geojson`), and depth cross-section tools.
+- [OGS Seismic War Room](https://hy-x.github.io/OGS_Moni_Dev_WarRoom_Swiss.html): Situation display with 24h/7d/30d earthquake vs. quarry blast counts, M >= 3.0 & DYFI felt status banner, briefing export, and hotspot rankings.
+- [OGS Seismic Analytics & Swarm Board](https://hy-x.github.io/OGS_Moni_Dev_Analytics_Swiss.html): 30d/90d daily and 24h hourly rate bars, Mag-Time and Depth-Time plots, Magnitude/Depth distributions, `Swarm Watch · 24h` county filter, and `Notable @ Felt` feed.

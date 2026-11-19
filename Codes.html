@@ -557,6 +557,90 @@
       </p>
     </header>
 
+    <!-- Project Card: OGS Seismic War Room Suite (Swiss Style) -->
+    <article class="card"
+             id="ogs-war-room-suite"
+             data-aos="fade-up"
+             data-aos-offset="80"
+             data-aos-duration="700">
+      <div class="card-body">
+
+        <h3>OGS Seismic War Room Suite (Multi-Screen Real-Time Observatory Displays)</h3>
+        <p class="text-muted">Live Web Application · Swiss Design · OGS Event distributed by USGS · Author: Hongyu Xiao</p>
+
+        <!-- Schema.org WebApplication Markup -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "OGS Seismic War Room Suite",
+          "description": "Zero-backend, multi-screen real-time Oklahoma earthquake monitoring dashboard suite (OGS Event distributed by USGS) designed for seismic observatory wall displays. Includes an interactive SeisComP station and 77-county map, a 24h/7d/30d situation and M >= 3.0 / DYFI felt alert board, and a seismicity rate and 24-hour swarm analytics board.",
+          "url": "https://hy-x.github.io/OGS_Moni_Dev_WarRoom_Swiss.html",
+          "applicationCategory": "Scientific Research Software",
+          "operatingSystem": "Any (Web Browser)",
+          "programmingLanguage": ["HTML", "JavaScript"],
+          "creator": {
+            "@type": "Person",
+            "name": "Hongyu Xiao",
+            "affiliation": {
+              "@type": "Organization",
+              "name": "Oklahoma Geological Survey"
+            }
+          },
+          "hasPart": [
+            {
+              "@type": "WebApplication",
+              "name": "OGS Interactive Earthquake Map (SeisComP Autoload · Swiss)",
+              "url": "https://hy-x.github.io/OGS_Moni_Dev_Seiscomp_Autoload_Swiss.html"
+            },
+            {
+              "@type": "WebApplication",
+              "name": "OGS Seismic War Room (Situation & M3+ Alert Board · Swiss)",
+              "url": "https://hy-x.github.io/OGS_Moni_Dev_WarRoom_Swiss.html"
+            },
+            {
+              "@type": "WebApplication",
+              "name": "OGS Seismic Analytics & Swarm Board (Swiss)",
+              "url": "https://hy-x.github.io/OGS_Moni_Dev_Analytics_Swiss.html"
+            }
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+        </script>
+
+        <h4 style="margin-top: 20px; margin-bottom: 10px;">Overview</h4>
+        <p>
+          A three-screen real-time Oklahoma earthquake monitoring suite styled in Swiss (International Typographic) design for wall-mounted observatory displays. Powered client-side by the <strong>USGS FDSN Event API</strong> (attributed as <strong>OGS Event distributed by USGS</strong>), static GeoJSON boundaries for all <strong>77 Oklahoma counties</strong>, and a JSON inventory of <strong>176 SeisComP stations</strong> (146 active across the OK and O2 networks). Every screen polls live updates every <strong>60 seconds</strong> (<code style="background-color: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-family: monospace;">cache: "no-store"</code>) and reloads cleanly every <strong>6 hours</strong> for unattended kiosk reliability.
+        </p>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">Three-Screen War Room Architecture</h4>
+        <ul style="margin-left: 20px; line-height: 1.8;">
+          <li>
+            <strong>Screen 1 — Interactive Seismicity &amp; SeisComP Station Map:</strong> Leaflet map combining USGS/OGS event markers, active vs. decommissioned SeisComP station layers, Oklahoma county polygons, and depth cross-section / magnitude-time tools.
+            (<a href="OGS_Moni_Dev_Seiscomp_Autoload_Swiss.html" target="_blank" rel="noopener noreferrer" style="font-weight: 500; text-decoration: none; color: #0066cc;">Launch Map →</a>)
+          </li>
+          <li>
+            <strong>Screen 2 — Situation &amp; M &ge; 3.0 Alert Board:</strong> Rolling <code>24h / 7d / 30d</code> Earthquake vs. Quarry Blast KPIs, <code>M &ge; 3.0</code> and DYFI felt traffic-light status banner, one-click briefing export, 24h &amp; 7d hotspot rankings, and Central/UTC event feed with direct <code>INFO ↗</code> links.
+            (<a href="OGS_Moni_Dev_WarRoom_Swiss.html" target="_blank" rel="noopener noreferrer" style="font-weight: 500; text-decoration: none; color: #0066cc;">Launch War Room →</a>)
+          </li>
+          <li>
+            <strong>Screen 3 — Seismicity Analytics &amp; 24h Swarm Board:</strong> Interactive Plotly.js <code>30d/90d</code> daily &amp; <code>24h</code> hourly event-rate bars, <code>Mag–Time</code> and <code>Depth–Time</code> plots, stacked Magnitude and Depth distributions, county-level <strong>Swarm Watch · 24h</strong> filter, and <strong>Notable @ Felt</strong> feed.
+            (<a href="OGS_Moni_Dev_Analytics_Swiss.html" target="_blank" rel="noopener noreferrer" style="font-weight: 500; text-decoration: none; color: #0066cc;">Launch Analytics Board →</a>)
+          </li>
+        </ul>
+
+        <h4 style="margin-top: 15px; margin-bottom: 10px;">Technology Stack &amp; Data Sources</h4>
+        <p>
+          <strong>HTML5 / JavaScript</strong> · <strong>Tailwind CSS</strong> · <strong>Leaflet.js</strong> · <strong>Plotly.js</strong> · <strong>USGS FDSN Event API</strong> · <strong>GeoJSON</strong>
+        </p>
+
+      </div>
+    </article>
+
     <!-- Project Card: SeisBench with Synthetic Seismogram -->
     <article class="card"
              data-aos="fade-up"

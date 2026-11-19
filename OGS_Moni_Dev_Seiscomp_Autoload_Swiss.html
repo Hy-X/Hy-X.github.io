@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>OGS Interactive Earthquake Map (Swiss Style · SeisComP Autoload)</title>
+    <meta name="description" content="Real-time interactive Oklahoma seismicity and SeisComP station map (OGS Event distributed by USGS) with 77 Oklahoma county boundaries, depth cross-sections, 60-second polling, and 6-hour wall-monitor reload." />
+    <link rel="canonical" href="https://hy-x.github.io/OGS_Moni_Dev_Seiscomp_Autoload_Swiss.html" />
     <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
@@ -4076,7 +4078,7 @@
             maxLng = -90.0;
           const maxMagParam = maxMag ? `&maxmagnitude=${maxMag}` : "";
           const usgsUrl = `${USGS_API_BASE_URL}?format=geojson&starttime=${startStr}&endtime=${endStr}&minlatitude=${minLat}&maxlatitude=${maxLat}&minlongitude=${minLng}&maxlongitude=${maxLng}&minmagnitude=${minMag}${maxMagParam}`;
-          const usgsResponse = await fetch(usgsUrl);
+          const usgsResponse = await fetch(usgsUrl, { cache: "no-store" });
           if (!usgsResponse.ok) {
             if (usgsResponse.status === 400) {
               showUsgsApiErrorModal();
@@ -4125,7 +4127,7 @@
           console.log("[USGS HOTPATCH] Fetching:", ogsWebUrl);
           let ogsWebResponse, geojson;
           try {
-            ogsWebResponse = await fetch(ogsWebUrl);
+            ogsWebResponse = await fetch(ogsWebUrl, { cache: "no-store" });
             if (!ogsWebResponse.ok)
               throw new Error(
                 `OGS Web API responded with status: ${ogsWebResponse.status}`,
@@ -4416,7 +4418,7 @@
           console.log("[USGS HOTPATCH] Polling:", ogsWebUrl);
           let ogsWebResponse, geojson;
           try {
-            ogsWebResponse = await fetch(ogsWebUrl);
+            ogsWebResponse = await fetch(ogsWebUrl, { cache: "no-store" });
             if (!ogsWebResponse.ok)
               throw new Error(
                 `OGS Web API responded with status: ${ogsWebResponse.status}`,
