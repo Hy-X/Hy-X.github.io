@@ -4930,7 +4930,7 @@
         function loadStations() {
           const stationUrl = "./seiscomp_stations.json";
 
-          fetch(stationUrl)
+          fetch(stationUrl, { cache: "no-store" })
             .then((res) => {
               if (!res.ok) throw new Error(`HTTP error ${res.status}`);
               return res.json();
@@ -4956,8 +4956,7 @@
             });
         }
 
-        plotStationsFromStatic(); // Prioritize authentic SeisComP station inventory
-        // loadStations();
+        loadStations(); // Primary: fetch ./seiscomp_stations.json (falls back to embedded STATIC_STATIONS)
 
         setInitialDates();
         document
