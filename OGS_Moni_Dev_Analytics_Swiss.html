@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OGS Seismic Analytics & Swarm Board | OGS Event Distributed by USGS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { border-radius: 0 !important; }
+      html, body {
+        font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background: #f4f4f1;
+        color: #111111;
+        font-variant-numeric: tabular-nums;
+        -webkit-font-smoothing: antialiased;
+      }
+      .swiss-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #525252; }
+      @keyframes wrPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+      .dot-live, .dot-polling, .dot-error { width: 9px; height: 9px; display: inline-block; flex-shrink: 0; }
+      .dot-live { background: #15803d; animation: wrPulse 2s ease-in-out infinite; }
+      .dot-polling { background: #d97706; }
+      .dot-error { background: #dc2626; }
+      .swiss-tab {
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        border: 1px solid #111111;
+        background: #ffffff;
+        color: #111111;
+        cursor: pointer;
+        transition: background 0.12s, color 0.12s;
+      }
+      .swiss-tab:hover { background: #e5e5e0; }
+      .swiss-tab.active { background: #111111; color: #ffffff; }
+      .swarm-row {
+        cursor: pointer;
+        padding: 11px 16px;
+        border-bottom: 1px solid #e5e5e0;
+        border-left: 4px solid transparent;
+        transition: background 0.12s, border-color 0.12s;
+      }
+      .swarm-row:hover { background: #f4f4f1; }
+      .swarm-row.selected { background: #eff6ff; border-left-color: #1d4ed8; }
+      .feed-row {
+        padding: 11px 16px;
+        border-bottom: 1px solid #e5e5e0;
+        background: #ffffff;
+        transition: background 0.12s;
+      }
+      .feed-row:hover { background: #f9f9f7; }
+      .scroll-slim::-webkit-scrollbar { width: 6px; }
+      .scroll-slim::-webkit-scrollbar-track { background: #f4f4f1; }
+      .scroll-slim::-webkit-scrollbar-thumb { background: #a3a3a3; }
+    </style>
+  </head>
+  <body class="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden bg-[#f4f4f1]">
+    <!-- 1. Top Header: Telemetry Heartbeat, Window Switcher & Analytical KPIs -->
+    <header id="analytics-kpi-bar" class="bg-white border-b border-neutral-900 grid grid-cols-1 xl:grid-cols-12 shrink-0">
+      <div class="xl:col-span-6 px-5 py-3 border-b xl:border-b-0 xl:border-r border-neutral-900 flex flex-col justify-between gap-2">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="bg-neutral-900 text-white px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.1em]">OGS Event distributed by USGS</span>
+            <span class="swiss-label text-neutral-700">Swarm &amp; Rate Board</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button type="button" class="swiss-tab active" data-window="30">30D</button>
+            <button type="button" class="swiss-tab" data-window="90">90D</button>
+            <span id="wr-poll-countdown" class="swiss-label text-neutral-600 ml-2">Next: 60s</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between gap-3 pt-0.5">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span id="wr-poll-dot" class="dot-polling"></span>
+            <span id="wr-poll-status" class="text-sm sm:text-base font-bold tracking-tight text-neutral-900 truncate">Connecting...</span>
+          </div>
+          <div id="active-filter-pill" class="hidden items-center gap-2 shrink-0">
+            <span id="active-filter-label" class="px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wider bg-blue-700 text-white"></span>
+            <button id="clear-area-filter" type="button" class="px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wider bg-neutral-900 text-white hover:bg-blue-700 cursor-pointer">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="xl:col-span-6 grid grid-cols-2">
+        <div class="px-5 py-2.5 border-r border-neutral-300 flex flex-col justify-between">
+          <div class="flex items-center justify-between gap-1">
+            <span id="kpi-peak-label" class="swiss-label">Peak · 30d</span>
+            <span id="kpi-m3-badge" class="px-1.5 py-0.5 text-[10px] font-extrabold uppercase bg-neutral-200 text-neutral-800">M3+: --</span>
+          </div>
+          <div class="flex items-baseline justify-between gap-2 mt-1">
+            <span id="kpi-peak-mag" class="text-3xl font-black tracking-tight text-neutral-900 leading-none">--</span>
+            <span id="kpi-m25-sub" class="text-xs font-semibold text-neutral-600">M2.5+: --</span>
+          </div>
+        </div>
+
+        <div class="px-5 py-2.5 flex flex-col justify-between">
+          <div class="flex items-center justify-between gap-1">
+            <span class="swiss-label">Median EQ Depth</span>
+          </div>
+          <div class="flex items-baseline justify-between gap-2 mt-1">
+            <span id="kpi-med-depth" class="text-3xl font-black tracking-tight text-neutral-900 leading-none">--</span>
+            <span id="kpi-eq-share" class="text-xs font-semibold text-neutral-600">--% EQ</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. Main Analytical Grid: Top Plots (46%) + Bottom Matrices (54%) -->
+    <main class="flex-1 min-h-0 flex flex-col bg-white">
+      <!-- Top Row: Charts -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 border-b border-neutral-900 lg:h-[46%] min-h-[280px]">
+        <!-- Left Chart: Daily / Hourly Event Rate -->
+        <div class="lg:col-span-6 border-b lg:border-b-0 lg:border-r border-neutral-900 flex flex-col min-h-0">
+          <div class="px-4 py-2.5 border-b border-neutral-300 bg-[#f9f9f7] flex items-center justify-between gap-2 shrink-0">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-2.5 h-2.5 bg-[#e31a1c] inline-block shrink-0"></span>
+              <h2 id="rate-chart-title" class="text-xs sm:text-sm font-extrabold uppercase tracking-[0.08em] text-neutral-900 truncate">Daily Event Rate</h2>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              <button type="button" class="swiss-tab active" data-rate-mode="daily">Daily</button>
+              <button type="button" class="swiss-tab" data-rate-mode="hourly">24h Hourly</button>
+            </div>
+          </div>
+          <div id="chart-rate" class="flex-1 min-h-[210px] w-full bg-white"></div>
+        </div>
+
+        <!-- Right Chart: Magnitude vs. Time / Depth vs. Time -->
+        <div class="lg:col-span-6 flex flex-col min-h-0">
+          <div class="px-4 py-2.5 border-b border-neutral-300 bg-[#f9f9f7] flex items-center justify-between gap-2 shrink-0">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-2.5 h-2.5 bg-neutral-900 inline-block shrink-0"></span>
+              <h2 id="series-chart-title" class="text-xs sm:text-sm font-extrabold uppercase tracking-[0.08em] text-neutral-900 truncate">Magnitude vs. Time (CT)</h2>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              <button type="button" class="swiss-tab active" data-series-mode="magtime">Mag–Time</button>
+              <button type="button" class="swiss-tab" data-series-mode="depthtime">Depth–Time</button>
+            </div>
+          </div>
+          <div id="chart-series" class="flex-1 min-h-[210px] w-full bg-white"></div>
+        </div>
+      </section>
+
+      <!-- Bottom Row: 3 Operational Panels -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 flex-1 min-h-0">
+        <!-- Bottom Left (4 cols): 24h County Swarm Watch -->
+        <div class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-neutral-900 flex flex-col min-h-0">
+          <div class="px-4 py-2.5 border-b border-neutral-300 bg-[#f9f9f7] flex items-center justify-between gap-2 shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 bg-[#e31a1c] inline-block"></span>
+              <h2 class="text-xs sm:text-sm font-extrabold uppercase tracking-[0.08em] text-neutral-900">Swarm Watch · 24h</h2>
+            </div>
+            <span id="swarm-area-total" class="swiss-label">--</span>
+          </div>
+          <div id="swarm-county-list" class="flex-1 min-h-0 overflow-y-auto scroll-slim">
+            <div class="p-4 text-sm text-neutral-500">Waiting for feed...</div>
+          </div>
+          <div class="px-4 py-2 border-t border-neutral-300 bg-[#f9f9f7] flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-neutral-500 shrink-0">
+            <span id="county-source-note">County match: resolving...</span>
+            <span>Click row to filter</span>
+          </div>
+        </div>
+
+        <!-- Bottom Center (4 cols): Notable / Felt Event Log -->
+        <div class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-neutral-900 flex flex-col min-h-0">
+          <div class="px-4 py-2.5 border-b border-neutral-300 bg-[#f9f9f7] flex items-center justify-between gap-2 shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 bg-[#fc8d00] inline-block"></span>
+              <h2 class="text-xs sm:text-sm font-extrabold uppercase tracking-[0.08em] text-neutral-900">Notable / Felt</h2>
+            </div>
+            <span id="notable-count-label" class="swiss-label">--</span>
+          </div>
+          <div id="notable-event-list" class="flex-1 min-h-0 overflow-y-auto scroll-slim">
+            <div class="p-4 text-sm text-neutral-500">Waiting for feed...</div>
+          </div>
+          <div class="px-4 py-2 border-t border-neutral-300 bg-[#f9f9f7] flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-neutral-500 shrink-0">
+            <span>OGS Event distributed by USGS</span>
+            <span>M &ge; 2.5 or DYFI felt</span>
+          </div>
+        </div>
+
+        <!-- Bottom Right (4 cols): Magnitude / Depth Distribution Stacked Bar -->
+        <div class="lg:col-span-4 flex flex-col min-h-0">
+          <div class="px-4 py-2.5 border-b border-neutral-300 bg-[#f9f9f7] flex items-center justify-between gap-2 shrink-0">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-2.5 h-2.5 bg-neutral-900 inline-block shrink-0"></span>
+              <h2 id="dist-chart-title" class="text-xs sm:text-sm font-extrabold uppercase tracking-[0.08em] text-neutral-900 truncate">Magnitude Distribution (EQ vs. Quarry)</h2>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              <button type="button" class="swiss-tab active" data-dist-mode="mag">Mag</button>
+              <button type="button" class="swiss-tab" data-dist-mode="depth">Depth</button>
+            </div>
+          </div>
+          <div id="chart-dist" class="flex-1 min-h-[210px] w-full bg-white"></div>
+          <div class="px-4 py-2 border-t border-neutral-300 bg-[#f9f9f7] flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-neutral-500 shrink-0">
+            <span>OGS Event distributed by USGS</span>
+            <span>60s poll &middot; 6h reload</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const OK_POLYGON = [
+        [-103.002, 37.0], [-103.0, 36.5], [-100.004, 36.5], [-99.998, 34.557],
+        [-99.4, 34.3], [-98.9, 34.15], [-98.3, 34.0], [-97.8, 33.85],
+        [-97.2, 33.7], [-96.3, 33.6], [-95.2, 33.7], [-94.48, 33.63],
+        [-94.43, 35.39], [-94.618, 36.499], [-94.618, 36.999], [-102.042, 36.993], [-103.002, 37.0],
+      ];
+      const SOURCE_LABEL = "OGS Event distributed by USGS";
+      const DAY_MS = 24 * 60 * 60 * 1000;
+      const HOUR_MS = 60 * 60 * 1000;
+
+      const state = {
+        events: [],
+        counties: [],
+        countyGeoLoaded: false,
+        windowDays: 30,
+        rateMode: "daily",
+        seriesMode: "magtime",
+        distMode: "mag",
+        selectedArea: null,
+        nextPollAt: Date.now() + 60000,
+      };
+
+      const pointInRing = (lng, lat, ring) => {
+        let inside = false;
+        for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+          const [xi, yi] = ring[i], [xj, yj] = ring[j];
+          if ((yi > lat) !== (yj > lat) && lng < ((xj - xi) * (lat - yi)) / (yj - yi + 1e-12) + xi) inside = !inside;
+        }
+        return inside;
+      };
+
+      const buildCountyIndex = (gj) => {
+        if (!gj || !Array.isArray(gj.features)) return [];
+        return gj.features.map((f) => {
+          const g = f.geometry || {};
+          const rings = g.type === "Polygon" ? [g.coordinates[0]] : (g.type === "MultiPolygon" ? g.coordinates.map((p) => p[0]) : []);
+          let minLng = Infinity, maxLng = -Infinity, minLat = Infinity, maxLat = -Infinity;
+          rings.forEach((r) => r.forEach(([x, y]) => {
+            if (x < minLng) minLng = x;
+            if (x > maxLng) maxLng = x;
+            if (y < minLat) minLat = y;
+            if (y > maxLat) maxLat = y;
+          }));
+          const rawName = (f.properties && (f.properties.NAME || f.properties.BASENAME)) || "";
+          const name = rawName ? (/County$/i.test(rawName) ? rawName : `${rawName} County`) : "";
+          return name && rings.length ? { name, rings, bbox: [minLng, maxLng, minLat, maxLat] } : null;
+        }).filter(Boolean);
+      };
+
+      const extractUsgsArea = (props) => {
+        if (props.county) return String(props.county).trim();
+        const place = (props.place || "").trim();
+        if (!place) return props.state || "Oklahoma";
+        const cm = place.match(/([A-Za-z.\s]+?\sCounty)/i);
+        if (cm) return cm[1].trim();
+        const om = place.match(/\bof\s+([^,]+)(?:,\s*([A-Za-z\s]+))?/i);
+        if (om) {
+          const city = om[1].trim(), reg = (om[2] || "").trim();
+          return /^Oklahoma$/i.test(reg) ? `${city}, OK` : (reg ? `${city}, ${reg}` : city);
+        }
+        return place;
+      };
+
+      const resolveCounty = (lng, lat, props) => {
+        for (const c of state.counties) {
+          const [minX, maxX, minY, maxY] = c.bbox;
+          if (lng < minX || lng > maxX || lat < minY || lat > maxY) continue;
+          if (c.rings.some((r) => pointInRing(lng, lat, r))) return c.name;
+        }
+        return extractUsgsArea(props);
+      };
+
+      const ctPartsFmt = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZoneName: "short",
+      });
+      const getCtParts = (ms) => {
+        const p = Object.fromEntries(ctPartsFmt.formatToParts(new Date(ms)).map((x) => [x.type, x.value]));
+        if (p.hour === "24") p.hour = "00";
+        return p;
+      };
+      const formatCentralTime = (ms) => {
+        const p = getCtParts(ms);
+        return `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:${p.second} ${p.timeZoneName || "CT"}`;
+      };
+      const formatCtIsoPlot = (ms) => {
+        const p = getCtParts(ms);
+        return `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:${p.second}`;
+      };
+      const formatCtDate = (ms) => {
+        const p = getCtParts(ms);
+        return `${p.year}-${p.month}-${p.day}`;
+      };
+      const formatUtc = (ms) => new Date(ms).toISOString().replace("T", " ").substring(0, 19);
+      const formatAgeAgo = (ms) => {
+        const mins = Math.floor(Math.max(0, Date.now() - ms) / 60000);
+        if (mins < 1) return "just now";
+        if (mins < 60) return `${mins}m ago`;
+        const hrs = Math.floor(mins / 60);
+        return hrs < 24 ? `${hrs}h ago` : `${Math.floor(hrs / 24)}d ago`;
+      };
+
+      const median = (vals) => {
+        if (!vals.length) return null;
+        const s = [...vals].sort((a, b) => a - b);
+        const mid = Math.floor(s.length / 2);
+        return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
+      };
+
+      const setPollState = (status, note) => {
+        const dot = document.getElementById("wr-poll-dot");
+        const label = document.getElementById("wr-poll-status");
+        if (status === "ok") {
+          state.nextPollAt = Date.now() + 60000;
+          dot.className = "dot-live";
+          label.textContent = `Last poll OK (${new Date().toTimeString().substring(0, 8)}) · ${state.events.length} OK events (${state.windowDays}d)`;
+        } else if (status === "error") {
+          state.nextPollAt = Date.now() + 60000;
+          dot.className = "dot-error";
+          label.textContent = note || "Poll Error";
+        } else {
+          dot.className = "dot-polling";
+          label.textContent = note || "Polling...";
+        }
+      };
+
+      const loadCountiesOnce = async () => {
+        if (state.counties.length) return;
+        const noteEl = document.getElementById("county-source-note");
+        try {
+          const res = await fetch("./ok_counties.geojson", { cache: "no-store" });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          state.counties = buildCountyIndex(await res.json());
+          state.countyGeoLoaded = state.counties.length > 0;
+          noteEl.textContent = state.countyGeoLoaded ? `County match: ${state.counties.length} OK polygons` : "County match: USGS place";
+        } catch {
+          noteEl.textContent = "County match: USGS place fallback";
+        }
+      };
+
+      const fetchUsgsEvents = async () => {
+        setPollState("polling", `Polling ${state.windowDays}d USGS feed...`);
+        await loadCountiesOnce();
+        const end = new Date(), start = new Date(end.getTime() - state.windowDays * DAY_MS);
+        const url = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${start.toISOString()}&endtime=${end.toISOString()}&minlatitude=33.5&maxlatitude=37.1&minlongitude=-103.1&maxlongitude=-94.3&minmagnitude=0&orderby=time`;
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const gj = await res.json();
+          state.events = (Array.isArray(gj.features) ? gj.features : []).map((f) => {
+            const p = f.properties || {}, coords = f.geometry && f.geometry.coordinates;
+            if (!coords || coords.length < 2) return null;
+            const lng = Number(coords[0]), lat = Number(coords[1]);
+            if (isNaN(lat) || isNaN(lng) || !pointInRing(lng, lat, OK_POLYGON)) return null;
+            const depth = coords.length > 2 && !isNaN(Number(coords[2])) ? Number(coords[2]) : null;
+            const typeStr = (p.type || "").toLowerCase();
+            const isQuarry = typeStr.includes("quarry") || typeStr.includes("blast") || typeStr.includes("explosion") || (depth !== null && depth < 0.05);
+            return {
+              id: f.id,
+              source: SOURCE_LABEL,
+              timeMs: Number(p.time),
+              mag: p.mag !== null && p.mag !== undefined ? Number(p.mag) : null,
+              depth,
+              lat,
+              lng,
+              place: p.place || "Oklahoma",
+              county: resolveCounty(lng, lat, p),
+              status: (p.status || "automatic").toLowerCase(),
+              felt: Number(p.felt || 0),
+              mmi: p.mmi !== null && p.mmi !== undefined ? Number(p.mmi) : null,
+              nst: p.nst !== null && p.nst !== undefined ? Number(p.nst) : null,
+              gap: p.gap !== null && p.gap !== undefined ? Number(p.gap) : null,
+              rms: p.rms !== null && p.rms !== undefined ? Number(p.rms) : null,
+              url: p.url || `https://earthquake.usgs.gov/earthquakes/eventpage/${f.id}/executive`,
+              isQuarry,
+            };
+          }).filter(Boolean).sort((a, b) => b.timeMs - a.timeMs);
+          setPollState("ok");
+          renderDashboard();
+        } catch (err) {
+          console.error("Event poll failed:", err);
+          setPollState("error", "Poll Error");
+        }
+      };
+
+      const PLOTLY_BASE = {
+        paper_bgcolor: "#ffffff",
+        plot_bgcolor: "#ffffff",
+        font: { family: "Inter, Helvetica Neue, Arial, sans-serif", size: 11, color: "#111111" },
+        margin: { l: 46, r: 24, t: 16, b: 36 },
+        hoverlabel: { bgcolor: "#111111", bordercolor: "#111111", font: { color: "#ffffff", size: 11 } },
+      };
+      const PLOTLY_CFG = { responsive: true, displayModeBar: false };
+
+      const renderRateChart = (filtered) => {
+        const target = document.getElementById("chart-rate");
+        const titleEl = document.getElementById("rate-chart-title");
+        if (typeof Plotly === "undefined") {
+          target.innerHTML = '<div class="p-4 text-sm text-neutral-500">Plotly library unavailable.</div>';
+          return;
+        }
+        const now = Date.now();
+        const xLabels = [], eqCounts = [], qCounts = [];
+
+        if (state.rateMode === "hourly") {
+          titleEl.textContent = "24h Hourly Event Rate";
+          const startHour = Math.floor((now - 23 * HOUR_MS) / HOUR_MS) * HOUR_MS;
+          const bins = Array.from({ length: 24 }, (_, i) => {
+            const t = startHour + i * HOUR_MS;
+            const p = getCtParts(t);
+            return { label: `${p.month}/${p.day} ${p.hour}:00`, eq: 0, q: 0 };
+          });
+          filtered.forEach((ev) => {
+            const idx = Math.floor((ev.timeMs - startHour) / HOUR_MS);
+            if (idx >= 0 && idx < 24) ev.isQuarry ? bins[idx].q++ : bins[idx].eq++;
+          });
+          bins.forEach((b) => {
+            xLabels.push(b.label);
+            eqCounts.push(b.eq);
+            qCounts.push(b.q);
+          });
+        } else {
+          titleEl.textContent = `${state.windowDays}d Daily Event Rate`;
+          const map = new Map();
+          for (let d = state.windowDays - 1; d >= 0; d--) {
+            const key = formatCtDate(now - d * DAY_MS);
+            if (!map.has(key)) map.set(key, { eq: 0, q: 0 });
+          }
+          filtered.forEach((ev) => {
+            const key = formatCtDate(ev.timeMs);
+            if (!map.has(key)) map.set(key, { eq: 0, q: 0 });
+            const bucket = map.get(key);
+            ev.isQuarry ? bucket.q++ : bucket.eq++;
+          });
+          Array.from(map.keys()).sort().forEach((k) => {
+            const b = map.get(k);
+            xLabels.push(k);
+            eqCounts.push(b.eq);
+            qCounts.push(b.q);
+          });
+        }
+
+        const traces = [
+          {
+            x: xLabels, y: eqCounts, name: "Earthquake", type: "bar",
+            marker: { color: "#111111" },
+          },
+          {
+            x: xLabels, y: qCounts, name: "Quarry Blast", type: "bar",
+            marker: { color: "#b5b5b0" },
+          },
+        ];
+
+        Plotly.react(target, traces, {
+          ...PLOTLY_BASE,
+          barmode: "stack",
+          showlegend: true,
+          legend: { orientation: "h", x: 0, y: 1.14, font: { size: 10 } },
+          xaxis: {
+            gridcolor: "#ecece7", linecolor: "#111111", tickangle: state.rateMode === "hourly" ? -30 : 0,
+            nticks: state.rateMode === "hourly" ? 8 : 10,
+          },
+          yaxis: { title: "Events", gridcolor: "#ecece7", zerolinecolor: "#111111", rangemode: "tozero" },
+        }, PLOTLY_CFG);
+      };
+
+      const renderSeriesChart = (filtered) => {
+        const target = document.getElementById("chart-series");
+        const titleEl = document.getElementById("series-chart-title");
+        if (typeof Plotly === "undefined") {
+          target.innerHTML = '<div class="p-4 text-sm text-neutral-500">Plotly library unavailable.</div>';
+          return;
+        }
+
+        const isDepth = state.seriesMode === "depthtime";
+        titleEl.textContent = `${isDepth ? "Depth" : "Magnitude"} vs. Time (${state.windowDays}d · CT)`;
+        const hasVal = (e) => (isDepth ? e.depth !== null : e.mag !== null);
+        const eqs = filtered.filter((e) => !e.isQuarry && hasVal(e));
+        const qs = filtered.filter((e) => e.isQuarry && hasVal(e));
+
+        const eqY = eqs.map((e) => (isDepth ? e.depth : e.mag));
+        const qY = qs.map((e) => (isDepth ? e.depth : e.mag));
+        const eqColors = eqs.map((e) => ((e.mag ?? 0) >= 3.0 ? "#e31a1c" : ((e.mag ?? 0) >= 2.5 ? "#fc8d00" : "#111111")));
+        const eqSizes = eqs.map((e) => Math.max(6, Math.min(18, 4 + (e.mag ?? 1) * 3.2)));
+
+        Plotly.react(target, [
+          {
+            x: qs.map((e) => formatCtIsoPlot(e.timeMs)),
+            y: qY,
+            text: qs.map((e) => `${e.county} — Quarry ${e.mag !== null ? `M ${e.mag.toFixed(1)}` : ""}${e.depth !== null ? ` · ${e.depth.toFixed(1)} km` : ""}`),
+            hoverinfo: "text+x",
+            name: "Quarry Blast",
+            type: "scatter",
+            mode: "markers",
+            marker: { color: "#9ca3af", symbol: "triangle-up", size: 7, opacity: 0.75 },
+          },
+          {
+            x: eqs.map((e) => formatCtIsoPlot(e.timeMs)),
+            y: eqY,
+            text: eqs.map((e) => `${e.county} — M ${e.mag !== null ? e.mag.toFixed(1) : "?"} · ${e.depth !== null ? `${e.depth.toFixed(1)} km` : "?"}`),
+            hoverinfo: "text+x",
+            name: "Earthquake",
+            type: "scatter",
+            mode: "markers",
+            marker: { color: eqColors, size: eqSizes, line: { color: "#ffffff", width: 0.8 } },
+          },
+        ], {
+          ...PLOTLY_BASE,
+          showlegend: true,
+          legend: { orientation: "h", x: 0, y: 1.14, font: { size: 10 } },
+          xaxis: { gridcolor: "#ecece7", linecolor: "#111111" },
+          yaxis: isDepth
+            ? { title: "Depth (km)", gridcolor: "#ecece7", autorange: "reversed", zerolinecolor: "#d4d4d4" }
+            : { title: "Magnitude", gridcolor: "#ecece7", zerolinecolor: "#d4d4d4" },
+          shapes: isDepth
+            ? [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 5.0, y1: 5.0, line: { color: "#fc8d00", width: 1, dash: "dot" } }]
+            : [
+                { type: "line", xref: "paper", x0: 0, x1: 1, y0: 3.0, y1: 3.0, line: { color: "#e31a1c", width: 1.5, dash: "dash" } },
+                { type: "line", xref: "paper", x0: 0, x1: 1, y0: 2.5, y1: 2.5, line: { color: "#fc8d00", width: 1, dash: "dot" } },
+              ],
+          annotations: isDepth
+            ? [{ xref: "paper", x: 0.01, y: 5.0, text: "5 km shallow", showarrow: false, yshift: -8, font: { size: 10, color: "#fc8d00" } }]
+            : [{ xref: "paper", x: 0.01, y: 3.0, text: "M3.0 Alert", showarrow: false, yshift: 8, font: { size: 10, color: "#e31a1c" } }],
+        }, PLOTLY_CFG);
+      };
+
+      const renderDistChart = (filtered) => {
+        const target = document.getElementById("chart-dist");
+        const titleEl = document.getElementById("dist-chart-title");
+        if (typeof Plotly === "undefined") {
+          target.innerHTML = '<div class="p-4 text-sm text-neutral-500">Plotly library unavailable.</div>';
+          return;
+        }
+
+        const isDepth = state.distMode === "depth";
+        titleEl.textContent = `${isDepth ? "Depth" : "Magnitude"} Distribution (EQ vs. Quarry · ${state.windowDays}d)`;
+        const labels = isDepth
+          ? ["0–1", "1–2", "2–4", "4–6", "6–8", "8–12", ">12 km"]
+          : ["<1.0", "1.0–1.4", "1.5–1.9", "2.0–2.4", "2.5–2.9", "≥3.0"];
+        const eqBins = new Array(labels.length).fill(0);
+        const qBins = new Array(labels.length).fill(0);
+
+        filtered.forEach((ev) => {
+          const val = isDepth ? ev.depth : ev.mag;
+          if (val === null) return;
+          const idx = isDepth
+            ? (val <= 1 ? 0 : val <= 2 ? 1 : val <= 4 ? 2 : val <= 6 ? 3 : val <= 8 ? 4 : val <= 12 ? 5 : 6)
+            : (val < 1.0 ? 0 : val < 1.5 ? 1 : val < 2.0 ? 2 : val < 2.5 ? 3 : val < 3.0 ? 4 : 5);
+          ev.isQuarry ? qBins[idx]++ : eqBins[idx]++;
+        });
+
+        Plotly.react(target, [
+          { x: labels, y: eqBins, name: "Earthquake", type: "bar", marker: { color: "#111111" } },
+          { x: labels, y: qBins, name: "Quarry Blast", type: "bar", marker: { color: "#b5b5b0" } },
+        ], {
+          ...PLOTLY_BASE,
+          barmode: "stack",
+          showlegend: true,
+          legend: { orientation: "h", x: 0, y: 1.14, font: { size: 10 } },
+          xaxis: { title: isDepth ? "Depth (km)" : "Magnitude", linecolor: "#111111" },
+          yaxis: { title: "Count", gridcolor: "#ecece7", rangemode: "tozero" },
+        }, PLOTLY_CFG);
+      };
+
+      const renderEventRow = (ev) => {
+        const magStr = ev.mag !== null ? ev.mag.toFixed(1) : "?";
+        const magStyle = (ev.mag ?? 0) >= 3.0 ? "background:#e31a1c;color:#ffffff;" : ((ev.mag ?? 0) >= 2.5 ? "background:#fc8d00;color:#ffffff;" : "background:#111111;color:#ffffff;");
+        const feltPart = ev.felt > 0 ? ` · ${ev.felt} felt` : "";
+        const mmiPart = ev.mmi !== null ? ` · MMI ${ev.mmi.toFixed(1)}` : "";
+        return `
+          <div class="feed-row">
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 font-extrabold text-xs" style="${magStyle}">M ${magStr}</span>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-neutral-800">${ev.isQuarry ? "QUARRY" : "EQ"}</span>
+                <span class="text-[11px] uppercase tracking-wider ${ev.status === "automatic" ? "text-amber-700 font-bold" : "text-neutral-500"}">${ev.status}</span>
+              </div>
+              <div class="flex items-center gap-2.5 shrink-0">
+                <span class="text-[11px] font-semibold text-neutral-500">${formatAgeAgo(ev.timeMs)}</span>
+                <a href="${ev.url}" target="_blank" rel="noopener noreferrer" class="text-[11px] font-bold uppercase tracking-wider text-blue-700 hover:underline">INFO &nearr;</a>
+              </div>
+            </div>
+            <div class="text-xs sm:text-sm font-bold text-neutral-900 truncate">${ev.county || "Oklahoma"} <span class="font-normal text-neutral-600">&mdash; ${ev.place}${feltPart}${mmiPart}</span></div>
+            <div class="flex items-center justify-between text-[11px] text-neutral-500 mt-1 pt-1 border-t border-neutral-200 gap-2">
+              <span class="truncate">${formatCentralTime(ev.timeMs)} &middot; ${formatUtc(ev.timeMs)} UTC${ev.depth !== null ? ` &middot; ${ev.depth.toFixed(1)} km` : ""}</span>
+              <span class="text-[10px] text-neutral-400 shrink-0 hidden xl:inline">${ev.source}</span>
+            </div>
+          </div>`;
+      };
+
+      const renderDashboard = () => {
+        const now = Date.now();
+        const filtered = state.selectedArea ? state.events.filter((e) => e.county === state.selectedArea) : state.events;
+
+        // Filter indicator UI
+        const filterPill = document.getElementById("active-filter-pill");
+        filterPill.classList.toggle("hidden", !state.selectedArea);
+        filterPill.classList.toggle("flex", Boolean(state.selectedArea));
+        if (state.selectedArea) document.getElementById("active-filter-label").textContent = state.selectedArea;
+
+        // Header KPIs (computed on active filter / full state)
+        const peak = filtered.reduce((b, e) => (!b || (e.mag ?? -99) > (b.mag ?? -99) ? e : b), null);
+        const m3Count = filtered.filter((e) => (e.mag ?? -99) >= 3.0).length;
+        const m25Count = filtered.filter((e) => (e.mag ?? -99) >= 2.5).length;
+        document.getElementById("kpi-peak-label").textContent = `Peak · ${state.windowDays}d`;
+        document.getElementById("kpi-peak-mag").textContent = peak && peak.mag !== null ? `M ${peak.mag.toFixed(1)}` : "--";
+        document.getElementById("kpi-m25-sub").textContent = `M2.5+: ${m25Count}`;
+        const m3Badge = document.getElementById("kpi-m3-badge");
+        m3Badge.textContent = `M3+: ${m3Count}`;
+        m3Badge.className = m3Count > 0 ? "px-1.5 py-0.5 text-[10px] font-extrabold uppercase bg-red-600 text-white" : "px-1.5 py-0.5 text-[10px] font-extrabold uppercase bg-neutral-200 text-neutral-800";
+
+        const eqOnly = filtered.filter((e) => !e.isQuarry);
+        const eqDepths = eqOnly.map((e) => e.depth).filter((d) => d !== null);
+        const medD = median(eqDepths);
+        const eqPct = filtered.length ? Math.round((eqOnly.length / filtered.length) * 100) : 0;
+        document.getElementById("kpi-med-depth").textContent = medD !== null ? `${medD.toFixed(1)} km` : "--";
+        document.getElementById("kpi-eq-share").textContent = `${eqPct}% EQ`;
+
+        // Charts
+        renderRateChart(filtered);
+        renderSeriesChart(filtered);
+        renderDistChart(filtered);
+
+        // Swarm Watch · 24h (strictly last 24h events by area/county)
+        const byArea = new Map();
+        state.events.forEach((ev) => {
+          if (!ev.county || now - ev.timeMs > DAY_MS) return;
+          const cur = byArea.get(ev.county) || { name: ev.county, total: 0, eq: 0, q: 0, maxMag: -Infinity };
+          cur.total++;
+          ev.isQuarry ? cur.q++ : cur.eq++;
+          if (ev.mag !== null && ev.mag > cur.maxMag) cur.maxMag = ev.mag;
+          byArea.set(ev.county, cur);
+        });
+        const rankedAreas = Array.from(byArea.values()).sort((a, b) => b.eq - a.eq || b.total - a.total || b.maxMag - a.maxMag);
+        const topTotal = rankedAreas.length ? rankedAreas[0].total : 1;
+
+        document.getElementById("swarm-area-total").textContent = `${rankedAreas.length} active`;
+        const swarmList = document.getElementById("swarm-county-list");
+        swarmList.innerHTML = rankedAreas.length ? rankedAreas.slice(0, 25).map((c) => {
+          const isSwarm = c.eq >= 3;
+          const isCluster = !isSwarm && c.eq === 2;
+          const tagHtml = isSwarm
+            ? '<span class="px-1.5 py-0.5 text-[10px] font-extrabold uppercase bg-red-600 text-white">SWARM</span>'
+            : isCluster
+              ? '<span class="px-1.5 py-0.5 text-[10px] font-extrabold uppercase bg-amber-500 text-white">2+ EQ</span>'
+              : `<span class="px-1.5 py-0.5 text-[10px] font-bold uppercase bg-neutral-200 text-neutral-700">${c.eq > 0 ? "ACTIVE" : "QUARRY"}</span>`;
+          const barPct = Math.max(8, Math.round((c.total / topTotal) * 100));
+          const barColor = isSwarm ? "#e31a1c" : (isCluster ? "#fc8d00" : "#111111");
+          return `
+            <div class="swarm-row ${state.selectedArea === c.name ? "selected" : ""}" data-county="${c.name}">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-sm font-bold text-neutral-900 truncate">${c.name}</span>
+                <div class="flex items-center gap-2 shrink-0">${tagHtml}<span class="text-sm font-black text-neutral-900">${c.total}<span class="text-[11px] font-semibold text-neutral-500"> /24h</span></span></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-neutral-600 mt-1">
+                <span>${c.eq} EQ &middot; ${c.q} Quarry</span>
+                <span>${c.maxMag > -Infinity ? `Max M ${c.maxMag.toFixed(1)}` : ""}</span>
+              </div>
+              <div class="w-full bg-neutral-200 h-1 mt-1.5"><div class="h-1" style="width:${barPct}%;background:${barColor};"></div></div>
+            </div>`;
+        }).join("") : '<div class="p-4 text-sm text-neutral-500">No Oklahoma events in the last 24h.</div>';
+
+        // Notable @ Felt Log
+        const notable = filtered.filter((e) => (e.mag ?? -99) >= 2.5 || e.felt > 0);
+        document.getElementById("notable-count-label").textContent = `${notable.length} events`;
+        document.getElementById("notable-event-list").innerHTML = notable.length
+          ? notable.slice(0, 60).map((ev) => renderEventRow(ev)).join("")
+          : '<div class="p-4 text-sm text-neutral-500">No M &ge; 2.5 or DYFI felt events in current view.</div>';
+      };
+
+      // Controls
+      document.querySelectorAll("[data-window]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const days = Number(btn.getAttribute("data-window"));
+          if (days === state.windowDays) return;
+          state.windowDays = days;
+          document.querySelectorAll("[data-window]").forEach((b) => b.classList.toggle("active", b === btn));
+          fetchUsgsEvents();
+        });
+      });
+
+      document.querySelectorAll("[data-rate-mode]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          state.rateMode = btn.getAttribute("data-rate-mode");
+          document.querySelectorAll("[data-rate-mode]").forEach((b) => b.classList.toggle("active", b === btn));
+          renderDashboard();
+        });
+      });
+
+      document.querySelectorAll("[data-series-mode]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          state.seriesMode = btn.getAttribute("data-series-mode");
+          document.querySelectorAll("[data-series-mode]").forEach((b) => b.classList.toggle("active", b === btn));
+          renderDashboard();
+        });
+      });
+
+      document.querySelectorAll("[data-dist-mode]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          state.distMode = btn.getAttribute("data-dist-mode");
+          document.querySelectorAll("[data-dist-mode]").forEach((b) => b.classList.toggle("active", b === btn));
+          renderDashboard();
+        });
+      });
+
+      document.getElementById("swarm-county-list").addEventListener("click", (e) => {
+        const row = e.target.closest(".swarm-row");
+        if (!row) return;
+        const cName = row.getAttribute("data-county");
+        state.selectedArea = state.selectedArea === cName ? null : cName;
+        renderDashboard();
+      });
+
+      document.getElementById("clear-area-filter").addEventListener("click", () => {
+        state.selectedArea = null;
+        renderDashboard();
+      });
+
+      window.addEventListener("resize", () => {
+        if (typeof Plotly === "undefined") return;
+        ["chart-rate", "chart-series", "chart-dist"].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el && el.data) Plotly.Plots.resize(el);
+        });
+      });
+
+      setInterval(() => {
+        const secs = Math.max(0, Math.ceil((state.nextPollAt - Date.now()) / 1000));
+        document.getElementById("wr-poll-countdown").textContent = `Next: ${secs}s`;
+      }, 1000);
+
+      fetchUsgsEvents();
+      setInterval(fetchUsgsEvents, 60000);
+      setTimeout(() => window.location.reload(), 6 * HOUR_MS);
+    </script>
+  </body>
+</html>

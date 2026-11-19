@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OGS Seismic War Room | OGS Event Distributed by USGS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { border-radius: 0 !important; }
+      html, body {
+        font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background: #f4f4f1;
+        color: #111111;
+        font-variant-numeric: tabular-nums;
+        -webkit-font-smoothing: antialiased;
+      }
+      .swiss-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #525252; }
+      @keyframes wrPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+      @keyframes alertFlash {
+        0%, 100% { background-color: #fef2f2; border-left-color: #dc2626; }
+        50% { background-color: #fee2e2; border-left-color: #991b1b; }
+      }
+      .dot-live, .dot-polling, .dot-error { width: 9px; height: 9px; display: inline-block; flex-shrink: 0; }
+      .dot-live { background: #15803d; animation: wrPulse 2s ease-in-out infinite; }
+      .dot-polling { background: #d97706; }
+      .dot-error { background: #dc2626; }
+      .banner-red { animation: alertFlash 1.6s ease-in-out infinite; border-left: 6px solid #dc2626; background: #fef2f2; }
+      .banner-amber { border-left: 6px solid #d97706; background: #fffbeb; }
+      .banner-green { border-left: 6px solid #15803d; background: #ffffff; }
+      .hotspot-row { cursor: pointer; padding: 12px 16px; border-bottom: 1px solid #e5e5e0; border-left: 4px solid transparent; transition: background 0.12s, border-color 0.12s; }
+      .hotspot-row:hover { background: #f4f4f1; }
+      .hotspot-row.selected { background: #eff6ff; border-left-color: #1d4ed8; }
+      .event-row { padding: 13px 18px; border-bottom: 1px solid #e5e5e0; background: #ffffff; transition: background 0.12s; }
+      .event-row:hover { background: #f9f9f7; }
+      .scroll-slim::-webkit-scrollbar { width: 6px; }
+      .scroll-slim::-webkit-scrollbar-track { background: #f4f4f1; }
+      .scroll-slim::-webkit-scrollbar-thumb { background: #a3a3a3; }
+    </style>
+  </head>
+  <body class="min-h-screen lg:h-screen flex flex-col lg:overflow-hidden bg-[#f4f4f1]">
+    <!-- 1. Top Header: Telemetry Heartbeat & Rolling KPIs -->
+    <header id="warroom-kpi-bar" class="bg-white border-b border-neutral-900 grid grid-cols-1 xl:grid-cols-12">
+      <div class="xl:col-span-5 px-5 py-3.5 border-b xl:border-b-0 xl:border-r border-neutral-300 flex flex-col justify-between gap-2">
+        <div class="flex items-center justify-between gap-2">
+          <span class="bg-neutral-900 text-white px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.1em]">OGS Event distributed by USGS</span>
+          <span id="wr-poll-countdown" class="swiss-label text-neutral-600">Next refresh: 60s</span>
+        </div>
+        <div class="flex items-center gap-2.5 pt-0.5">
+          <span id="wr-poll-dot" class="dot-polling"></span>
+          <span id="wr-poll-status" class="text-base font-bold tracking-tight text-neutral-900">Connecting...</span>
+        </div>
+      </div>
+
+      <div class="xl:col-span-7 grid grid-cols-3">
+        <div class="px-5 py-3 border-r border-neutral-300 flex items-center justify-between gap-2">
+          <div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-[#e31a1c] inline-block"></span><span class="swiss-label">24 Hours</span></div>
+            <div id="wr-kpi-24h" class="text-4xl font-black tracking-tight text-neutral-900 leading-none mt-1.5">--</div>
+          </div>
+          <div class="text-right text-xs font-semibold text-neutral-600 leading-snug">
+            <div><span id="wr-kpi-24h-eq" class="font-bold text-neutral-900">--</span> EQ</div>
+            <div><span id="wr-kpi-24h-q" class="font-bold text-neutral-500">--</span> Q</div>
+          </div>
+        </div>
+        <div class="px-5 py-3 border-r border-neutral-300 flex items-center justify-between gap-2">
+          <div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-[#fc8d00] inline-block"></span><span class="swiss-label">7 Days</span></div>
+            <div id="wr-kpi-7d" class="text-4xl font-black tracking-tight text-neutral-900 leading-none mt-1.5">--</div>
+          </div>
+          <div class="text-right text-xs font-semibold text-neutral-600 leading-snug">
+            <div><span id="wr-kpi-7d-eq" class="font-bold text-neutral-900">--</span> EQ</div>
+            <div><span id="wr-kpi-7d-q" class="font-bold text-neutral-500">--</span> Q</div>
+          </div>
+        </div>
+        <div class="px-5 py-3 flex items-center justify-between gap-2">
+          <div>
+            <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 bg-[#4292c6] inline-block"></span><span class="swiss-label">30 Days</span></div>
+            <div id="wr-kpi-30d" class="text-4xl font-black tracking-tight text-neutral-900 leading-none mt-1.5">--</div>
+          </div>
+          <div class="text-right text-xs font-semibold text-neutral-600 leading-snug">
+            <div><span id="wr-kpi-30d-eq" class="font-bold text-neutral-900">--</span> EQ</div>
+            <div><span id="wr-kpi-30d-q" class="font-bold text-neutral-500">--</span> Q</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. Threshold / Traffic-Light Banner (24h M >= 3.0 / DYFI Felt) -->
+    <section id="traffic-light-banner" aria-live="polite" class="border-b border-neutral-900 px-5 py-3 banner-green flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-4">
+        <span id="tl-light-badge" class="px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.1em] bg-emerald-700 text-white">GREEN · NOMINAL</span>
+        <div>
+          <div id="tl-headline" class="text-base sm:text-lg font-bold text-neutral-900 tracking-tight">Evaluating 24-hour M3 thresholds...</div>
+          <div id="tl-subline" class="text-sm text-neutral-600">Source: OGS Event distributed by USGS — monitoring 24h events M &ge; 3.0 or DYFI felt reports.</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 flex-wrap" id="tl-meta-pills"></div>
+    </section>
+
+    <!-- 3. 3-Column Swiss Grid (3 / 3 / 6) -->
+    <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 min-h-0 bg-white">
+      <section class="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-neutral-900 flex flex-col min-h-0">
+        <div class="px-5 py-3.5 border-b border-neutral-300 bg-[#f9f9f7] flex items-center justify-between">
+          <div class="flex items-center gap-2.5"><span class="w-3 h-3 bg-[#e31a1c] inline-block"></span><h2 class="text-sm font-extrabold uppercase tracking-[0.1em] text-neutral-900">Top Hotspots · 24h</h2></div>
+          <span id="counties-24h-total" class="swiss-label">--</span>
+        </div>
+        <div id="hotspot-list-24h" class="flex-1 min-h-0 overflow-y-auto scroll-slim"><div class="p-5 text-sm text-neutral-500">Waiting for feed...</div></div>
+        <div class="px-5 py-2.5 border-t border-neutral-300 bg-[#f9f9f7] flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+          <span>OGS Event distributed by USGS</span><span>Click to filter</span>
+        </div>
+      </section>
+
+      <section class="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-neutral-900 flex flex-col min-h-0">
+        <div class="px-5 py-3.5 border-b border-neutral-300 bg-[#f9f9f7] flex items-center justify-between">
+          <div class="flex items-center gap-2.5"><span class="w-3 h-3 bg-[#fc8d00] inline-block"></span><h2 class="text-sm font-extrabold uppercase tracking-[0.1em] text-neutral-900">Top Hotspots · 7d</h2></div>
+          <span id="counties-7d-total" class="swiss-label">--</span>
+        </div>
+        <div id="hotspot-list-7d" class="flex-1 min-h-0 overflow-y-auto scroll-slim"><div class="p-5 text-sm text-neutral-500">Waiting for feed...</div></div>
+        <div class="px-5 py-2.5 border-t border-neutral-300 bg-[#f9f9f7] flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+          <span>OGS Event distributed by USGS</span><span>EQ / Quarry split</span>
+        </div>
+      </section>
+
+      <section class="lg:col-span-6 flex flex-col min-h-0">
+        <div class="px-5 py-3.5 border-b border-neutral-300 bg-[#f9f9f7] flex items-center justify-between">
+          <div class="flex items-center gap-2.5"><span class="w-3 h-3 bg-neutral-900 inline-block"></span><h2 id="detail-panel-title" class="text-sm font-extrabold uppercase tracking-[0.1em] text-neutral-900">Recent OK Events · 7d</h2></div>
+          <button id="clear-county-filter" type="button" class="hidden text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 bg-neutral-900 text-white hover:bg-blue-700 cursor-pointer">Reset</button>
+        </div>
+        <div id="detail-event-list" class="flex-1 min-h-0 overflow-y-auto scroll-slim"><div class="p-5 text-sm text-neutral-500">Waiting for feed...</div></div>
+        <div class="px-5 py-2.5 border-t border-neutral-300 bg-[#f9f9f7] flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+          <span>OGS Event distributed by USGS</span><span>60s poll · 6h reload</span>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const OK_POLYGON = [
+        [-103.002, 37.0], [-103.0, 36.5], [-100.004, 36.5], [-99.998, 34.557],
+        [-99.4, 34.3], [-98.9, 34.15], [-98.3, 34.0], [-97.8, 33.85],
+        [-97.2, 33.7], [-96.3, 33.6], [-95.2, 33.7], [-94.48, 33.63],
+        [-94.43, 35.39], [-94.618, 36.499], [-94.618, 36.999], [-102.042, 36.993], [-103.002, 37.0],
+      ];
+      const SOURCE_LABEL = "OGS Event distributed by USGS";
+      const DAY_MS = 24 * 60 * 60 * 1000;
+      const state = { events: [], selectedArea: null, nextPollAt: Date.now() + 60000, briefing: "" };
+
+      const pointInPolygon = (lng, lat, poly) => {
+        let inside = false;
+        for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+          const [xi, yi] = poly[i], [xj, yj] = poly[j];
+          if ((yi > lat) !== (yj > lat) && lng < ((xj - xi) * (lat - yi)) / (yj - yi + 1e-12) + xi) inside = !inside;
+        }
+        return inside;
+      };
+
+      const extractUsgsArea = (props) => {
+        if (props.county) return String(props.county).trim();
+        const place = (props.place || "").trim();
+        if (!place) return props.state || "Oklahoma";
+        const cm = place.match(/([A-Za-z.\s]+?\sCounty)/i);
+        if (cm) return cm[1].trim();
+        const om = place.match(/\bof\s+([^,]+)(?:,\s*([A-Za-z\s]+))?/i);
+        if (om) {
+          const city = om[1].trim(), reg = (om[2] || "").trim();
+          return /^Oklahoma$/i.test(reg) ? `${city}, OK` : (reg ? `${city}, ${reg}` : city);
+        }
+        return place;
+      };
+
+      const formatAgeAgo = (ms) => {
+        const mins = Math.floor(Math.max(0, Date.now() - ms) / 60000);
+        if (mins < 1) return "just now";
+        if (mins < 60) return `${mins}m ago`;
+        const hrs = Math.floor(mins / 60);
+        return hrs < 24 ? `${hrs}h ago` : `${Math.floor(hrs / 24)}d ago`;
+      };
+
+      const formatUtc = (ms) => new Date(ms).toISOString().replace("T", " ").substring(0, 19);
+      const ctFmt = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Chicago", year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false, timeZoneName: "short",
+      });
+      const formatCentralTime = (ms) => {
+        const p = Object.fromEntries(ctFmt.formatToParts(new Date(ms)).map((x) => [x.type, x.value]));
+        return `${p.year}-${p.month}-${p.day} ${p.hour === "24" ? "00" : p.hour}:${p.minute}:${p.second} ${p.timeZoneName || "CT"}`;
+      };
+
+      const setPollState = (status, note) => {
+        const dot = document.getElementById("wr-poll-dot");
+        const label = document.getElementById("wr-poll-status");
+        if (status === "ok") {
+          state.nextPollAt = Date.now() + 60000;
+          dot.className = "dot-live";
+          label.textContent = `Last poll OK (${new Date().toTimeString().substring(0, 8)})`;
+        } else if (status === "error") {
+          state.nextPollAt = Date.now() + 60000;
+          dot.className = "dot-error";
+          label.textContent = note || "Poll Error";
+        } else {
+          dot.className = "dot-polling";
+          label.textContent = note || "Polling...";
+        }
+      };
+
+      const rankAreas = (events) => {
+        const byArea = new Map();
+        events.forEach((ev) => {
+          if (!ev.county) return;
+          const cur = byArea.get(ev.county) || { name: ev.county, count: 0, eq: 0, q: 0, maxMag: -Infinity };
+          cur.count++;
+          ev.isQuarry ? cur.q++ : cur.eq++;
+          if (ev.mag !== null && ev.mag > cur.maxMag) cur.maxMag = ev.mag;
+          byArea.set(ev.county, cur);
+        });
+        return Array.from(byArea.values()).sort((a, b) => b.count - a.count || b.maxMag - a.maxMag);
+      };
+
+      const renderHotspotList = (containerId, totalId, ranked, emptyLabel, barHex) => {
+        const container = document.getElementById(containerId);
+        document.getElementById(totalId).textContent = `${ranked.length} areas`;
+        if (!ranked.length) {
+          container.innerHTML = `<div class="p-4 text-sm text-neutral-500">${emptyLabel}</div>`;
+          return;
+        }
+        const top = ranked[0].count;
+        container.innerHTML = ranked.slice(0, 20).map((c, idx) => {
+          const pct = Math.max(6, Math.round((c.count / top) * 100));
+          const shortName = c.name.replace(/\s+County$/i, "");
+          const maxStr = c.maxMag > -Infinity ? `Max M ${c.maxMag.toFixed(1)}` : "";
+          return `
+            <div class="hotspot-row ${state.selectedArea === c.name ? "selected" : ""}" data-county="${c.name}">
+              <div class="flex items-baseline justify-between gap-2">
+                <div class="text-sm font-bold text-neutral-900 truncate"><span class="text-neutral-400 mr-2 font-semibold">${String(idx + 1).padStart(2, "0")}</span>${shortName}</div>
+                <div class="text-lg font-black text-neutral-900 shrink-0">${c.count}</div>
+              </div>
+              <div class="flex items-center justify-between text-xs text-neutral-600 mt-1"><span>${c.eq} EQ &middot; ${c.q} Quarry</span><span>${maxStr}</span></div>
+              <div class="w-full bg-neutral-200 h-1.5 mt-2"><div class="h-1.5" style="width:${pct}%;background:${idx === 0 ? barHex : "#111111"};"></div></div>
+            </div>`;
+        }).join("");
+      };
+
+      const fetchUsgsEvents = async () => {
+        setPollState("polling", "Polling...");
+        const end = new Date(), start = new Date(end.getTime() - 30 * DAY_MS);
+        const url = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${start.toISOString()}&endtime=${end.toISOString()}&minlatitude=33.5&maxlatitude=37.1&minlongitude=-103.1&maxlongitude=-94.3&minmagnitude=0&orderby=time`;
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const gj = await res.json();
+          state.events = (Array.isArray(gj.features) ? gj.features : []).map((f) => {
+            const p = f.properties || {}, coords = f.geometry && f.geometry.coordinates;
+            if (!coords || coords.length < 2) return null;
+            const lng = Number(coords[0]), lat = Number(coords[1]);
+            if (isNaN(lat) || isNaN(lng) || !pointInPolygon(lng, lat, OK_POLYGON)) return null;
+            const depth = coords.length > 2 && !isNaN(Number(coords[2])) ? Number(coords[2]) : null;
+            const typeStr = (p.type || "").toLowerCase();
+            return {
+              id: f.id, source: SOURCE_LABEL, timeMs: Number(p.time),
+              mag: p.mag !== null && p.mag !== undefined ? Number(p.mag) : null,
+              depth, lat, lng, place: p.place || "Oklahoma", county: extractUsgsArea(p),
+              status: (p.status || "automatic").toLowerCase(), felt: Number(p.felt || 0),
+              mmi: p.mmi !== null && p.mmi !== undefined ? Number(p.mmi) : null,
+              url: p.url || `https://earthquake.usgs.gov/earthquakes/eventpage/${f.id}/executive`,
+              isQuarry: typeStr.includes("quarry") || typeStr.includes("blast") || typeStr.includes("explosion") || (depth !== null && depth < 0.05),
+            };
+          }).filter(Boolean).sort((a, b) => b.timeMs - a.timeMs);
+          setPollState("ok");
+          renderDashboard();
+        } catch (err) {
+          console.error("Event poll failed:", err);
+          setPollState("error", "Poll Error");
+        }
+      };
+
+      const renderDashboard = () => {
+        const now = Date.now();
+        const summarize = (days) => {
+          const list = state.events.filter((e) => now - e.timeMs <= days * DAY_MS);
+          const q = list.filter((e) => e.isQuarry).length;
+          return { list, eq: list.length - q, q };
+        };
+        const w24 = summarize(1), w7 = summarize(7), w30 = summarize(30);
+
+        [["24h", w24], ["7d", w7], ["30d", w30]].forEach(([k, w]) => {
+          document.getElementById(`wr-kpi-${k}`).textContent = w.list.length;
+          document.getElementById(`wr-kpi-${k}-eq`).textContent = w.eq;
+          document.getElementById(`wr-kpi-${k}-q`).textContent = w.q;
+        });
+
+        const max24 = w24.list.reduce((best, e) => (!best || (e.mag ?? -99) > (best.mag ?? -99) ? e : best), null);
+        const pillEv = max24 || state.events[0] || null;
+        const red24 = w24.list.filter((e) => (e.mag ?? -99) >= 3.0);
+        const felt24 = w24.list.filter((e) => e.felt > 0);
+        const totalFelt24 = felt24.reduce((s, e) => s + e.felt, 0);
+        const triggerEv = red24[0] || felt24[0] || max24;
+
+        const banner = document.getElementById("traffic-light-banner");
+        const tlBadge = document.getElementById("tl-light-badge");
+        const tlHeadline = document.getElementById("tl-headline");
+        const tlSubline = document.getElementById("tl-subline");
+
+        if (red24.length > 0) {
+          banner.className = "border-b border-neutral-900 px-5 py-3 banner-red flex flex-wrap items-center justify-between gap-3";
+          tlBadge.className = "px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.1em] bg-red-600 text-white";
+          tlBadge.textContent = "RED · M3+ ALERT";
+          tlHeadline.textContent = `M ${(triggerEv.mag ?? 0).toFixed(1)} in ${triggerEv.county || triggerEv.place} (${formatAgeAgo(triggerEv.timeMs)})`;
+          tlSubline.textContent = `${SOURCE_LABEL} — ${red24.length} event(s) >= M 3.0 in past 24h (${triggerEv.place}).`;
+        } else if (felt24.length > 0) {
+          banner.className = "border-b border-neutral-900 px-5 py-3 banner-amber flex flex-wrap items-center justify-between gap-3";
+          tlBadge.className = "px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.1em] bg-amber-600 text-white";
+          tlBadge.textContent = "AMBER · FELT WATCH";
+          tlHeadline.textContent = `24h Felt Event: M ${(triggerEv.mag ?? 0).toFixed(1)} in ${triggerEv.county || triggerEv.place} (${totalFelt24} DYFI felt report(s))`;
+          tlSubline.textContent = `${SOURCE_LABEL} — ${felt24.length} event(s) with public DYFI felt reports in past 24h (all < M 3.0).`;
+        } else {
+          banner.className = "border-b border-neutral-900 px-5 py-3 banner-green flex flex-wrap items-center justify-between gap-3";
+          tlBadge.className = "px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.1em] bg-emerald-700 text-white";
+          tlBadge.textContent = "GREEN · NOMINAL";
+          tlHeadline.textContent = "No 24h events >= M 3.0 and 0 DYFI felt reports";
+          tlSubline.textContent = w24.list.length > 0
+            ? `${SOURCE_LABEL} — 24h peak is M ${(max24.mag ?? 0).toFixed(1)} in ${max24.county || max24.place} (${formatAgeAgo(max24.timeMs)}).`
+            : `${SOURCE_LABEL} — No Oklahoma events in the past 24 hours.`;
+        }
+
+        const ranked24 = rankAreas(w24.list), ranked7 = rankAreas(w7.list);
+        state.briefing = [
+          `OGS Seismic War Room Summary (${SOURCE_LABEL})`,
+          `Generated: ${formatCentralTime(now)} | ${formatUtc(now)} UTC`,
+          `Status: ${tlBadge.textContent} — ${tlHeadline.textContent}`,
+          `24h: ${w24.list.length} (${w24.eq} EQ / ${w24.q} Quarry) | 7d: ${w7.list.length} (${w7.eq} EQ / ${w7.q} Quarry) | 30d: ${w30.list.length} (${w30.eq} EQ / ${w30.q} Quarry)`,
+          pillEv ? `Peak: M ${pillEv.mag !== null ? pillEv.mag.toFixed(1) : "?"} · ${pillEv.county || pillEv.place} · ${formatCentralTime(pillEv.timeMs)}` : "Peak: None",
+          `Top Hotspots (7d): ${ranked7.slice(0, 5).map((c, i) => `${i + 1}. ${c.name} (${c.count})`).join(", ") || "None"}`,
+        ].join("\n");
+
+        document.getElementById("tl-meta-pills").innerHTML =
+          `<button id="copy-briefing-btn" type="button" class="px-3.5 py-2 text-xs font-bold uppercase tracking-wider bg-white border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white transition cursor-pointer">Copy Briefing</button>` +
+          (triggerEv ? `<a href="${triggerEv.url}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 text-xs font-bold uppercase tracking-wider bg-neutral-900 hover:bg-blue-700 text-white transition">INFO &nearr;</a>` : "");
+
+        renderHotspotList("hotspot-list-24h", "counties-24h-total", ranked24, "No events in last 24h.", "#e31a1c");
+        renderHotspotList("hotspot-list-7d", "counties-7d-total", ranked7, "No events in last 7d.", "#fc8d00");
+
+        const detailEvents = state.selectedArea ? w30.list.filter((e) => e.county === state.selectedArea) : w7.list;
+        document.getElementById("detail-panel-title").textContent = state.selectedArea ? `${state.selectedArea} · 30d` : "Recent OK Events · 7d";
+        document.getElementById("clear-county-filter").classList.toggle("hidden", !state.selectedArea);
+
+        document.getElementById("detail-event-list").innerHTML = detailEvents.length
+          ? detailEvents.slice(0, 50).map((ev) => {
+              const magStr = ev.mag !== null ? ev.mag.toFixed(1) : "?";
+              const magStyle = (ev.mag ?? 0) >= 3.0 ? "background:#e31a1c;color:#ffffff;" : (ev.mag ?? 0) >= 2.5 ? "background:#fc8d00;color:#ffffff;" : "background:#111111;color:#ffffff;";
+              const extra = `${ev.felt > 0 ? ` · ${ev.felt} felt` : ""}${ev.mmi !== null ? ` · MMI ${ev.mmi.toFixed(1)}` : ""}`;
+              return `
+                <div class="event-row">
+                  <div class="flex items-center justify-between gap-3 mb-1.5">
+                    <div class="flex items-center gap-2.5">
+                      <span class="px-2.5 py-0.5 font-extrabold text-sm" style="${magStyle}">M ${magStr}</span>
+                      <span class="text-xs font-bold uppercase tracking-wider text-neutral-800">${ev.isQuarry ? "QUARRY" : "EQ"}</span>
+                      <span class="text-xs uppercase tracking-wider text-neutral-500">${ev.status}</span>
+                    </div>
+                    <div class="flex items-center gap-3 shrink-0">
+                      <span class="text-xs font-semibold text-neutral-600">${formatAgeAgo(ev.timeMs)}</span>
+                      <a href="${ev.url}" target="_blank" rel="noopener noreferrer" class="text-xs font-bold uppercase tracking-wider text-blue-700 hover:underline">INFO &nearr;</a>
+                    </div>
+                  </div>
+                  <div class="text-sm font-bold text-neutral-900 truncate">${ev.county || "Oklahoma"} <span class="font-normal text-neutral-600">&mdash; ${ev.place}${extra}</span></div>
+                  <div class="flex items-center justify-between text-xs text-neutral-500 mt-1.5 pt-1.5 border-t border-neutral-200 gap-3">
+                    <span>${formatCentralTime(ev.timeMs)} &middot; ${formatUtc(ev.timeMs)} UTC${ev.depth !== null ? ` &middot; ${ev.depth.toFixed(1)} km` : ""}</span>
+                    <span class="text-[11px] text-neutral-400 shrink-0 hidden sm:inline">${ev.source}</span>
+                  </div>
+                </div>`;
+            }).join("")
+          : '<div class="p-4 text-sm text-neutral-500">No events in selected view.</div>';
+      };
+
+      const handleCountyClick = (e) => {
+        const row = e.target.closest(".hotspot-row");
+        if (!row) return;
+        const cName = row.getAttribute("data-county");
+        state.selectedArea = state.selectedArea === cName ? null : cName;
+        renderDashboard();
+      };
+
+      document.getElementById("hotspot-list-24h").addEventListener("click", handleCountyClick);
+      document.getElementById("hotspot-list-7d").addEventListener("click", handleCountyClick);
+      document.getElementById("clear-county-filter").addEventListener("click", () => { state.selectedArea = null; renderDashboard(); });
+      document.getElementById("tl-meta-pills").addEventListener("click", async (e) => {
+        const btn = e.target.closest("#copy-briefing-btn");
+        if (!btn) return;
+        try {
+          await navigator.clipboard.writeText(state.briefing);
+          btn.textContent = "Copied";
+          setTimeout(() => { btn.textContent = "Copy Briefing"; }, 2000);
+        } catch {
+          window.prompt("Copy War Room Briefing:", state.briefing);
+        }
+      });
+
+      setInterval(() => {
+        const secs = Math.max(0, Math.ceil((state.nextPollAt - Date.now()) / 1000));
+        document.getElementById("wr-poll-countdown").textContent = `Next refresh: ${secs}s`;
+      }, 1000);
+
+      fetchUsgsEvents();
+      setInterval(fetchUsgsEvents, 60000);
+      setTimeout(() => window.location.reload(), 6 * DAY_MS / 24);
+    </script>
+  </body>
+</html>
